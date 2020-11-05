@@ -16,10 +16,13 @@ export const RedditLogo = styled(FaReddit)`
 export const SearchBarContainer = styled.div`
   position: relative;
   flex: 1;
+  margin: 0 auto;
+  max-width: 656px;
+
 `
 export const SearchIcon = styled(FaSearch)`
   position: absolute;
-  top: 10px;
+  top: 8px;
   left: 15px;
   font-size: 20px;
   color: gray;
@@ -32,9 +35,8 @@ export const SearchBar = styled.input`
   padding: .5rem .75rem;
   padding-left: 50px;
   font-size: 16px;
-  box-sizing: content-box;
   border: 1px solid lightgray;
-
+  width: 100%;
   &:hover {
     border: 1px solid royalblue;
   }
