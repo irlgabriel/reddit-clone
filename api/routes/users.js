@@ -23,7 +23,6 @@ router.post('/register', (req, res, next) => {
   .then(() => res.status(200).send("User created successfully"))
   .catch(err => res.status(400).json(err))
 })
-module.exports = router;
 
 router.post('/login', (req, res, next) => {
   const { username, password } = req.body;
@@ -40,3 +39,5 @@ router.post('/login', (req, res, next) => {
   })
   .catch(err => res.status(400).send(err))
 })
+
+module.exports = router;
