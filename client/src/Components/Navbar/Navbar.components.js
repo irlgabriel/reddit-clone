@@ -52,12 +52,19 @@ export const ButtonGroup = styled.div`
     }
   }  
 `
-export const Button = styled.button`
+export const Button = styled.a`
+  text-decoration: none;
   border-radius: 4px;
   outline: none;
   border: 1px solid royalblue;
-  padding: .5rem .75rem;
+  padding: .35rem .5rem;
   font-weight: bold;
   background-color: ${({bgColor}) => (`${bgColor}`)};
   color: ${({color}) => (`${color}`)};
+  &:hover {
+    text-decoration: none;
+  }
+  &:first-child {
+    margin-right: .25rem;
+  }
 `

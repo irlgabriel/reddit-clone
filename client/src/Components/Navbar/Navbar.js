@@ -18,8 +18,8 @@ const Navbar = () => {
         <SearchBar type="text" placeholder="Search"/>
       </SearchBarContainer>
       <ButtonGroup>
-        <Button color="royalblue" bgColor="white">LOG IN</Button>
-        <Button color="white" bgColor="royalblue">SIGN IN</Button>
+        <Button href="/users/login" color="royalblue" bgColor="white">LOG IN</Button>
+        <Button href="/users/register" color="white" bgColor="royalblue">SIGN IN</Button>
       </ButtonGroup>
     </Nav>
   )
