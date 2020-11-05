@@ -1,10 +1,26 @@
 import './App.css';
-import { Navbar } from "./Components";
-import { Container } from "./App.components";
+import { 
+  Navbar,
+  Sidebar,
+  Post
+} from "./Components";
+import { 
+  Container,
+  MainWrapper,
+  PostsContainer,
+} from "./App.components";
 function App() {
   return (
     <Container>
       <Navbar />
+      <MainWrapper>
+        <PostsContainer>
+          <Post />
+        </PostsContainer>
+        <Sidebar>
+
+        </Sidebar>
+      </MainWrapper>
     </Container>
   );
 }

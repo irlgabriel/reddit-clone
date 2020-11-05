@@ -5,3 +5,14 @@ export const Container = styled.div`
   margin: 0 auto;
   background-color: #DAE0E6;
 `
+export const MainWrapper = styled.div`
+  display: flex;
+  justify-content: space-around;
+  background-color: #DAE0E6;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1.5rem;
+`
+export const PostsContainer = styled.div`
+  
+`
