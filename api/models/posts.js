@@ -1,10 +1,11 @@
 var mongoose = require("mongoose");
 var PostSchema = mongoose.Schema({
-  subreddit: String,
+  subreddit: {type: String, required: [true, "can't be blank"]},
   user: String,
-  votes: String,
-  comments: Array,
   title: {type: String, required: [true, "can't be blank"]},
+  content: {type: String, required: [true, "can't be blank"]},
+  votes: {type: String, default: "0"},
+  comments: {type: Array, default: []},
 })
 var Post = mongoose.model("Post", PostSchema);
 module.exports = Post;
@@ -12,6 +13,8 @@ module.exports = Post;
 /*
 Post
 {
+  title: "",
+  content: "",
   subreddit: "",
   user: "",
   votes: "",

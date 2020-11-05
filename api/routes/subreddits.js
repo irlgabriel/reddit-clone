@@ -19,4 +19,5 @@ router.post('/', (req, res, next) => {
   .then(() => res.status(200).send('Subreddit created successfully'))
   .catch((err) => res.status(400).send(err))
 })
+
 module.exports = router;

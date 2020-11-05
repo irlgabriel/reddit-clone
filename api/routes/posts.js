@@ -12,5 +12,17 @@ router.get("/", (req, res, next) => {
     }
   })
 })
+/* POST - Create a post */
+router.post("/", (req, res, next) => {
+  const {title, subreddit, user, content} = req.body;
+  Post.create({
+    title: title,
+    subreddit: subreddit,
+    user: user,
+    content: content,
+  })
+  .then(() => res.status(200).send('Post created successfully'))
+  .catch(err => res.status(400).send(err));
+})
 
 module.exports = router;
