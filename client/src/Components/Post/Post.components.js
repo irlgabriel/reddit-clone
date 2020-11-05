@@ -9,6 +9,11 @@ export const PostContainer = styled.div`
   width: 600px;
   min-height: 30vh;
   position: relative;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  &:hover {
+    border: 1px solid black;
+  }
 `
 export const DotsWrapper = styled.div`
   background-color: whitesmoke;

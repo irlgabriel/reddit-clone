@@ -57,8 +57,9 @@ export const Button = styled.a`
   border-radius: 4px;
   outline: none;
   border: 1px solid royalblue;
-  padding: .35rem .5rem;
+  padding: .55rem 2rem;
   font-weight: bold;
+  font-size: 12px;
   background-color: ${({bgColor}) => (`${bgColor}`)};
   color: ${({color}) => (`${color}`)};
   &:hover {

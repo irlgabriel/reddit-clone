@@ -11,6 +11,7 @@ const Post = () => {
   const [dots, setDots] = useState(0);
   return(
     <PostContainer>
+      {/* Votes Container */}
       <DotsWrapper>
         <DotsContainer>
           <UpDot />
@@ -18,6 +19,7 @@ const Post = () => {
           <DownDot />
         </DotsContainer>
       </DotsWrapper>
+
     </PostContainer>  
   )
 }

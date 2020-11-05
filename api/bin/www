@@ -18,7 +18,10 @@ mongoose.connect(uri,{
   useUnifiedTopology: true,
   useCreateIndex: true,
 })
-
+const db = mongoose.connection;
+db.once('open', () => {
+  console.log("Connected to mongoDB")
+})
 /**
  * Get port from environment and store in Express.
  */
