@@ -1,10 +1,16 @@
-
-
 var express = require('express');
 var router = express.Router();
+var Post = require("../models/posts");
 
+/* GET - retrieve all posts */
 router.get("/", (req, res, next) => {
-  res.send("List of all posts")
+  Post.find((err,docs) =>{
+    if(err) {
+      res.status(400).send(err);
+    } else {
+      res.status(200).send(docs);
+    }
+  })
 })
 
 module.exports = router;
