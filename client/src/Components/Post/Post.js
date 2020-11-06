@@ -20,7 +20,8 @@ import {
   ShareIcon,
   SaveIcon
 } from "./Post.components"
-const Post = ({votes, comments, title, subreddit, user, content}) => {
+const Post = ({votes, comments, title, subreddit, user, content, id}) => {
+  
   const [dots, setDots] = useState(votes);
   const [liked, setLiked] = useState('')
 
