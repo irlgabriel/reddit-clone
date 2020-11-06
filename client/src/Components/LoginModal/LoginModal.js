@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import {
   LoginWrapper,
@@ -16,18 +17,20 @@ const LoginModal = ({setLogin}) => {
   const loginHandler = (e) => {
     e.preventDefault();
     console.log("form submitted")
-    fetch("/users/login", {
+    axios.post("/users/login", {
       method: "POST",
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
+      data: {
         username: user,
         password: password,
-      })
+      }
     })
-    .then(res => console.log(res))
+    .then(res => 
+      console.log(res)
+    )
     .catch(err => console.log(err))
   }
 

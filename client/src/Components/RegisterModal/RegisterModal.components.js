@@ -51,7 +51,7 @@ export const Label = styled.p`
   margin: .25rem 0;
 `
 
-export const Button = styled.a`
+export const Button = styled.button`
   cursor: pointer;
   text-decoration: none;
   border-radius: 4px;

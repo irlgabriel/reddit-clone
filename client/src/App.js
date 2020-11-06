@@ -11,15 +11,17 @@ import {
   MainWrapper,
   PostsContainer,
 } from "./App.components";
+
 function App() {
   const [posts, setPosts] = useState([])
+  const [user, setUser] = useState(undefined)
+  
   useEffect(() => {
     fetch('/posts', {
       mode: "no-cors"
     })
     .then(res => res.json()
-      .then(data => setPosts(data))
-    
+    .then(data => setPosts(data))
     )    
   }, [])
 

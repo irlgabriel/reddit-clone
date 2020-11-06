@@ -15,7 +15,6 @@ const RegisterModal = ({setRegister}) => {
   const [email, setEmail] = useState("");
 
   const RegisterHandler = (e) => {
-    console.log("form submitted")
     e.preventDefault();
     fetch("/users/register", {
       method: "POST",

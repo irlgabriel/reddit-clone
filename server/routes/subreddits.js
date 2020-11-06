@@ -16,7 +16,7 @@ router.post('/', (req, res, next) => {
     name: req.body.name,
     posts: [],
   })
-  .then(() => res.status(200).send('Subreddit created successfully'))
+  .then((sub) => res.status(200).send(sub))
   .catch((err) => res.status(400).send(err))
 })
 

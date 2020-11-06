@@ -10,7 +10,6 @@ export const LoginWrapper = styled.div`
   justify-content: center;
   align-items: center;
   background-color: rgba(173,216,230,.4);
-  
   z-index: 2;
 `
 
@@ -51,7 +50,7 @@ export const Label = styled.p`
   margin: .25rem 0;
 `
 
-export const Button = styled.a`
+export const Button = styled.button`
   cursor: pointer;
   text-decoration: none;
   border-radius: 4px;
