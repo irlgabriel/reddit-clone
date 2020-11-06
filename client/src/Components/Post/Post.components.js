@@ -57,11 +57,14 @@ export const SubredditName = styled.p`
 `
 export const Creator = styled.p`
   font-size: 14px;
+  color: gray;
   &:before {
     content: "posted by";
   }
 `
-
 export const MiddleDot = styled(BsDot)`
 
+`
+export const CreatedAt = styled.p`
+  
 `
