@@ -14,8 +14,8 @@ const LoginModal = ({setLogin}) => {
   const [password, setPassword] = useState("");
 
   const loginHandler = (e) => {
-    console.log("form submitted")
     e.preventDefault();
+    console.log("form submitted")
     fetch("/users/login", {
       method: "POST",
       headers: {
@@ -35,7 +35,7 @@ const LoginModal = ({setLogin}) => {
     <LoginWrapper onClick={() => setLogin(false)}>
       <LoginContainer onClick={(e) => e.stopPropagation()}>
         <LoginHeader>LOG IN</LoginHeader>
-        <LoginForm onSubmit={loginHandler}>
+        <LoginForm onSubmit={(e) => loginHandler(e)}>
           <FormGroup>
             <Label>Username</Label>
             <Input onChange={(e) => setUser(e.target.value)} type="text"/>

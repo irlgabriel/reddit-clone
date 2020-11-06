@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Subreddit = require("../models/Subreddits");
+var Subreddit = require("../models/subreddits");
 
 /* GET - retrieve all subreddits */
 router.get('/', (req, res, next) => {

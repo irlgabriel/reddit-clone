@@ -1,4 +1,5 @@
 var mongoose = require("mongoose");
+
 var PostSchema = mongoose.Schema({
   subreddit: {type: String, required: [true, "can't be blank"]},
   user: String,
@@ -7,7 +8,9 @@ var PostSchema = mongoose.Schema({
   votes: {type: String, default: "0"},
   comments: {type: Array, default: []},
 }, {timestamps: true})
+
 var Post = mongoose.model("Post", PostSchema);
+
 module.exports = Post;
 
 /*
