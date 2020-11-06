@@ -7,7 +7,7 @@ export const Container = styled.div`
 `
 export const MainWrapper = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   background-color: #DAE0E6;
   max-width: 1000px;
   margin: 0 auto;

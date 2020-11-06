@@ -7,7 +7,6 @@ export const Nav = styled.div`
   background-color: white;
   display: flex;
   align-items: center;
-  position: relative;
   padding: .5rem 1.25rem;
 `
 export const RedditLogo = styled(FaReddit)`
@@ -53,6 +52,7 @@ export const ButtonGroup = styled.div`
   }  
 `
 export const Button = styled.a`
+  cursor: pointer;
   text-decoration: none;
   border-radius: 4px;
   outline: none;
