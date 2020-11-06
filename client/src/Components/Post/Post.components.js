@@ -3,6 +3,7 @@ import {
   GoArrowDown, 
   GoArrowUp
 } from "react-icons/go";
+import { BsDot } from "react-icons/bs";
 
 export const PostContainer = styled.div`
   background-color: white;
@@ -42,4 +43,25 @@ export const UpDot = styled(GoArrowUp)`
 export const DownDot = styled(GoArrowDown)`
   color: gray;
   font-size: 24px;
+`
+export const Topbar = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 40px;
+  padding: .25rem;
+`
+export const SubredditName = styled.p`
+  font-size: 14px;
+  font-weight: bold;
+
+`
+export const Creator = styled.p`
+  font-size: 14px;
+  &:before {
+    content: "posted by";
+  }
+`
+
+export const MiddleDot = styled(BsDot)`
+
 `

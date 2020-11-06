@@ -6,8 +6,12 @@ import {
   DotsCount,
   UpDot,
   DownDot,
+  Topbar,
+  SubredditName,
+  Creator,
+  MiddleDot
 } from "./Post.components"
-const Post = () => {
+const Post = ({votes, comments, title, subreddit, user, content}) => {
   const [dots, setDots] = useState(0);
   return(
     <PostContainer>
@@ -15,11 +19,14 @@ const Post = () => {
       <DotsWrapper>
         <DotsContainer>
           <UpDot />
-          <DotsCount>{dots}</DotsCount>
+          <DotsCount>{votes}</DotsCount>
           <DownDot />
         </DotsContainer>
       </DotsWrapper>
-
+      <Topbar>
+        <SubredditName>r/{subreddit}&nbsp;&middot;&nbsp;</SubredditName>
+        <Creator>{user}</Creator>
+      </Topbar>
     </PostContainer>  
   )
 }
