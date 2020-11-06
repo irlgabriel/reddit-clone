@@ -56,7 +56,6 @@ export const PostContentWrapper = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  height: 100%; // No idea why this does not work so I will use absolute position instead
   padding: .5rem;
 
 `
