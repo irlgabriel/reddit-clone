@@ -21,21 +21,23 @@ import {
   SaveIcon
 } from "./Post.components"
 const Post = ({votes, comments, title, subreddit, user, content}) => {
-  const [dots, setDots] = useState(0);
+  const [dots, setDots] = useState(votes);
+  const [liked, setLiked] = useState('')
+
   return(
     <PostContainer>
       {/* Votes Container */}
       <DotsWrapper>
         <DotsContainer>
-          <UpDot />
-          <DotsCount>{votes}</DotsCount>
-          <DownDot />
+          <UpDot onClick={() => liked !== "yes" ? setLiked("yes") : setLiked("")} liked={liked} />
+          <DotsCount liked={liked}>{votes}</DotsCount>
+          <DownDot onClick={() => liked !== "no" ? setLiked("no") : setLiked("")} liked={liked} />
         </DotsContainer>
       </DotsWrapper>
       <PostContentWrapper>
         <PostHeader>
-          <SubredditName>r/{subreddit}&nbsp;&middot;&nbsp;</SubredditName>
-          <Creator>{user}</Creator>
+          <SubredditName>r/{subreddit}&nbsp;</SubredditName>
+          <Creator>&middot;&nbsp; posted by {user}</Creator>
         </PostHeader>
         <PostBody>
           <PostTitle>{title}</PostTitle>

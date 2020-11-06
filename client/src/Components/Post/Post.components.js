@@ -11,12 +11,15 @@ import { FaSave } from "react-icons/fa";
 export const PostContainer = styled.div`
   background-color: white;
   width: 600px;
-  min-height: 30vh;
+  min-height: 150px;
   position: relative;
   border: 1px solid lightgray;
   border-radius: 4px;
   &:hover {
     border: 1px solid black;
+  }
+  @media screen and (max-width: 960px) {
+    width: 95vw;
   }
 `
 export const DotsWrapper = styled.div`
@@ -26,7 +29,8 @@ export const DotsWrapper = styled.div`
   position: absolute;
   top: 0;
   bottom: 0;
-
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
 `
 export const DotsContainer = styled.div`
   height: 80px;
@@ -38,14 +42,17 @@ export const DotsContainer = styled.div`
 `
 export const DotsCount = styled.p`
   font-weight: bold;
+  color: ${({liked}) => (liked === 'yes' ? "red" : liked === "no" ? "blue" : "gray")};
 `
 export const UpDot = styled(GoArrowUp)`
-  color: gray;
+  color: ${({liked}) => (liked === 'yes' ? "red" : "gray")};
   font-size: 24px;
+  cursor: pointer;
 `
 export const DownDot = styled(GoArrowDown)`
-  color: gray;
+  color: ${({liked}) => (liked === 'no' ? "blue" : "gray")};
   font-size: 24px;
+  cursor: pointer;
 `
 export const PostContentWrapper = styled.div`
   display: flex;
@@ -69,11 +76,10 @@ export const SubredditName = styled.p`
 
 `
 export const Creator = styled.p`
-  font-size: 14px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  font-size: 12px;
   color: gray;
-  &:before {
-    content: "posted by";
-  }
 `
 export const MiddleDot = styled(BsDot)`
 

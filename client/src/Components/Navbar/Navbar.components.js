@@ -66,6 +66,6 @@ export const Button = styled.a`
     text-decoration: none;
   }
   &:first-child {
-    margin-right: .25rem;
+    margin: 0 .25rem;
   }
 `

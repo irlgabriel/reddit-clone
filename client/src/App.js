@@ -30,6 +30,7 @@ function App() {
         <PostsContainer>
           {posts.map(post =>
           <Post 
+          data-id={post._id}
           key={post._id}
           user={post.user}
           content={post.content}
