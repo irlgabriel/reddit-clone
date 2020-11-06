@@ -9,10 +9,12 @@ import { FaSave } from "react-icons/fa";
 
 
 export const PostContainer = styled.div`
+  margin: .5rem 0;
   background-color: white;
   width: 600px;
   min-height: 150px;
   position: relative;
+  display: flex;
   border: 1px solid lightgray;
   border-radius: 4px;
   &:hover {
@@ -24,11 +26,7 @@ export const PostContainer = styled.div`
 `
 export const DotsWrapper = styled.div`
   background-color: whitesmoke;
-  display: inline-block;
   min-width: 40px;
-  position: absolute;
-  top: 0;
-  bottom: 0;
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
 `
@@ -55,14 +53,10 @@ export const DownDot = styled(GoArrowDown)`
   cursor: pointer;
 `
 export const PostContentWrapper = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: column;
-  //height: 100%; // No idea why this does not work so I will use absolute position instead
-  position: absolute;
-  left: 40px;
-  bottom: 0;
-  top: 0;
-  right: 0;
+  height: 100%; // No idea why this does not work so I will use absolute position instead
   padding: .5rem;
 
 `
