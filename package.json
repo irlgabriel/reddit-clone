@@ -16,7 +16,7 @@
     "client": "cd client && npm start",
     "server": "cd server && npm start",
     "start": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm i --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm i --prefix client && npm run build --prefix client npm i --prefix server"
   },
   "repository": {
     "type": "git",
