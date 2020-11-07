@@ -12,17 +12,15 @@ import {
   PostContentWrapper,
   PostBody,
   PostFooter,
-  CreatedAt,
   PostTitle,
   PostContent,
   FooterLink,
   CommentIcon,
   ShareIcon,
-  SaveIcon
+  SaveIcon,
+  DeleteIcon,
 } from "./Post.components"
 const Post = ({user, votes, comments, title, subreddit, creator, content, id}) => {
-  
-  const [dots, setDots] = useState(votes);
   const [liked, setLiked] = useState('')
 
   return(
@@ -38,7 +36,7 @@ const Post = ({user, votes, comments, title, subreddit, creator, content, id}) =
       <PostContentWrapper>
         <PostHeader>
           <SubredditName>r/{subreddit}&nbsp;</SubredditName>
-          <Creator>&middot;&nbsp; posted by {creator}</Creator>
+          &middot;&nbsp;<Creator me={creator === user.username}> {creator}</Creator>
         </PostHeader>
         <PostBody>
           <PostTitle>{title}</PostTitle>
@@ -57,6 +55,12 @@ const Post = ({user, votes, comments, title, subreddit, creator, content, id}) =
             <SaveIcon />&nbsp;
             <span>Save</span>
           </FooterLink>
+          {creator === user.username && 
+            <FooterLink href="">
+              <DeleteIcon />&nbsp;
+              <span style={{color: "lightsalmon"}}>Delete</span>
+            </FooterLink>
+          } 
         </PostFooter>
       </PostContentWrapper>
     </PostContainer>  

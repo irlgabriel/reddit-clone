@@ -1,9 +1,26 @@
 import React from "react";
-import { SidebarContainer } from "./Sidebar.components";
+import { CSSTransiton} from "react-transition-group";
+import { 
+  SidebarContainer,
+  Header,
+  Title,
+  Description,
+  RedditLogo,
+} from "./Sidebar.components";
+
 const Sidebar = () => {
   //960px hidden
   return (
     <SidebarContainer>
+      <Header>
+        <RedditLogo />
+        <Title>
+          Reddit-Clone
+        </Title>
+      </Header>
+      <Description>
+
+      </Description>
     </SidebarContainer>
   )
 }

@@ -1,42 +1,41 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-export const RegisterWrapper = styled.div`
+export const PostModalWrapper = styled.div`
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  background-color: rgba(173,216,230,.4);
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(173,216,230,.4);
   z-index: 2;
 `
-
-export const RegisterContainer = styled.div`
-  border: 1px solid lightgray;
+export const PostModalContainer = styled.div`
+  background: white;
   border-radius: 5px;
-  padding: .5rem;
   min-width: 400px;
   max-width: 600px;
-  margin: 0 auto;
-  background: white;
+  padding: .5rem;
   z-index: 3;
-`
-export const RegisterHeader = styled.h2`
-  text-align: center;
-`
-export const RegisterForm = styled.form`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
 `
 export const FormGroup = styled.div`
   margin-bottom: .5rem;
+  display: flex;
+  flex-direction: column;
+
   &:last-child{
     width: 100%;
     text-align: center;
   }
+`
+export const Header = styled.h2`
+  text-align: center;
+`
+
+export const PostForm = styled.form`
+  margin: .25rem 0;
 `
 export const Input = styled.input`
   padding: .5rem .75rem;
@@ -46,10 +45,8 @@ export const Input = styled.input`
   background: white;
   width: 100%;
 `
-export const Label = styled.p`
-  margin: .25rem 0;
+export const Label = styled.label`
 `
-
 export const Button = styled.button`
   cursor: pointer;
   text-decoration: none;
@@ -64,4 +61,12 @@ export const Button = styled.button`
   &:hover {
     text-decoration: none;
   }
+`
+export const Select = styled.select`
+`
+export const Option = styled.option`
+
+`
+export const TextArea = styled.textarea`
+
 `

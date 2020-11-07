@@ -14,6 +14,7 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
   Subreddit.create({
     name: req.body.name,
+    creator : req.body.creator,
     posts: [],
   })
   .then((sub) => res.status(200).send(sub))

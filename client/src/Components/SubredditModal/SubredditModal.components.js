@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const RegisterWrapper = styled.div`
+export const SubredditModalWrapper = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -9,34 +9,33 @@ export const RegisterWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(173,216,230,.4);
   z-index: 2;
+  background-color: rgba(173,216,230,.4);
 `
-
-export const RegisterContainer = styled.div`
-  border: 1px solid lightgray;
+export const SubredditModalContainer = styled.div`
+  background: white;
   border-radius: 5px;
-  padding: .5rem;
   min-width: 400px;
   max-width: 600px;
-  margin: 0 auto;
-  background: white;
+  padding: .5rem;
   z-index: 3;
-`
-export const RegisterHeader = styled.h2`
-  text-align: center;
-`
-export const RegisterForm = styled.form`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
 `
 export const FormGroup = styled.div`
   margin-bottom: .5rem;
+  display: flex;
+  flex-direction: column;
+
   &:last-child{
     width: 100%;
     text-align: center;
   }
+`
+export const Header = styled.h2`
+  text-align: center;
+`
+
+export const SubredditForm = styled.form`
+  margin: .25rem 0;
 `
 export const Input = styled.input`
   padding: .5rem .75rem;
@@ -46,10 +45,8 @@ export const Input = styled.input`
   background: white;
   width: 100%;
 `
-export const Label = styled.p`
-  margin: .25rem 0;
+export const Label = styled.label`
 `
-
 export const Button = styled.button`
   cursor: pointer;
   text-decoration: none;

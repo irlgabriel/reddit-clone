@@ -5,7 +5,7 @@ import {
 } from "react-icons/go";
 import { BsDot } from "react-icons/bs";
 import { RiMessageFill, RiShareForwardFill } from "react-icons/ri";
-import { FaSave } from "react-icons/fa";
+import { FaSave, FaTrash } from "react-icons/fa";
 
 
 export const PostContainer = styled.div`
@@ -72,7 +72,11 @@ export const Creator = styled.p`
   font-family: 'Open Sans', sans-serif;
   font-weight: 300;
   font-size: 12px;
-  color: gray;
+  color: ${({me}) => (me ? "lightsalmon" : "gray")};
+  &:before {
+    content: "posted by";
+    color: gray;
+  }
 `
 export const MiddleDot = styled(BsDot)`
 
@@ -110,11 +114,11 @@ export const FooterLink = styled.a`
   
 `
 export const CommentIcon = styled(RiMessageFill)`
-
 `
 export const ShareIcon = styled(RiShareForwardFill)`
-
 `
 export const SaveIcon = styled(FaSave)`
-
+`
+export const DeleteIcon = styled(FaTrash)`
+  color: red;
 `

@@ -27,12 +27,12 @@ router.post("/", (req, res, next) => {
 })
 
 // POST - deletes a post
-router.delete("/:id", (req, res, next) => {
-  const postId = req.params.id;
+router.delete("/:user_id/:post_id", (req, res, next) => {
+  const postId = req.params.post_id;
   // Find and delete the post form the "posts" collection
   Post.findOneByIdAndRemove(postId)
   .then(post =>
-    res.status(200).send(post)
+    res.status(200).send({msg: "Post deleted", post})
   )
   .catch(err =>
     res.status(400).send(err)

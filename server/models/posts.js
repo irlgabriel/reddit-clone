@@ -5,7 +5,7 @@ var PostSchema = mongoose.Schema({
   user: String,
   title: {type: String, required: [true, "can't be blank"]},
   content: {type: String, required: [true, "can't be blank"]},
-  votes: {type: String, default: "0"},
+  votes: {type: Array, default: []},
   comments: {type: Array, default: []},
 }, {timestamps: true})
 

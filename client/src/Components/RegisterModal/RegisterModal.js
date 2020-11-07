@@ -30,7 +30,7 @@ const RegisterModal = ({setUser, setRegister}) => {
     })
     axios.post("/users/register", body, config)
     .then(res => {
-      localStorage.setItem('currentUser', res.data.user)
+      localStorage.setItem('currentUser', JSON.stringify(res.data.user))
       setUser(res.data.user);
       setRegister(false);
 

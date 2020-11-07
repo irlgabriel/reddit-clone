@@ -71,7 +71,7 @@ export const Button = styled.a`
 `
 export const UserSection = styled.p`
   color: gray;
-  margin: 0 auto;  
+  padding: 0 .5rem;
   &:hover {
     cursor: pointer;
   }
