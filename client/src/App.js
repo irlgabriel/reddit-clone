@@ -16,6 +16,7 @@ function App() {
   const [posts, setPosts] = useState([])
   const [user, setUser] = useState(undefined)
   
+  // retrieve all posts when the app comp is rendered
   useEffect(() => {
     fetch('/posts', {
       mode: "no-cors"
@@ -27,7 +28,7 @@ function App() {
 
   return (
     <Container>
-      <Navbar />
+      <Navbar user={user} setUser={setUser}/>
       <MainWrapper>
         <PostsContainer>
           {posts.map(post =>

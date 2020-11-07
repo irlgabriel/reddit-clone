@@ -69,3 +69,10 @@ export const Button = styled.a`
     margin: 0 .25rem;
   }
 `
+export const UserSection = styled.p`
+  color: gray;
+  margin: 0 auto;  
+  &:hover {
+    cursor: pointer;
+  }
+`

@@ -10,8 +10,8 @@ import {
   Button,
   LoginHeader
 } from "./LoginModal.components";
-const LoginModal = ({setLogin}) => {
-  const [user, setUser] = useState("");
+const LoginModal = ({setLogin, user, setUser}) => {
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const loginHandler = (e) => {
@@ -22,16 +22,14 @@ const LoginModal = ({setLogin}) => {
         'Content-Type': 'application/json'
       },
     }
-    const body = {
-      username: user,
+    const body = JSON.stringify({
+      username: username,
       password: password,
-    }
-    const token = localStorage.getItem('token');
-    if(token) config.headers['x-auth-token'] = token;
+    });
     axios.post("/users/login", body, config)
     .then(res => {
-      console.log(res);
-      
+      // Logged in Successfully!
+      setUser(res.data.user);
     })
     .catch(err => console.log(err))
   }
@@ -43,7 +41,7 @@ const LoginModal = ({setLogin}) => {
         <LoginForm onSubmit={(e) => loginHandler(e)}>
           <FormGroup>
             <Label>Username</Label>
-            <Input onChange={(e) => setUser(e.target.value)} type="text"/>
+            <Input onChange={(e) => setUsername(e.target.value)} type="text"/>
           </FormGroup>
           <FormGroup>
             <Label>Password</Label>

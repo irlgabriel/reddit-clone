@@ -6,12 +6,13 @@ import {
   SearchBar,
   Button,
   SearchIcon,
-  ButtonGroup
+  ButtonGroup,
+  UserSection,
 } from "./Navbar.components";
 import { LoginModal, RegisterModal } from "..";
 import { CSSTransition } from "react-transition-group";
 
-const Navbar = () => {
+const Navbar = ({user, setUser}) => {
   const [showLogin, setLogin] = useState(false);
   const [showRegister, setRegister] = useState(false);
   return (
@@ -24,6 +25,8 @@ const Navbar = () => {
       >
         <LoginModal
           setLogin={setLogin}
+          user={user}
+          setUser={setUser}
         />
       </CSSTransition>
 
@@ -35,6 +38,8 @@ const Navbar = () => {
       >
         <RegisterModal
           setRegister={setRegister}
+          user={user}
+          setUser={setUser}
         />
       </CSSTransition>
 
@@ -43,9 +48,11 @@ const Navbar = () => {
         <SearchIcon />
         <SearchBar type="text" placeholder="Search"/>
       </SearchBarContainer>
+      {user && <UserSection>{user.username}</UserSection>}
       <ButtonGroup>
-        <Button onClick={() => setRegister(true)} color="royalblue" bgColor="white">SIGN UP</Button>
-        <Button onClick={() => setLogin(true)} color="white" bgColor="royalblue">SIGN IN</Button>
+        {!user && <Button onClick={() => setRegister(true)} color="royalblue" bgColor="white">SIGN UP</Button>}
+        {!user && <Button onClick={() => setLogin(true)} color="white" bgColor="royalblue">SIGN IN</Button>}
+        {user && <Button onClick={()=> setUser(undefined)} color="royalblue" bgColor="white">LOG OUT</Button>}
       </ButtonGroup>
     </Nav>
   )
