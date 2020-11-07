@@ -20,7 +20,7 @@ import {
   ShareIcon,
   SaveIcon
 } from "./Post.components"
-const Post = ({votes, comments, title, subreddit, user, content, id}) => {
+const Post = ({user, votes, comments, title, subreddit, creator, content, id}) => {
   
   const [dots, setDots] = useState(votes);
   const [liked, setLiked] = useState('')
@@ -38,7 +38,7 @@ const Post = ({votes, comments, title, subreddit, user, content, id}) => {
       <PostContentWrapper>
         <PostHeader>
           <SubredditName>r/{subreddit}&nbsp;</SubredditName>
-          <Creator>&middot;&nbsp; posted by {user}</Creator>
+          <Creator>&middot;&nbsp; posted by {creator}</Creator>
         </PostHeader>
         <PostBody>
           <PostTitle>{title}</PostTitle>

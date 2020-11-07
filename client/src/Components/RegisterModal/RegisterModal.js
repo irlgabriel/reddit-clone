@@ -10,8 +10,8 @@ import {
   Button,
   RegisterHeader
 } from "./RegisterModal.components";
-const RegisterModal = ({setRegister}) => {
-  const [user, setUser] = useState("");
+const RegisterModal = ({setUser, setRegister}) => {
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
@@ -24,14 +24,16 @@ const RegisterModal = ({setRegister}) => {
       },
     };
     const body = JSON.stringify({
-      username: user,
+      username: username,
       email: email,
       password: password,
     })
     axios.post("/users/register", body, config)
     .then(res => {
-      console.log(res);
-      localStorage.setItem('token', res.token);
+      localStorage.setItem('currentUser', res.data.user)
+      setUser(res.data.user);
+      setRegister(false);
+
     })
     .catch(err => console.log(err))
   }
@@ -47,7 +49,7 @@ const RegisterModal = ({setRegister}) => {
           </FormGroup>
           <FormGroup>
             <Label>Username</Label>
-            <Input onChange={(e) => setUser(e.target.value)} type="text"/>
+            <Input onChange={(e) => setUsername(e.target.value)} type="text"/>
           </FormGroup>
           <FormGroup>
             <Label>Password</Label>

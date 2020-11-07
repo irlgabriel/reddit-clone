@@ -25,6 +25,11 @@ function App() {
     .then(data => setPosts(data))
     )    
   }, [])
+  // check if there's an user in localstorage
+  useEffect(() => {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if(currentUser) setUser(currentUser)
+  }, [])
 
   return (
     <Container>
@@ -33,9 +38,10 @@ function App() {
         <PostsContainer>
           {posts.map(post =>
           <Post 
+          user={user}
           id={post._id}
           key={post._id}
-          user={post.user}
+          creator={post.user}
           content={post.content}
           subreddit={post.subreddit}
           title={post.title}

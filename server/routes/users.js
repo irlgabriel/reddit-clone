@@ -52,4 +52,8 @@ router.post('/login', (req, res, next) => {
   })
 })
 
+router.post("/logout", (req, res, next) => {
+  const user = req.body.username;
+})
+
 module.exports = router;

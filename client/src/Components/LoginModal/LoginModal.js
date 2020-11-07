@@ -29,7 +29,9 @@ const LoginModal = ({setLogin, user, setUser}) => {
     axios.post("/users/login", body, config)
     .then(res => {
       // Logged in Successfully!
+      localStorage.setItem('currentUser', JSON.stringify(res.data.user));
       setUser(res.data.user);
+      setLogin(false);
     })
     .catch(err => console.log(err))
   }

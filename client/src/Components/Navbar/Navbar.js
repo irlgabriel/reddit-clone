@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { 
   Nav,
   RedditLogo,
@@ -15,6 +16,19 @@ import { CSSTransition } from "react-transition-group";
 const Navbar = ({user, setUser}) => {
   const [showLogin, setLogin] = useState(false);
   const [showRegister, setRegister] = useState(false);
+  const logoutUser = () => {
+    /*
+    const config = {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    }
+    axios.post("http://localhost:4000/users/logout", user, config)
+    */
+   localStorage.removeItem('currentUser');
+   setUser(undefined);
+  }
   return (
     <Nav>
       <CSSTransition
@@ -52,7 +66,7 @@ const Navbar = ({user, setUser}) => {
       <ButtonGroup>
         {!user && <Button onClick={() => setRegister(true)} color="royalblue" bgColor="white">SIGN UP</Button>}
         {!user && <Button onClick={() => setLogin(true)} color="white" bgColor="royalblue">SIGN IN</Button>}
-        {user && <Button onClick={()=> setUser(undefined)} color="royalblue" bgColor="white">LOG OUT</Button>}
+        {user && <Button onClick={()=> logoutUser()} color="royalblue" bgColor="white">LOG OUT</Button>}
       </ButtonGroup>
     </Nav>
   )
