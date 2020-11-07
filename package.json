@@ -1,32 +1,26 @@
 {
-  "name": "reddit-clone",
-  "version": "1.0.0",
-  "description": "## App Ports ### React Front-end -> 3000 ### Node Back-end -> 4000",
-  "main": "index.js",
-  "dependencies": {
-    "concurrently": "^5.3.0",
-    "express-generator": "^4.16.1",
-    "jsonwebtoken": "^8.5.1",
-    "mongodb": "^3.6.2",
-    "mongoose": "^5.10.12",
-    "react-router-dom": "^5.2.0"
-  },
-  "devDependencies": {},
+  "name": "api",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "client": "cd client && npm start",
-    "server": "cd server && npm start",
+    "client-install": "npm i --prefix client",
+    "server": "node ./bin/www",
+    "client": "npm start --prefix client",
     "start": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm i --prefix client && npm run build --prefix client npm i --prefix server"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm i --prefix client && npm run build --prefix client"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/irlgabriel/reddit-clone.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/irlgabriel/reddit-clone/issues"
-  },
-  "homepage": "https://github.com/irlgabriel/reddit-clone#readme"
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "bcryptjs": "^2.4.3",
+    "concurrently": "^5.3.0",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "jsonwebtoken-promisified": "^1.0.3",
+    "mongoose": "^5.10.12",
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.6"
+  }
 }
