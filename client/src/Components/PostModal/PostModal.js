@@ -30,7 +30,6 @@ const PostModal = ({setPostModal}) => {
             <Select name="subreddits">
               {subreddits.map(subreddit =>
                 <Option value={`${subreddit.name}`}>{subreddit.name}</Option>
-
                 )
               }
             </Select>

@@ -26,7 +26,7 @@ export const PostsHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 600px;
+  width: 100%;
   background-color: white;
   border: 1px solid lightgray;
   border-radius: 4px;
@@ -36,15 +36,13 @@ export const PostsHeader = styled.div`
 `
 export const PostIcon = styled(BsFilePost)`
   font-size: 24px;
-  &:hover {
-    color: red;
-  }
+  color: royalblue;
+  margin: 0 .25rem;
 `
 export const RedditLogo = styled(FaReddit)`
+  color: red;
   font-size: 24px;
-  &:hover {
-    color: red;
-  }
+  margin: 0 .25rem;  
 `
 export const Paragraph = styled.p`
   font-size: 20px;

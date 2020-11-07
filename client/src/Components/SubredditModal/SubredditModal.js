@@ -12,7 +12,8 @@ import {
 } from "./SubredditModal.components";
 const SubredditModal = ({user, setSubredditModal}) => {
   const [subredditName, setSubredditName] = useState('')
-  const createSubreddit = () => {
+  const createSubreddit = (e) => {
+    e.preventDefault();
     const config = {
       headers: {
         'Accept': 'application/json',
@@ -31,7 +32,7 @@ const SubredditModal = ({user, setSubredditModal}) => {
   return (
     <SubredditModalWrapper onClick={() => setSubredditModal(false)}>
       <SubredditModalContainer onClick={(e) => e.stopPropagation()}>
-        <SubredditForm onSubmit={() => createSubreddit()}>
+        <SubredditForm onSubmit={(e) => createSubreddit(e)}>
           <Header>Create a new Subreddit!</Header>
           <FormGroup>
             <Label>Name</Label>
