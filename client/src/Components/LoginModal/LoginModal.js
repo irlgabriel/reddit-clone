@@ -16,21 +16,23 @@ const LoginModal = ({setLogin}) => {
 
   const loginHandler = (e) => {
     e.preventDefault();
-    console.log("form submitted")
-    axios.post("/users/login", {
-      method: "POST",
+    const config = {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      data: {
-        username: user,
-        password: password,
-      }
+    }
+    const body = {
+      username: user,
+      password: password,
+    }
+    const token = localStorage.getItem('token');
+    if(token) config.headers['x-auth-token'] = token;
+    axios.post("/users/login", body, config)
+    .then(res => {
+      console.log(res);
+      
     })
-    .then(res => 
-      console.log(res)
-    )
     .catch(err => console.log(err))
   }
 

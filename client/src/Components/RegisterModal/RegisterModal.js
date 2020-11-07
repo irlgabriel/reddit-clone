@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import {
   RegisterWrapper,
@@ -16,19 +17,22 @@ const RegisterModal = ({setRegister}) => {
 
   const RegisterHandler = (e) => {
     e.preventDefault();
-    fetch("/users/register", {
-      method: "POST",
+    const config = {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        username: user,
-        email: email,
-        password: password,
-      })
+    };
+    const body = JSON.stringify({
+      username: user,
+      email: email,
+      password: password,
     })
-    .then(res => console.log(res))
+    axios.post("/users/register", body, config)
+    .then(res => {
+      console.log(res);
+      localStorage.setItem('token', res.token);
+    })
     .catch(err => console.log(err))
   }
 

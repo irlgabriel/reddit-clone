@@ -43,9 +43,7 @@ function App() {
           />
           )}
         </PostsContainer>
-        <Sidebar>
-
-        </Sidebar>
+        <Sidebar />
       </MainWrapper>
     </Container>
   );
