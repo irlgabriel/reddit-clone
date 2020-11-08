@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { 
+import {
   PostModalWrapper,
   PostModalContainer,
   PostForm,
@@ -14,40 +14,40 @@ import {
   Header,
 } from "./PostModal.components";
 
-const PostModal = ({setPosts, posts, user, setPostModal}) => {
-  const [subreddits, setSubreddits] = useState([])
+const PostModal = ({ setPosts, posts, user, setPostModal }) => {
+  const [subreddits, setSubreddits] = useState([]);
   const [subreddit, setSubreddit] = useState();
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  // Seed state with the available subreddits 
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  // Seed state with the available subreddits
   useEffect(() => {
-    axios.get("/subreddits")
-    .then(res => {
+    axios.get("/subreddits").then((res) => {
       setSubreddits(res.data);
-      if(res.data.length > 0) setSubreddit(res.data[0].name)
-    })
-  }, [])
+      if (res.data.length > 0) setSubreddit(res.data[0].name);
+    });
+  }, []);
   const createPost = (e) => {
     e.preventDefault();
     const config = {
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
-    }
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
     const body = JSON.stringify({
       user,
       subreddit,
       title,
-      content
-    })
-    axios.post("/posts", body, config)
-    .then(res => {
-      setPostModal(false);
-      setPosts([...posts, res.data])
-    })
-    .catch(err => console.log(err))
-  }
+      content,
+    });
+    axios
+      .post("/posts", body, config)
+      .then((res) => {
+        setPostModal(false);
+        setPosts([...posts, res.data]);
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <PostModalWrapper onClick={() => setPostModal(false)}>
       <PostModalContainer onClick={(e) => e.stopPropagation()}>
@@ -55,11 +55,13 @@ const PostModal = ({setPosts, posts, user, setPostModal}) => {
           <Header>Create a new Post</Header>
           <FormGroup>
             <Label>Subreddit</Label>
-            <Select onChange={(e) => setSubreddit(e.target.value)} name="subreddits">
-              {subreddits.map(subreddit =>
+            <Select
+              onChange={(e) => setSubreddit(e.target.value)}
+              name="subreddits"
+            >
+              {subreddits.map((subreddit) => (
                 <Option value={`${subreddit.name}`}>{subreddit.name}</Option>
-                )
-              }
+              ))}
             </Select>
           </FormGroup>
           <FormGroup>
@@ -68,15 +70,20 @@ const PostModal = ({setPosts, posts, user, setPostModal}) => {
           </FormGroup>
           <FormGroup>
             <Label>Content</Label>
-            <TextArea onChange={(e) => setContent(e.target.value)} rows="10"></TextArea>
+            <TextArea
+              onChange={(e) => setContent(e.target.value)}
+              rows="10"
+            ></TextArea>
           </FormGroup>
           <FormGroup>
-            <Button type="submit" color="white" bgColor="royalblue">Post</Button>
+            <Button type="submit" color="white" bgColor="royalblue">
+              Post
+            </Button>
           </FormGroup>
         </PostForm>
       </PostModalContainer>
     </PostModalWrapper>
-  )
-}
+  );
+};
 
 export default PostModal;

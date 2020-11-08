@@ -8,9 +8,9 @@ import {
   Input,
   Label,
   Button,
-  LoginHeader
+  LoginHeader,
 } from "./LoginModal.components";
-const LoginModal = ({setLogin, user, setUser}) => {
+const LoginModal = ({ setLogin, user, setUser }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -18,23 +18,24 @@ const LoginModal = ({setLogin, user, setUser}) => {
     e.preventDefault();
     const config = {
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
-    }
+    };
     const body = JSON.stringify({
       username: username,
       password: password,
     });
-    axios.post("/users/login", body, config)
-    .then(res => {
-      // Logged in Successfully!
-      localStorage.setItem('currentUser', JSON.stringify(res.data.user));
-      setUser(res.data.user);
-      setLogin(false);
-    })
-    .catch(err => console.log(err))
-  }
+    axios
+      .post("/users/login", body, config)
+      .then((res) => {
+        // Logged in Successfully!
+        localStorage.setItem("currentUser", JSON.stringify(res.data.user));
+        setUser(res.data.user);
+        setLogin(false);
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <LoginWrapper onClick={() => setLogin(false)}>
@@ -43,19 +44,24 @@ const LoginModal = ({setLogin, user, setUser}) => {
         <LoginForm onSubmit={(e) => loginHandler(e)}>
           <FormGroup>
             <Label>Username</Label>
-            <Input onChange={(e) => setUsername(e.target.value)} type="text"/>
+            <Input onChange={(e) => setUsername(e.target.value)} type="text" />
           </FormGroup>
           <FormGroup>
             <Label>Password</Label>
-            <Input onChange={(e) => setPassword(e.target.value)} type="password" />
+            <Input
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+            />
           </FormGroup>
           <FormGroup>
-            <Button color="white" bgColor="royalblue">LOG IN</Button>
+            <Button color="white" bgColor="royalblue">
+              LOG IN
+            </Button>
           </FormGroup>
         </LoginForm>
       </LoginContainer>
     </LoginWrapper>
-  )
-}
+  );
+};
 
 export default LoginModal;

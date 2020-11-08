@@ -8,27 +8,26 @@ import {
   SubredditForm,
   Input,
   Label,
-  Button  
+  Button,
 } from "./SubredditModal.components";
-const SubredditModal = ({user, setSubredditModal}) => {
-  const [subredditName, setSubredditName] = useState('')
+const SubredditModal = ({ user, setSubredditModal }) => {
+  const [subredditName, setSubredditName] = useState("");
   const createSubreddit = (e) => {
     e.preventDefault();
     const config = {
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
-    }
+    };
     const body = {
       name: subredditName,
       creator: user._id,
-    }
-    axios.post("/subreddits", body, config)
-    .then(res => {
+    };
+    axios.post("/subreddits", body, config).then((res) => {
       console.log(res);
-    })
-  }
+    });
+  };
   return (
     <SubredditModalWrapper onClick={() => setSubredditModal(false)}>
       <SubredditModalContainer onClick={(e) => e.stopPropagation()}>
@@ -36,15 +35,20 @@ const SubredditModal = ({user, setSubredditModal}) => {
           <Header>Create a new Subreddit!</Header>
           <FormGroup>
             <Label>Name</Label>
-            <Input onChange={(e) => setSubredditName(e.target.value)} type="text"/>
+            <Input
+              onChange={(e) => setSubredditName(e.target.value)}
+              type="text"
+            />
           </FormGroup>
           <FormGroup>
-            <Button color="white" bgColor="royalblue">Submit</Button>
+            <Button color="white" bgColor="royalblue">
+              Submit
+            </Button>
           </FormGroup>
         </SubredditForm>
       </SubredditModalContainer>
     </SubredditModalWrapper>
-  )
-}
+  );
+};
 
-export default SubredditModal
+export default SubredditModal;

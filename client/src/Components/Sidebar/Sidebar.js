@@ -1,6 +1,6 @@
 import React from "react";
-import { CSSTransiton} from "react-transition-group";
-import { 
+import { CSSTransiton } from "react-transition-group";
+import {
   SidebarContainer,
   Header,
   Title,
@@ -13,14 +13,11 @@ const Sidebar = () => {
   return (
     <SidebarContainer>
       <Header>
-        <Title>
-        </Title>
+        <Title></Title>
       </Header>
-      <Description>
-
-      </Description>
+      <Description></Description>
     </SidebarContainer>
-  )
-}
+  );
+};
 
 export default Sidebar;

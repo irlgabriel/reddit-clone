@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import './App.css';
-import { 
-  Navbar,
-  Sidebar,
-  Post,
-  PostModal,
-  SubredditModal
-} from "./Components";
-import { 
+import "./App.css";
+import { Navbar, Sidebar, Post, PostModal, SubredditModal } from "./Components";
+import {
   Container,
   MainWrapper,
   PostsContainer,
@@ -20,8 +14,8 @@ import {
 import { CSSTransition } from "react-transition-group";
 
 function App() {
-  const [posts, setPosts] = useState([])
-  const [user, setUser] = useState(undefined)
+  const [posts, setPosts] = useState([]);
+  const [user, setUser] = useState(undefined);
   const [postModal, setPostModal] = useState(false);
   const [subredditModal, setSubredditModal] = useState(false);
   // retrieve all posts when the app comp is rendered
@@ -33,18 +27,13 @@ function App() {
     .then(res => res.json()
     .then(data => setPosts(data))
     )*/
-    axios.get('/posts')
-    .then(res =>
-      setPosts(res.data)
-    )    
-  }, [])
+    axios.get("/posts").then((res) => setPosts(res.data));
+  }, []);
   // check if there's an user in localstorage
   useEffect(() => {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    if(currentUser) setUser(currentUser)
-  }, [])
-
-
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (currentUser) setUser(currentUser);
+  }, []);
 
   return (
     <Container>
@@ -54,7 +43,12 @@ function App() {
         timeout={300}
         unmountOnExit
       >
-        <PostModal setPosts={setPosts} posts={posts} user={user} setPostModal={setPostModal}/>
+        <PostModal
+          setPosts={setPosts}
+          posts={posts}
+          user={user}
+          setPostModal={setPostModal}
+        />
       </CSSTransition>
       <CSSTransition
         in={subredditModal}
@@ -62,9 +56,9 @@ function App() {
         timeout={300}
         unmountOnExit
       >
-        <SubredditModal user={user} setSubredditModal={setSubredditModal}/>
+        <SubredditModal user={user} setSubredditModal={setSubredditModal} />
       </CSSTransition>
-      <Navbar user={user} setUser={setUser}/>
+      <Navbar user={user} setUser={setUser} />
       <MainWrapper>
         <PostsContainer>
           <PostsHeader onClick={() => setSubredditModal(true)}>
@@ -75,19 +69,19 @@ function App() {
             <PostIcon />
             <Paragraph>Create a Post.</Paragraph>
           </PostsHeader>
-          {posts.map(post =>
-          <Post 
-          user={user}
-          id={post._id}
-          key={post._id}
-          creator={post.user}
-          content={post.content}
-          subreddit={post.subreddit}
-          title={post.title}
-          votes={post.votes}
-          comments={post.comments}
-          />
-          )}
+          {posts.map((post) => (
+            <Post
+              user={user}
+              id={post._id}
+              key={post._id}
+              creator={post.user}
+              content={post.content}
+              subreddit={post.subreddit}
+              title={post.title}
+              votes={post.votes}
+              comments={post.comments}
+            />
+          ))}
         </PostsContainer>
         <Sidebar />
       </MainWrapper>

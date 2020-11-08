@@ -9,46 +9,46 @@ export const RegisterWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(173,216,230,.4);
+  background-color: rgba(173, 216, 230, 0.4);
   z-index: 2;
-`
+`;
 
 export const RegisterContainer = styled.div`
   border: 1px solid lightgray;
   border-radius: 5px;
-  padding: .5rem;
+  padding: 0.5rem;
   min-width: 400px;
   max-width: 600px;
   margin: 0 auto;
   background: white;
   z-index: 3;
-`
+`;
 export const RegisterHeader = styled.h2`
   text-align: center;
-`
+`;
 export const RegisterForm = styled.form`
   height: 100%;
   display: flex;
   flex-direction: column;
-`
+`;
 export const FormGroup = styled.div`
-  margin-bottom: .5rem;
-  &:last-child{
+  margin-bottom: 0.5rem;
+  &:last-child {
     width: 100%;
     text-align: center;
   }
-`
+`;
 export const Input = styled.input`
-  padding: .5rem .75rem;
+  padding: 0.5rem 0.75rem;
   border: 1px solid lightgray;
   border-radius: 2px;
   outline: none;
   background: white;
   width: 100%;
-`
+`;
 export const Label = styled.p`
-  margin: .25rem 0;
-`
+  margin: 0.25rem 0;
+`;
 
 export const Button = styled.button`
   cursor: pointer;
@@ -56,12 +56,12 @@ export const Button = styled.button`
   border-radius: 4px;
   outline: none;
   border: 1px solid royalblue;
-  padding: .5rem 2rem;
+  padding: 0.5rem 2rem;
   font-weight: bold;
   font-size: 12px;
-  background-color: ${({bgColor}) => (`${bgColor}`)};
-  color: ${({color}) => (`${color}`)};
+  background-color: ${({ bgColor }) => `${bgColor}`};
+  color: ${({ color }) => `${color}`};
   &:hover {
     text-decoration: none;
   }
-`
+`;
