@@ -22,6 +22,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+if (process.env.NODE_ENV == 'production') {
+  // Set a static folder
+  app.use(express.static('../client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '..', 'client', 'build', 'index.html'))
+  })
+}
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
@@ -43,13 +53,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-if (process.env.NODE_ENV == 'production') {
-  // Set a static folder
-  app.use(express.static('../client/build'));
-
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '..', 'client', 'build', 'index.html'))
-  })
-}
 
 module.exports = app;
