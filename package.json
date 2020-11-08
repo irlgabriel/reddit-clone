@@ -5,6 +5,7 @@
   "scripts": {
     "client-install": "npm i --prefix client",
     "server": "node ./bin/www",
+    "serverDev": "nodemon ./bin/www",
     "client": "npm start --prefix client",
     "start": "node ./bin/www",
     "startDev": "concurrently \"npm run server\" \"npm run client\"",

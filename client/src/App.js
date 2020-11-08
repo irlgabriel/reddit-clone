@@ -78,7 +78,8 @@ function App() {
               content={post.content}
               subreddit={post.subreddit}
               title={post.title}
-              votes={post.votes}
+              upvotes={post.upvotes}
+              downvotes={post.downvotes}
               comments={post.comments}
             />
           ))}

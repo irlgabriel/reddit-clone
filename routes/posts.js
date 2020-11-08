@@ -25,7 +25,34 @@ router.post("/", (req, res, next) => {
     .then((post) => res.status(200).send(post))
     .catch((err) => res.status(400).send(err));
 });
-
+// POST - upvote a post
+router.post("/upvote/:id", (req, res, next) => {
+  const userId = req.body.user_id;
+  Post.findById(req.params.id)
+  .then(post => {
+    if(post.upvotes.includes(userId)) {
+      post.upvotes.filter(upvote => upvote != userId)
+    } else {
+      post.upvotes = [...post.upvotes, userId]
+    }
+    post.save((err, doc) => {
+      if(err) res.status(400).send(err)
+      res.status(200).send("Upvoted successfully")
+    })
+  })
+})
+// POST - downvote a post
+router.post("/downvote/:id", (req, res, next) => {
+  const userId = req.body.user_id;
+  Post.findById(req.params.id)
+  .then(post => {
+    post.downvotes.filter(downvote => downvote !== userId)
+    post.save((err, doc) => {
+      if(err) res.status(400).send(err)
+      res.status(200).send("Downvoted successfully")
+    })
+  })
+})
 // POST - deletes a post
 router.delete("/:user_id/:post_id", (req, res, next) => {
   const postId = req.params.post_id;
