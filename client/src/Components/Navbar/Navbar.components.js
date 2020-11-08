@@ -11,6 +11,7 @@ export const Nav = styled.div`
 `
 export const RedditLogo = styled(FaReddit)`
   margin-right: 1.25rem;
+  
 `
 export const SearchBarContainer = styled.div`
   position: relative;
@@ -75,4 +76,10 @@ export const UserSection = styled.p`
   &:hover {
     cursor: pointer;
   }
+`
+export const Link = styled.a`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
 `

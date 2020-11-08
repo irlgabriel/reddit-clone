@@ -14,20 +14,48 @@ import {
   Header,
 } from "./PostModal.components";
 
-const PostModal = ({setPostModal}) => {
+const PostModal = ({setPosts, posts, user, setPostModal}) => {
   const [subreddits, setSubreddits] = useState([])
+  const [subreddit, setSubreddit] = useState();
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  // Seed state with the available subreddits 
   useEffect(() => {
     axios.get("/subreddits")
-    .then(res => setSubreddits(res.data))
+    .then(res => {
+      setSubreddits(res.data);
+      if(res.data.length > 0) setSubreddit(res.data[0].name)
+    })
   }, [])
+  const createPost = (e) => {
+    e.preventDefault();
+    const config = {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    }
+    const body = JSON.stringify({
+      user,
+      subreddit,
+      title,
+      content
+    })
+    axios.post("/posts", body, config)
+    .then(res => {
+      setPostModal(false);
+      setPosts([...posts, res.data])
+    })
+    .catch(err => console.log(err))
+  }
   return (
     <PostModalWrapper onClick={() => setPostModal(false)}>
       <PostModalContainer onClick={(e) => e.stopPropagation()}>
-        <PostForm>
+        <PostForm onSubmit={(e) => createPost(e)}>
           <Header>Create a new Post</Header>
           <FormGroup>
             <Label>Subreddit</Label>
-            <Select name="subreddits">
+            <Select onChange={(e) => setSubreddit(e.target.value)} name="subreddits">
               {subreddits.map(subreddit =>
                 <Option value={`${subreddit.name}`}>{subreddit.name}</Option>
                 )
@@ -36,11 +64,11 @@ const PostModal = ({setPostModal}) => {
           </FormGroup>
           <FormGroup>
             <Label>Title</Label>
-            <Input type="text" />
+            <Input onChange={(e) => setTitle(e.target.value)} type="text" />
           </FormGroup>
           <FormGroup>
             <Label>Content</Label>
-            <TextArea rows="10"></TextArea>
+            <TextArea onChange={(e) => setContent(e.target.value)} rows="10"></TextArea>
           </FormGroup>
           <FormGroup>
             <Button type="submit" color="white" bgColor="royalblue">Post</Button>

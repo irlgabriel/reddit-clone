@@ -13,9 +13,7 @@ const Sidebar = () => {
   return (
     <SidebarContainer>
       <Header>
-        <RedditLogo />
         <Title>
-          Reddit-Clone
         </Title>
       </Header>
       <Description>

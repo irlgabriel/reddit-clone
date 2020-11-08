@@ -38,7 +38,7 @@ export const PostForm = styled.form`
   margin: .25rem 0;
 `
 export const Input = styled.input`
-  padding: .5rem .75rem;
+  padding: .5rem;
   border: 1px solid lightgray;
   border-radius: 2px;
   outline: none;
@@ -68,5 +68,5 @@ export const Option = styled.option`
 
 `
 export const TextArea = styled.textarea`
-
+  padding: .5rem;
 `

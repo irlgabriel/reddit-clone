@@ -48,7 +48,7 @@ function App() {
         timeout={300}
         unmountOnExit
       >
-        <PostModal user={user} setPostModal={setPostModal}/>
+        <PostModal setPosts={setPosts} posts={posts} user={user} setPostModal={setPostModal}/>
       </CSSTransition>
       <CSSTransition
         in={subredditModal}

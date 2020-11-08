@@ -9,6 +9,7 @@ import {
   SearchIcon,
   ButtonGroup,
   UserSection,
+  Link
 } from "./Navbar.components";
 import { LoginModal, RegisterModal } from "..";
 import { CSSTransition } from "react-transition-group";
@@ -57,10 +58,10 @@ const Navbar = ({user, setUser}) => {
         />
       </CSSTransition>
 
-      <RedditLogo color="red" size="32px" />
+      <Link href ="/"><RedditLogo color="red" size="32px" /></Link>
       <SearchBarContainer>
         <SearchIcon />
-        <SearchBar type="text" placeholder="Search"/>
+        <SearchBar type="text" placeholder="You can try to search but I have not implemented this feature yet"/>
       </SearchBarContainer>
       {user && <UserSection>{user.username}</UserSection>}
       <ButtonGroup>

@@ -19,7 +19,7 @@ router.post("/", (req, res, next) => {
   Post.create({
     title: title,
     subreddit: subreddit,
-    user: user,
+    user: user._id, // object!
     content: content,
   })
   .then((post) => res.status(200).send(post))
