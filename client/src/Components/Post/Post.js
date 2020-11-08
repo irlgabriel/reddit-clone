@@ -36,7 +36,7 @@ const Post = ({user, votes, comments, title, subreddit, creator, content, id}) =
       <PostContentWrapper>
         <PostHeader>
           <SubredditName>r/{subreddit}&nbsp;</SubredditName>
-          &middot;&nbsp;<Creator me={creator === user.username}> {creator}</Creator>
+          &middot;&nbsp;<Creator me={user && creator === user.username}> {creator}</Creator>
         </PostHeader>
         <PostBody>
           <PostTitle>{title}</PostTitle>
@@ -55,7 +55,7 @@ const Post = ({user, votes, comments, title, subreddit, creator, content, id}) =
             <SaveIcon />&nbsp;
             <span>Save</span>
           </FooterLink>
-          {creator === user.username && 
+          {user && creator === user.username && 
             <FooterLink href="">
               <DeleteIcon />&nbsp;
               <span style={{color: "lightsalmon"}}>Delete</span>

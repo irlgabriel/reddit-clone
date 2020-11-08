@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import './App.css';
 import { 
   Navbar,
@@ -25,11 +26,16 @@ function App() {
   const [subredditModal, setSubredditModal] = useState(false);
   // retrieve all posts when the app comp is rendered
   useEffect(() => {
+    /*
     fetch('/posts', {
       mode: "no-cors"
     })
     .then(res => res.json()
     .then(data => setPosts(data))
+    )*/
+    axios.get('/posts')
+    .then(res =>
+      setPosts(res.data)
     )    
   }, [])
   // check if there's an user in localstorage
