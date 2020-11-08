@@ -27,17 +27,6 @@ app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
 app.use('/subreddits', subredditsRouter);
 
-
-// Serve our static assets if in production
-if (process.env.NODE_ENV == 'production') {
-  // Set a static folder
-  app.use(express.static('client/build'));
-
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
-  })
-}
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
