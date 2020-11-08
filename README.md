@@ -2,6 +2,5 @@
 #### - current [deployment](https://shrouded-sierra-00610.herokuapp.com)
 
 ### TO-DO/FIX
-#### - Heroku deployment doesn't serve react static assets!
 #### - Need to figure delete routes for Posts and Subreddits and more specifically how to make sure only the owner of the post/subreddit can delete their posts. 
 #### - Add comments and replies (and replies to replies? - how to nest those and how much?) 
