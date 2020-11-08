@@ -28,29 +28,37 @@ router.post("/", (req, res, next) => {
 // POST - upvote a post
 router.post("/upvote/:id", (req, res, next) => {
   const userId = req.body.user_id;
-  Post.findById(req.params.id)
-  .then(post => {
+
+  Post.findById(req.params.id, (err, post) => {
+    if(err) res.status(400).send(err)
+    // First check if the user maybe downvoted this first and remove the downvote
+    if(post.downvotes.includes(userId)) post.update({$pull: {downvotes: userId}});
+
+    // Then we check if the user previously upvoted it and instead remove it
     if(post.upvotes.includes(userId)) {
-      post.upvotes.filter(upvote => upvote != userId)
+      post.update({$pull: {upvotes: userId}})
     } else {
-      post.upvotes = [...post.upvotes, userId]
+      post.update({$push: {upvotes: userId}})
     }
-    post.save((err, doc) => {
-      if(err) res.status(400).send(err)
-      res.status(200).send("Upvoted successfully")
-    })
+    res.status(200).send(post);
   })
 })
 // POST - downvote a post
 router.post("/downvote/:id", (req, res, next) => {
   const userId = req.body.user_id;
-  Post.findById(req.params.id)
-  .then(post => {
-    post.downvotes.filter(downvote => downvote !== userId)
-    post.save((err, doc) => {
-      if(err) res.status(400).send(err)
-      res.status(200).send("Downvoted successfully")
-    })
+  
+  Post.findById(req.params.id, (err, post) => {
+    if(err) res.status(400).send(err)
+    // Check if the user upovted this before
+    if(post.upvotes.includes(userId)) post.update({$pull: {upvotes: userId}});
+
+    // Now check if the user previously downvoted it and remove it if that is the case
+    if(post.downvotes.includes(userId)) {
+      post.update({$pull: {downvotes: userId}})
+    } else {
+      post.update({$push: {downvotes: userId}})
+    }
+    res.sendStatus(200);
   })
 })
 // POST - deletes a post

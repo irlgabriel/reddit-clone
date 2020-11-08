@@ -36,16 +36,16 @@ export const DotsContainer = styled.div`
 `;
 export const DotsCount = styled.p`
   font-weight: bold;
-  color: ${({ liked }) =>
-    liked === "yes" ? "red" : liked === "no" ? "blue" : "gray"};
+  color: ${({ upvoted, downvoted }) =>
+    upvoted === "yes" ? "red" : downvoted === "yes" ? "blue" : "gray"};
 `;
 export const UpDot = styled(GoArrowUp)`
-  color: ${({ liked }) => (liked === "yes" ? "red" : "gray")};
+  color: ${({ upvoted }) => (upvoted === "yes" ? "red" : "gray")};
   font-size: 24px;
   cursor: pointer;
 `;
 export const DownDot = styled(GoArrowDown)`
-  color: ${({ liked }) => (liked === "no" ? "blue" : "gray")};
+  color: ${({ downvoted }) => (downvoted === "yes" ? "blue" : "gray")};
   font-size: 24px;
   cursor: pointer;
 `;

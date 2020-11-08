@@ -32,46 +32,41 @@ const Post = ({
   content,
   id,
 }) => {
-  const [liked, setLiked] = useState(undefined);
-  const [votes, setVotes] = useState('');
+  const [upvoted, setUpvoted] = useState(undefined);
+  const [downvoted, setDownvoted] = useState(undefined);
+
+  const [votes, setVotes] = useState(upvotes.length - downvotes.length);
 
   const config = {
     headers: {
-      Accept: "application/json",
+      "Accept": "application/json",
       "Content-Type": "application/json",
     },
   };
   const body = JSON.stringify({
-    user_id: id,
+    user_id: user._id,
   })
 
   const upvotePost = () => {
-    if(!user) return;
-    if(liked === undefined) { // no vote cast
-      axios.post(`/posts/upvote/${id}`, body, config)
-      .then(res => setLiked(true))
-      .catch(err => console.log(err))
-    }  
+    axios.post(`/posts/upvote/${id}`, body, config)
+    .then(res => {
+      const updatedPost = res.data;
+    })
   }
   const downvotePost = () => {
-    if(!user) return;
-    if(liked === undefined) { // no vote cast
-      axios.post(`/posts/downvote/${id}`, body, config)
-      .then(res => setLiked(false))
-      .catch(err => console.log(err))
-    }  
+    axios.post(`/posts/downvote/${id}`, body, config)
+    .then(res => {
+      const updatedPost = res.data;
+    })
   }
 
   // Check if user liked/disliked this post
   useEffect(() => {
     if(!user) return;
-    if(upvotes.includes(user.id)) setLiked(true);
-    if(downvotes.includes(user.id)) setLiked(false);
-  })
-  // Get post likes
-  useEffect(() => {
-    setVotes(upvotes.length - downvotes.length)
+    if(upvotes.includes(user._id)) setUpvoted("yes");
+    if(downvotes.includes(user._id)) setDownvoted("yes");
   }, [])
+
   return (
     <PostContainer>
       {/* Votes Container */}
@@ -79,12 +74,12 @@ const Post = ({
         <DotsContainer>
           <UpDot
             onClick={() => upvotePost()} 
-            liked={liked}
+            upvoted={upvoted}
           />
-          <DotsCount liked={liked}>{votes}</DotsCount>
+          <DotsCount upvoted={upvoted} downvoted={downvoted}>{votes}</DotsCount>
           <DownDot
             onClick={() => downvotePost()}
-            liked={liked}
+            downvoted={downvoted}
           />
         </DotsContainer>
       </DotsWrapper>
