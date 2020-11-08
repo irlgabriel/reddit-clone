@@ -8,7 +8,6 @@ var app = require('../app');
 var debug = require('debug')('api:server');
 var http = require('http');
 var mongoose = require('mongoose');
-var express = require('express');
 
 /**
  * Connect to mongodb cluster
@@ -39,15 +38,6 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
-
-if (process.env.NODE_ENV == 'production') {
-  // Set a static folder
-  app.use(express.static('../client/build'));
-
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '..', 'client', 'build', 'index.html'))
-  })
-}
 
 server.listen(port, () => console.log(`Server started on ${port}`))
 server.on('error', onError);
