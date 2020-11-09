@@ -89,23 +89,29 @@ export const PostContent = styled.p`
 `;
 export const PostFooter = styled.div`
   display: flex;
+  align-items: center;
   margin-top: auto;
 `;
-export const FooterLink = styled.a`
+export const FooterLink = styled.div`
   padding: 0.25rem;
   color: darkgray;
   display: flex;
   align-items: center;
   text-decoration: none;
   font-size: 14px;
+  cursor: pointer;
+
   &:hover {
     background: lightgray;
     text-decoration: none;
   }
 `;
-export const CommentIcon = styled(RiMessageFill)``;
-export const ShareIcon = styled(RiShareForwardFill)``;
-export const SaveIcon = styled(FaSave)``;
+export const CommentIcon = styled(RiMessageFill)`
+`;
+export const ShareIcon = styled(RiShareForwardFill)`
+`;
+export const SaveIcon = styled(FaSave)`
+`;
 export const DeleteIcon = styled(FaTrash)`
   color: red;
 `;

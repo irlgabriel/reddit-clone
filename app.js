@@ -4,12 +4,11 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
-var User = require("./models/users");
-var Post = require("./models/posts");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var postsRouter = require("./routes/posts");
 var subredditsRouter = require("./routes/subreddits");
+var commentsRouter = require("./routes/comments");
 var app = express();
 
 // view engine setup
@@ -35,6 +34,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
 app.use("/subreddits", subredditsRouter);
+app.use("/:post_id/comments", commentsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
