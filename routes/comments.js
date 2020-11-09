@@ -2,13 +2,94 @@ var express = require("express");
 var router = express.Router();
 
 const Post = require("../models/posts");
+const Comment = require("../models/comments");
 
-router.get("/", (req, res, next) => {
-  const postId = req.params.post_id
-  Post.findById(postId, (err, post => {
-    if(err) res.sendStatus(400);
-    res.status(200).send(post.comments)
-  }))
+// GET - Get comments of post_id
+router.get("/:post_id", (req, res, next) => {
+  const post_id = req.params.post_id;
+  Comment.find().
+  then(comments => {
+    comments.filter(comment => comment.post_id === post_id);
+    res.status(200).send(comments);
+  })
+  .catch(err => {
+    res.status(400).send(err);
+  })
 })
 
+// POST - Post a comment
+router.post("/:post_id", (req, res, next) => {
+  const post_id = req.params.post_id;
+
+  const user_id = req.body.user_id;
+  const content = req.body.content;
+  Comment.create({
+    user_id,
+    post_id,
+    content,
+  })
+  .then(comm => {
+    res.status(200).send(comm);
+  })
+  .catch(err => {
+    res.status(400).send(err);
+  })
+})
+// Post - Upvote a comment
+router.post("/:comment_id/upvote", (req, res, next) => {
+  const comment_id = req.params.comment_id;
+  const user_id = req.body.user_id;
+  Comment.findById(comment_id, (err, comm) => {
+    if(err) res.status(400).send(err);
+
+    // First check if the user downvoted this post and remove the downvote
+    if (comm.downvotes.includes(user_id)) ({$pull: {downvotes: user_id}}, {new: true}, (err, updatedComm) => {
+      if(err) res.status(400).send(err)
+      res.send(updatedComm);
+    });
+
+    // Now check if the user already liked this post and remove the like if that is the case
+    if(comm.upvotes.includes(user_id)) {
+      comm.update({$pull: {upvotes: user_id}}, {new: true}, (err, updatedComm) => {
+        if(err) res.status(400).send(err)
+        res.status(200).send(updatedComm);
+      })
+    } else {
+      comm.update({$push: {upvotes: user_id}}, {new: true}, (err, updatedComm) => {
+        if(err) res.status(400).send(err)
+        res.status(200).send(updatedComm);
+      })
+    }
+    
+  })
+})
+
+// Post - Downvote a comment
+router.post("/:comment_id/downvote", (req, res, next) => {
+  const comment_id = req.params.comment_id;
+  const user_id = req.body.user_id;
+  Comment.findById(comment_id, (err, comm) => {
+    if(err) res.status(400).send(err);
+
+    // First check if the user upvoted this post and remove the upvote
+    if (comm.upvotes.includes(user_id)) comm.update({$pull: {upvotes: user_id}}, {new: true}, (err, updatedComm) => {
+      if(err) res.status(400).send(err)
+      res.send(updatedComm);
+    });
+
+    // Now check if the user already downvoted this post and remove the downvote if that is the case
+    if(comm.downvotes.includes(user_id)) {
+      comm.update({$pull: {downvotes: user_id}}, {new: true}, (err, updatedComm) => {
+        if(err) res.status(400).send(err)
+        res.status(200).send(updatedComm);
+      })
+    } else {
+      comm.update({$push: {downvotes: user_id}}, {new: true}, (err, updatedComm) => {
+        if(err) res.status(400).send(err)
+        res.status(200).send(updatedComm);
+      })
+    }
+    
+  })
+})
 module.exports = router;

@@ -51,12 +51,14 @@ const Post = ({
     axios.post(`/posts/upvote/${id}`, body, config)
     .then(res => {
       const updatedPost = res.data;
+      console.log(updatedPost);
     })
   }
   const downvotePost = () => {
     axios.post(`/posts/downvote/${id}`, body, config)
     .then(res => {
       const updatedPost = res.data;
+      console.log(updatedPost);
     })
   }
 

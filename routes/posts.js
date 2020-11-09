@@ -58,7 +58,7 @@ router.post("/downvote/:id", (req, res, next) => {
     } else {
       post.update({$push: {downvotes: userId}})
     }
-    res.sendStatus(200);
+    res.status(200).send(post)
   })
 })
 // POST - deletes a post

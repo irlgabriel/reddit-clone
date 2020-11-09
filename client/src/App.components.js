@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { MdAdd } from "react-icons/md";
 import { BsFilePost } from "react-icons/bs";
 import { FaReddit } from "react-icons/fa";
 

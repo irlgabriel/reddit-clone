@@ -17,7 +17,7 @@ export const PostContainer = styled.div`
     border: 1px solid black;
   }
   @media screen and (max-width: 960px) {
-    width: 95vw;
+    width: 100%;
   }
 `;
 export const DotsWrapper = styled.div`
@@ -28,9 +28,9 @@ export const DotsWrapper = styled.div`
 `;
 export const DotsContainer = styled.div`
   height: 80px;
-  width: 100%;
+  width: 100%;  
   padding: 0.5rem 0;
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
 `;
@@ -53,7 +53,7 @@ export const PostContentWrapper = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 0.5rem;
+  padding: .5rem;
 `;
 export const PostHeader = styled.div`
   display: flex;

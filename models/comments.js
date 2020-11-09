@@ -8,4 +8,5 @@ const CommentsSchema = mongoose.Schema({
   replies: {type: Array, default: []}
 })
 const Comment = mongoose.model('Comment', CommentsSchema);
+
 module.exports = Comment;
