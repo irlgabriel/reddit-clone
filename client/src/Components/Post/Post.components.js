@@ -186,7 +186,7 @@ export const SortByDropdown = styled.div`
   display: flex;
   flex-direction: column;
   &:hover {
-    background: 
+    background: lightskyblue;
   }
 `
 export const OptionContainer = styled.div`

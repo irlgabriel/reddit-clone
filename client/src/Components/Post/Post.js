@@ -170,10 +170,8 @@ const Post = ({
                 </NotLoggedIn>
             }
               <SortBy>
-                <P onClick={setShowCommentsSortBy(!showCommentsSortBy)} size="11px" color="darkgray">SORT BY</P>
+                <P onClick={() => setShowCommentsSortBy(!showCommentsSortBy)} size="11px" color="darkgray">SORT BY</P>
                 <SortByDropdown>
-                  {['TOP', 'NEW']  
-                  }
                 </SortByDropdown>
               </SortBy>
               {
