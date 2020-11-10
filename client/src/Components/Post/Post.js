@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { PostComment } from "..";
+import { PostComment, CommentForm } from "..";
 import {
   PostWrapper, 
   PostContainer,
@@ -160,7 +160,7 @@ const Post = ({
             showComments && 
             <CommentsWrapper>
             {
-              user &&
+              !user &&
                 <NotLoggedIn>
                   <P color="darkgray">Log in or sign up to leave a comment</P>
                   <ButtonGroup>
@@ -168,6 +168,10 @@ const Post = ({
                     <Button color="white" bgColor="royalblue">SIGN UP</Button>
                   </ButtonGroup>
                 </NotLoggedIn>
+            }
+            {
+              user && 
+              <CommentForm />
             }
               <SortBy>
                 <P onClick={() => setShowCommentsSortBy(!showCommentsSortBy)} size="11px" color="darkgray">SORT BY</P>
