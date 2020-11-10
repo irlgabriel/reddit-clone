@@ -87,6 +87,14 @@ const Post = ({
     })
     .catch(err => console.log(err))
   }
+  const deletePost = () => {
+    if(!user) return;
+    window.confirm("Are you sure you want to delete this post?") && 
+    axios.delete(`posts/${id}`)
+    .then(deleted_post =>
+      setPosts(posts => posts.filter(post => post._id !== deleted_post._id))
+    )
+  }
 
   // When component renders
   useEffect(() => {
@@ -144,7 +152,7 @@ const Post = ({
                 <span>Save</span>
               </FooterLink>
               {user && creator_id === user._id && (
-                <FooterLink href="">
+                <FooterLink onClick={() => deletePost()} href="">
                   <DeleteIcon />
                   &nbsp;
                   <span style={{ color: "lightsalmon" }}>Delete</span>

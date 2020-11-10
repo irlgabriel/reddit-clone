@@ -44,7 +44,7 @@ const PostModal = ({ setPosts, posts, user, setPostModal }) => {
       .post("/posts", body, config)
       .then((res) => {
         setPostModal(false);
-        setPosts(res.data);
+        setPosts(posts => [...posts, res.data]);
       })
       .catch((err) => console.log(err));
   };
