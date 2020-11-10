@@ -59,8 +59,8 @@ const Post = ({
     },
   };
 
-  const getUsername = () => {
-    axios.get('/users')
+  const getUsername = (user_id) => {
+    axios.get(`/users/${user_id}`)
     .then(res => {
       console.log(res.data);
     })
@@ -180,7 +180,7 @@ const Post = ({
               </SortBy>
               {
                 postComments.map(comment => 
-                  <PostComment key={comment._id} user={user} comment={comment} />
+                  <PostComment key={comment._id} getUsername={getUsername} post_id={id} user={user} comment={comment} />
                 )
               }
             </CommentsWrapper>

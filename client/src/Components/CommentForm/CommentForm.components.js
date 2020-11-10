@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const FormWrapper = styled.div`
   padding: .5rem;
+  padding-top: 0;
   width: 100%;
 `
 export const Form = styled.div`

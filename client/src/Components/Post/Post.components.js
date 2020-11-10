@@ -9,7 +9,6 @@ export const PostWrapper = styled.div`
   border-radius: 4px;
   margin: 0.5rem 0;
 
-
 `
 export const PostContainer = styled.div`
   background-color: white;
@@ -63,6 +62,7 @@ export const PostContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: .5rem;
+  padding-bottom: 0;
 `
 export const PostHeader = styled.div`
   display: flex;
@@ -100,6 +100,7 @@ export const PostFooter = styled.div`
   display: flex;
   align-items: center;
   margin-top: auto;
+  padding: 4px 0;
 `;
 export const FooterLink = styled.div`
   padding: 0.25rem;
@@ -129,6 +130,7 @@ export const CommentsWrapper = styled.div`
   width: 100%;
   min-height: 50px;
   padding: .5rem 0;
+  padding-top: 0;
 `
 export const NotLoggedIn = styled.div`
   width: 90%;
