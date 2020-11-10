@@ -13,6 +13,13 @@ router.get("/", (req, res, next) => {
     }
   });
 });
+/* GET - Retrieve user with user_id */
+router.get("/:user_id", (req, res, next) => {
+  User.findById(req.params.user_id, (err, user) => {
+    if(err) res.status(400).send(err);
+    res.status(200).send(user)
+  })
+})
 /* POST - Register User */
 router.post("/register", (req, res, next) => {
   const { username, email, password } = req.body;
