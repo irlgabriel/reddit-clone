@@ -23,17 +23,17 @@ import {
   NotLoggedIn,
   ButtonGroup,
   Button,
-  Bold,
   P,
   SortBy,
   SortByDropdown,
-  OptionContainer,
   CommentIcon,
   ShareIcon,
   SaveIcon,
   DeleteIcon,
 } from "./Post.components";
 const Post = ({
+  posts,
+  setPosts,
   user,
   upvotes,
   downvotes,
@@ -43,13 +43,13 @@ const Post = ({
   creator,
   content,
   id,
+  upvoted,
+  downvoted,
 }) => {
-  const [upvoted, setUpvoted] = useState("no");
-  const [downvoted, setDownvoted] = useState("no");
-  const [votes, setVotes] = useState(upvotes.length - downvotes.length);
+  const [postUsername, setPostUsername] = useState('')
   const [showComments, setShowComments] = useState(false);
   const [postComments, setPostComments] = useState([]);
-  const [commentsSortBy, setCommentsSortBy] = useState('BEST')
+  // const [commentsSortBy, setCommentsSortBy] = useState('BEST')
   const [showCommentsSortBy, setShowCommentsSortBy] = useState(false);
 
   const config = {
@@ -58,11 +58,10 @@ const Post = ({
       "Content-Type": "application/json",
     },
   };
-
   const getUsername = (user_id) => {
     axios.get(`/users/${user_id}`)
     .then(res => {
-      console.log(res.data);
+      setPostUsername(res.data.username);
     })
   }
   const upvotePost = () => {
@@ -73,7 +72,7 @@ const Post = ({
     axios.post(`/posts/${id}/upvote`, body, config)
     .then(res => {
       const updatedPost = res.data;
-      console.log(updatedPost);
+      setPosts(posts.map(post => post._id === id ? updatedPost : post))
     })
   }
   const downvotePost = () => {
@@ -84,21 +83,18 @@ const Post = ({
     axios.post(`/posts/${id}/downvote`, body, config)
     .then(res => {
       const updatedPost = res.data;
-      console.log(updatedPost);
+      setPosts(posts.map(post => post._id === id ? updatedPost : post))
     })
     .catch(err => console.log(err))
   }
 
   // When component renders
   useEffect(() => {
-    // Check if user liked/disliked this post
-    if(user) {
-      if(upvotes.includes(user._id)) setUpvoted("yes");
-      if(downvotes.includes(user._id)) setDownvoted("yes");
-    }
     // Retrieve post's comments
     axios.get('/posts/:post_id/comments')
     .then(res => setPostComments(res.data));
+    // Get post's username using user_id
+    user && getUsername(user._id);
   }, [])
 
  
@@ -113,7 +109,7 @@ const Post = ({
               onClick={() => upvotePost()} 
               upvoted={upvoted}
             />
-            <DotsCount upvoted={upvoted} downvoted={downvoted}>{votes}</DotsCount>
+            <DotsCount upvoted={upvoted} downvoted={downvoted}>{upvotes.length - downvotes.length}</DotsCount>
             <DownDot
               onClick={() => downvotePost()}
               downvoted={downvoted}
@@ -125,7 +121,7 @@ const Post = ({
             <PostHeader>
               <SubredditName>r/{subreddit}&nbsp;</SubredditName>
               &middot;&nbsp;
-              <Creator me={user && creator === user.username}>{creator}</Creator>
+              <Creator me={user && creator === user.username}>&nbsp;{postUsername}</Creator>
             </PostHeader>
             <PostBody>
               <PostTitle>{title}</PostTitle>
@@ -171,7 +167,7 @@ const Post = ({
             }
             {
               user && 
-              <CommentForm />
+              <CommentForm post_id={id} user_id={user._id}/>
             }
             {
               postComments.length > 0 &&

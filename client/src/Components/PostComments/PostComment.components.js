@@ -35,10 +35,16 @@ export const TimeAgo = styled.span`
 export const Upvote = styled(GoArrowUp)`
   font-size: 24px;
   color: darkgray;
+  &:hover {
+    cursor: pointer;
+  }
 `
 export const Downvote = styled(GoArrowDown)`
   font-size: 24px;
   color: darkgray;
+  &:hover {
+    cursor: pointer;
+  }
 `
 export const CommentHeader = styled.div`
   display: flex;
@@ -49,10 +55,11 @@ export const CommentBody = styled.div`
 
 export const CommentFooter = styled.div`
   display: flex;
-  padding: 4px; 
 `
 export const Content = styled.p`
-
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+  font-size: 13px;
 `
 export const P = styled.p`
   font-size: ${({size}) => (size + "px")};
@@ -68,6 +75,7 @@ export const FooterItem = styled.div`
   display: flex;
   align-items: center;
   padding: 4px 2px;
+  padding-left: 0;
   &:hover {
     background: lightgray;
   }

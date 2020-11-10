@@ -18,15 +18,9 @@ function App() {
   const [user, setUser] = useState(undefined);
   const [postModal, setPostModal] = useState(false);
   const [subredditModal, setSubredditModal] = useState(false);
+
   // retrieve all posts when the app comp is rendered
   useEffect(() => {
-    /*
-    fetch('/posts', {
-      mode: "no-cors"
-    })
-    .then(res => res.json()
-    .then(data => setPosts(data))
-    )*/
     axios.get("/posts").then((res) => setPosts(res.data));
   }, []);
   // check if there's an user in localstorage
@@ -71,6 +65,8 @@ function App() {
           </PostsHeader>
           {posts.map((post) => (
             <Post
+              posts={posts}
+              setPosts={setPosts}
               user={user}
               id={post._id}
               key={post._id}
@@ -81,6 +77,8 @@ function App() {
               upvotes={post.upvotes}
               downvotes={post.downvotes}
               comments={post.comments}
+              upvoted={user && post.upvotes.includes(user._id) ? "yes" : "no"}
+              downvoted={user && post.downvotes.includes(user._id) ? "yes" : "no"}
             />
           ))}
         </PostsContainer>

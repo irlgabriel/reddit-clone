@@ -21,6 +21,7 @@ import {
 
 const PostComment = ({ post_id, user, comment }) => {
   const [upvotes, setUpvotes] = useState(comment.upvotes.length - comment.downvotes.length)
+  const [username, setUsername] = useState('');
   const config = {
     headers: {
       "Accept": "application/json",
@@ -31,7 +32,7 @@ const PostComment = ({ post_id, user, comment }) => {
   const getUsername = (user_id) => {
     axios.get(`/users/${user_id}`)
     .then(res => {
-      console.log(res.data);
+      setUsername(res.data.username);
     })
   }
 
@@ -42,7 +43,10 @@ const PostComment = ({ post_id, user, comment }) => {
     .then()
   }
   useEffect(() => {
+    // set initial upvotes count
     setUpvotes(comment.upvotes.length - comment.downvotes.length)
+    // set comment's user
+    getUsername(user._id)
   }, [])
   return (
     <CommentWrapper>
@@ -54,7 +58,7 @@ const PostComment = ({ post_id, user, comment }) => {
 
         <CommentContent>
           <CommentHeader>
-            <Username>{getUsername(comment.user)}</Username>&nbsp;&middot;&nbsp;
+            <Username>{username}</Username>&nbsp;&middot;&nbsp;
             <Upvotes>{upvotes} points</Upvotes>&nbsp;&middot;&nbsp;
             <TimeAgo>12h ago</TimeAgo>
           </CommentHeader>
@@ -63,7 +67,7 @@ const PostComment = ({ post_id, user, comment }) => {
           </CommentBody>
           <CommentFooter>
             <FooterItem>
-              <CommentIcon />
+              <CommentIcon />&nbsp;
               <P bold size="13" color="darkgray" color="darkgray">Reply</P>
             </FooterItem>
           </CommentFooter>
