@@ -34,7 +34,6 @@ const Post = ({
 }) => {
   const [upvoted, setUpvoted] = useState(undefined);
   const [downvoted, setDownvoted] = useState(undefined);
-
   const [votes, setVotes] = useState(upvotes.length - downvotes.length);
 
   const config = {
@@ -43,23 +42,35 @@ const Post = ({
       "Content-Type": "application/json",
     },
   };
-  const body = JSON.stringify({
-    user_id: user._id,
-  })
 
+  const getUsername = (user_id) => {
+    axios.get('/users')
+    .then(res => {
+      console.log(res.data);
+    })
+  }
   const upvotePost = () => {
-    axios.post(`/posts/upvote/${id}`, body, config)
+    if(!user) return;
+    const body = JSON.stringify({
+      user_id: user._id
+    })
+    axios.post(`/posts/${id}/upvote`, body, config)
     .then(res => {
       const updatedPost = res.data;
       console.log(updatedPost);
     })
   }
   const downvotePost = () => {
-    axios.post(`/posts/downvote/${id}`, body, config)
+    if(!user) return;
+    const body = JSON.stringify({
+      user_id: user._id
+    })
+    axios.post(`/posts/${id}/downvote`, body, config)
     .then(res => {
       const updatedPost = res.data;
       console.log(updatedPost);
     })
+    .catch(err => console.log(err))
   }
 
   // Check if user liked/disliked this post
@@ -89,7 +100,7 @@ const Post = ({
         <PostHeader>
           <SubredditName>r/{subreddit}&nbsp;</SubredditName>
           &middot;&nbsp;
-          <Creator me={user && creator === user.username}> {creator}</Creator>
+          <Creator me={user && creator === user.username}>{creator}</Creator>
         </PostHeader>
         <PostBody>
           <PostTitle>{title}</PostTitle>

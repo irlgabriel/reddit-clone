@@ -26,9 +26,33 @@ router.post("/", (req, res, next) => {
     .catch((err) => res.status(400).send(err));
 });
 // POST - upvote a post
-router.post("/upvote/:id", (req, res, next) => {
-  const userId = req.body.user_id;
+router.post("/:post_id/upvote", (req, res, next) => {
+  const post_id = req.params.post_id
+  const user_id = req.body.user_id;
 
+  Post.findById(post_id, (err, post) => {
+    if(err) console.log(err);
+
+    // Check if user downvoted this and remove it;
+    post.downvotes = post.downvotes.filter(downvote => downvote !== user_id)
+    // Check if user upvoted this and remove it;
+    post.upvotes.includes(user_id)
+    ? post.upvotes = post.upvotes.filter(upvote => upvote !== user_id)
+    : post.upvotes.push(user_id);
+
+    // Now save
+    post.save((err, post) => {
+      if(err){
+        res.status(400).send(err);
+      } else {
+        res.status(200).send(post);
+      }
+      
+    })
+  })
+
+
+  /*
   Post.findById(req.params.id, (err, post) => {
     if(err) res.status(400).send(err)
     // First check if the user maybe downvoted this first and remove the downvote
@@ -42,10 +66,40 @@ router.post("/upvote/:id", (req, res, next) => {
     }
     res.status(200).send(post);
   })
+  */
 })
 // POST - downvote a post
-router.post("/downvote/:id", (req, res, next) => {
-  const userId = req.body.user_id;
+router.post("/:post_id/downvote", (req, res, next) => {
+  const post_id = req.params.post_id
+  const user_id = req.body.user_id;
+
+  Post.findById(post_id, (err, post) => {
+    if(err) console.log(err);
+
+    // Check if user upvoted this and remove it;
+    post.upvotes = post.upvotes.filter(upvote => upvote !== user_id)  
+     // Check if user downvoted this and remove it;
+     post.downvotes.includes(user_id)
+     ? post.downvotes = post.downvotes.filter(downvote => downvote != user_id)
+     :  post.downvotes.push(user_id)
+
+    // Now save
+    post.save((err, post) => {
+      if(err){
+        res.status(400).send(err);
+      } else {
+        res.status(200).send(post);
+      }
+    })
+    
+  })
+    
+
+   
+
+
+
+  /*
   
   Post.findById(req.params.id, (err, post) => {
     if(err) res.status(400).send(err)
@@ -58,8 +112,9 @@ router.post("/downvote/:id", (req, res, next) => {
     } else {
       post.update({$push: {downvotes: userId}})
     }
-    res.status(200).send(post)
+    res.status(200).send(post) // note to help debug: repsonse comes back 200 even when no user_id is sent;
   })
+  */
 })
 // POST - deletes a post
 router.delete("/:user_id/:post_id", (req, res, next) => {
