@@ -70,7 +70,7 @@ function App() {
               user={user}
               id={post._id}
               key={post._id}
-              creator={post.user}
+              creator_id={post.user}
               content={post.content}
               subreddit={post.subreddit}
               title={post.title}

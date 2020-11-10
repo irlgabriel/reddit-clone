@@ -40,7 +40,7 @@ const Post = ({
   comments,
   title,
   subreddit,
-  creator,
+  creator_id,
   content,
   id,
   upvoted,
@@ -94,7 +94,7 @@ const Post = ({
     axios.get('/posts/:post_id/comments')
     .then(res => setPostComments(res.data));
     // Get post's username using user_id
-    user && getUsername(user._id);
+    getUsername(creator_id);
   }, [])
 
  
@@ -121,7 +121,7 @@ const Post = ({
             <PostHeader>
               <SubredditName>r/{subreddit}&nbsp;</SubredditName>
               &middot;&nbsp;
-              <Creator me={user && creator === user.username}>&nbsp;{postUsername}</Creator>
+              <Creator me={user && creator_id === user.username}>&nbsp;{postUsername}</Creator>
             </PostHeader>
             <PostBody>
               <PostTitle>{title}</PostTitle>
@@ -143,7 +143,7 @@ const Post = ({
                 &nbsp;
                 <span>Save</span>
               </FooterLink>
-              {user && creator === user.username && (
+              {user && creator_id === user._id && (
                 <FooterLink href="">
                   <DeleteIcon />
                   &nbsp;
