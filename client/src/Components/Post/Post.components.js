@@ -4,8 +4,14 @@ import { BsDot } from "react-icons/bs";
 import { RiMessageFill, RiShareForwardFill } from "react-icons/ri";
 import { FaSave, FaTrash } from "react-icons/fa";
 
-export const PostContainer = styled.div`
+export const PostWrapper = styled.div`
+  background-color: white;
+  border-radius: 4px;
   margin: 0.5rem 0;
+
+
+`
+export const PostContainer = styled.div`
   background-color: white;
   width: 600px;
   min-height: 150px;
@@ -50,11 +56,14 @@ export const DownDot = styled(GoArrowDown)`
   cursor: pointer;
 `;
 export const PostContentWrapper = styled.div`
+ 
+`;
+export const PostContentContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
   padding: .5rem;
-`;
+`
 export const PostHeader = styled.div`
   display: flex;
   align-items: center;
@@ -115,3 +124,68 @@ export const SaveIcon = styled(FaSave)`
 export const DeleteIcon = styled(FaTrash)`
   color: red;
 `;
+
+export const CommentsWrapper = styled.div`
+  width: 100%;
+  min-height: 50px;
+  padding: .5rem 0;
+`
+export const NotLoggedIn = styled.div`
+  width: 90%;
+  margin: 0 auto;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .5rem;
+
+`
+export const Button = styled.a`
+  cursor: pointer;
+  display: inline-block;
+  text-decoration: none;
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid royalblue;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  font-size: 12px;
+  margin-right: .25rem;
+  background-color: ${({ bgColor }) => `${bgColor}`};
+  color: ${({ color }) => `${color}`};
+  &:hover {
+    text-decoration: none;
+  }
+  &:first-child {
+    margin: 0 0.25rem;
+  }
+`;
+
+export const Bold = styled.b`
+  color: ${({color}) => (color)}
+`
+
+export const P = styled.p`
+  font-size: ${({size}) => (size)};
+  color: ${({color}) => (color)};
+`
+
+export const ButtonGroup = styled.div`
+`
+
+export const SortBy = styled.div`
+  display: flex;
+  align-items: center;
+  width: 90%;
+  margin: 0 auto;
+  padding: .25rem 0;
+  border-bottom: 1px solid lightgray;
+`
+export const Select = styled.select`
+  
+`
+
+export const Option = styled.option`
+
+`

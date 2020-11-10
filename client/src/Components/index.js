@@ -5,3 +5,4 @@ export { default as LoginModal } from "./LoginModal/LoginModal";
 export { default as RegisterModal } from "./RegisterModal/RegisterModal";
 export { default as PostModal } from "./PostModal/PostModal";
 export { default as SubredditModal } from "./SubredditModal/SubredditModal";
+export { default as PostComments } from "./PostComments/PostComments";
