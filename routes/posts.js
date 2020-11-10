@@ -12,13 +12,6 @@ router.get("/", (req, res, next) => {
     }
   });
 });
-/* GET - retrieve post with id */
-router.get("/:post_id", (req, res, next) => {
-  Post.findById(req.params.post_id, (err, post) => {
-    if(err) res.status(400).send(err);
-    res.status(200).send(post);
-  })
-})
 
 /* POST - Create a post */
 router.post("/", (req, res, next) => {
