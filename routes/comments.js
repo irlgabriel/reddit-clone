@@ -7,9 +7,8 @@ const Comment = require("../models/comments");
 // GET - Get comments of post_id
 router.get("/", (req, res, next) => {
   const post_id = req.params.post_id;
-  Comment.find()
+  Comment.find({post_id: post_id})
   .then(comments => {
-    comments.filter(comment => comment.post_id === post_id);
     res.status(200).send(comments);
   })
   .catch(err => {

@@ -16,7 +16,7 @@ export const MainWrapper = styled.div`
   padding: 1.5rem;
 `;
 export const PostsContainer = styled.div`
-  min-width: 600px;
+  min-width: 400px;
 `;
 export const PostsHeader = styled.div`
   margin-top: 0.5rem;

@@ -99,7 +99,7 @@ const Post = ({
   // When component renders
   useEffect(() => {
     // Retrieve post's comments
-    axios.get('/posts/:post_id/comments')
+    axios.get(`/posts/${id}/comments`)
     .then(res => setPostComments(res.data));
     // Get post's username using user_id
     getUsername(creator_id);
@@ -139,7 +139,7 @@ const Post = ({
               <FooterLink onClick={() => setShowComments(!showComments)} href="">
                 <CommentIcon />
                 &nbsp;
-                <span>{comments.length} Comments</span>
+                <span>{postComments.length} Comments</span>
               </FooterLink>
               <FooterLink href="">
                 <ShareIcon />

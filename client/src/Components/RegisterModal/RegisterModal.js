@@ -60,7 +60,7 @@ const RegisterModal = ({ setUser, setRegister }) => {
           </FormGroup>
           <FormGroup>
             <Button color="white" bgColor="royalblue">
-              LOG IN
+              REGISTER
             </Button>
           </FormGroup>
         </RegisterForm>
