@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { PostComments } from "..";
+import { PostComment } from "..";
 import {
   PostWrapper, 
   PostContainer,
@@ -26,8 +26,8 @@ import {
   Bold,
   P,
   SortBy,
-  Select,
-  Option,
+  SortByDropdown,
+  OptionContainer,
   CommentIcon,
   ShareIcon,
   SaveIcon,
@@ -50,6 +50,7 @@ const Post = ({
   const [showComments, setShowComments] = useState(false);
   const [postComments, setPostComments] = useState([]);
   const [commentsSortBy, setCommentsSortBy] = useState('BEST')
+  const [showCommentsSortBy, setShowCommentsSortBy] = useState(false);
 
   const config = {
     headers: {
@@ -169,12 +170,15 @@ const Post = ({
                 </NotLoggedIn>
             }
               <SortBy>
-                <P size="11px" color="darkgray">SORT BY</P>
-                <Option value=""></Option>
+                <P onClick={setShowCommentsSortBy(!showCommentsSortBy)} size="11px" color="darkgray">SORT BY</P>
+                <SortByDropdown>
+                  {['TOP', 'NEW']  
+                  }
+                </SortByDropdown>
               </SortBy>
               {
                 postComments.map(comment => 
-                  <PostComments key={comment._id} user={user} comment={comment} />
+                  <PostComment key={comment._id} user={user} comment={comment} />
                 )
               }
             </CommentsWrapper>

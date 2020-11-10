@@ -182,10 +182,16 @@ export const SortBy = styled.div`
   padding: .25rem 0;
   border-bottom: 1px solid lightgray;
 `
-export const Select = styled.select`
-  
+export const SortByDropdown = styled.div`
+  display: flex;
+  flex-direction: column;
+  &:hover {
+    background: 
+  }
 `
-
-export const Option = styled.option`
-
+export const OptionContainer = styled.div`
+  background: white;
+  &:hover {
+    background: lightskyblue;
+  }
 `
