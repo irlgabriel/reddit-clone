@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
 const CommentsSchema = mongoose.Schema({
-  user: String,
+  user_id: String,
+  post_id: String,
   content: {type: String, required: true},
   upvotes: {type: Array, default: []},
   downvotes: {type: Array, default: []},

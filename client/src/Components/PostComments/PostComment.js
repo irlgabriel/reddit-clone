@@ -19,15 +19,22 @@ import {
   P
 } from "./PostComment.components"
 
-const PostComment = ({getUsername, post_id, user, comment}) => {
+const PostComment = ({ post_id, user, comment }) => {
   const [upvotes, setUpvotes] = useState(comment.upvotes.length - comment.downvotes.length)
-
   const config = {
     headers: {
       "Accept": "application/json",
       "Content-Type": "application/json",
     },
   };
+
+  const getUsername = (user_id) => {
+    axios.get(`/users/${user_id}`)
+    .then(res => {
+      console.log(res.data);
+    })
+  }
+
   const upvoteComment = () => {
     if(!user) return;
     const body = JSON.stringify({user_id: user._id});

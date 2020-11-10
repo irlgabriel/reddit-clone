@@ -24,9 +24,9 @@ router.post("/", (req, res, next) => {
   const user_id = req.body.user_id;
   const content = req.body.content;
   Comment.create({
-    user_id,
-    post_id,
-    content,
+    user_id: user_id,
+    post_id: post_id,
+    content: content,
   })
   .then(comm => {
     res.status(200).send(comm);

@@ -173,11 +173,14 @@ const Post = ({
               user && 
               <CommentForm />
             }
+            {
+              postComments.length > 0 &&
               <SortBy>
                 <P onClick={() => setShowCommentsSortBy(!showCommentsSortBy)} size="11px" color="darkgray">SORT BY</P>
                 <SortByDropdown>
                 </SortByDropdown>
               </SortBy>
+            }
               {
                 postComments.map(comment => 
                   <PostComment key={comment._id} getUsername={getUsername} post_id={id} user={user} comment={comment} />
