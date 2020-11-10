@@ -91,8 +91,8 @@ const Post = ({
     if(!user) return;
     window.confirm("Are you sure you want to delete this post?") && 
     axios.delete(`posts/${id}`)
-    .then(deleted_post =>
-      setPosts(posts => posts.filter(post => post._id !== deleted_post._id))
+    .then(res =>
+      setPosts(posts => posts.filter(post => post._id !== res.data._id))
     )
   }
 

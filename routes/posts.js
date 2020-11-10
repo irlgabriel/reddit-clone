@@ -82,7 +82,7 @@ router.delete("/:post_id", (req, res, next) => {
   const postId = req.params.post_id;
   // Find and delete the post form the "posts" collection
   Post.findByIdAndDelete(postId)
-    .then((post) => res.status(200).send({ post }))
+    .then((post) => res.status(200).send(post))
     .catch((err) => res.status(400).send(err));
 });
 module.exports = router;
