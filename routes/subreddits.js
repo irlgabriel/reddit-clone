@@ -10,6 +10,14 @@ router.get("/", (req, res, next) => {
   });
 });
 
+/* GET - retrieve subreddit by subreddit_id */
+router.get('/:subreddit_id', (req, res, next) => {
+  Subreddit.findById(req.params.subreddit_id, (err, subreddit) => {
+    if(err) res.status(400).send(err)
+    res.status(200).send(subreddit);
+  })
+})
+
 /* POST - create new subreddit */
 router.post("/", (req, res, next) => {
   Subreddit.create({
