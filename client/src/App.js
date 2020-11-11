@@ -28,14 +28,14 @@ function App() {
 
   return (
     <Container>
-      <Navbar user={user} setUser={setUser} />
       <Router>
+        <Navbar user={user} setUser={setUser} />
         <Route exact path="/">
           <Home user={user} setUser={setUser} posts={posts} setPosts={setPosts} postModal={postModal} setPostModal={setPostModal} subredditModal={subredditModal} setSubredditModal={setSubredditModal}/>
         </Route>
         {
           subreddits.map(subreddit => 
-            <Route exact path={generatePath("/subreddits/:name", {name: subreddit.name})} />
+            <Route key={subreddit._id} exact path={generatePath("/subreddits/:name", {name: subreddit.name})} />
           )
         }
       </Router>

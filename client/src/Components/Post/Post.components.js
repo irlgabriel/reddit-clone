@@ -1,8 +1,10 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { GoArrowDown, GoArrowUp } from "react-icons/go";
 import { BsDot } from "react-icons/bs";
 import { RiMessageFill, RiShareForwardFill } from "react-icons/ri";
 import { FaSave, FaTrash } from "react-icons/fa";
+
 
 export const PostWrapper = styled.div`
   background-color: white;
@@ -68,9 +70,12 @@ export const PostHeader = styled.div`
   display: flex;
   align-items: center;
 `;
-export const SubredditName = styled.p`
+export const SubredditName = styled(Link)`
+  text-decoration: none;
+  color: black;
   font-size: 14px;
   font-weight: bold;
+
 `;
 export const Creator = styled.p`
   font-family: "Open Sans", sans-serif;

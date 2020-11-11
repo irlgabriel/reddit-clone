@@ -9,7 +9,7 @@ import {
   SearchIcon,
   ButtonGroup,
   UserSection,
-  Link,
+  RouteLink as Link,
 } from "./Navbar.components";
 import { LoginModal, RegisterModal } from "..";
 import { CSSTransition } from "react-transition-group";
@@ -54,7 +54,7 @@ const Navbar = ({ user, setUser }) => {
         />
       </CSSTransition>
 
-      <Link href="/">
+      <Link to="/">
         <RedditLogo color="red" size="32px" />
       </Link>
       <SearchBarContainer>

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { FaReddit, FaSearch } from "react-icons/fa";
 
 export const Nav = styled.div`
@@ -74,7 +75,7 @@ export const UserSection = styled.p`
     cursor: pointer;
   }
 `;
-export const Link = styled.a`
+export const RouteLink = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: center;
