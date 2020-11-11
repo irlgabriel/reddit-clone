@@ -4,7 +4,7 @@ import axios from "axios";
 import "./App.css";
 
 import { Navbar } from "./Components";
-import { Home } from "./Pages";
+import { Home, Subreddit } from "./Pages";
 import { Container } from "./App.components";
 
 function App() {
@@ -35,7 +35,9 @@ function App() {
         </Route>
         {
           subreddits.map(subreddit => 
-            <Route key={subreddit._id} exact path={generatePath("/subreddits/:name", {name: subreddit.name})} />
+            <Route key={subreddit._id} exact path={generatePath("/subreddits/:name", {name: subreddit.name})}>
+              <Subreddit user={user} setPosts={posts} posts={posts} subreddit={subreddit}/>
+            </Route>
           )
         }
       </Router>

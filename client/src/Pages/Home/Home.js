@@ -1,6 +1,6 @@
 import react from "react";
 import { CSSTransition } from "react-transition-group";
-import { Sidebar, Post, PostModal, SubredditModal } from "../Components";
+import { Sidebar, Post, PostModal, SubredditModal } from "../../Components";
 import {
   MainWrapper,
   PostsContainer,

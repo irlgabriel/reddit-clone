@@ -10,6 +10,5 @@
 
 #### - [Very important] - ADD Flash messages! (maybe add a msg key in the response body and use a state in main component to render it when there's a message sent back?)
 
-#### - [NEXT] - fix comments not re-rendering when adding a new comment
-
+#### - 
 
