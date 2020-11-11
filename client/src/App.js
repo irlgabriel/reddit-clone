@@ -1,17 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
-import { Navbar, Sidebar, Post, PostModal, SubredditModal } from "./Components";
-import {
-  Container,
-  MainWrapper,
-  PostsContainer,
-  PostsHeader,
-  PostIcon,
-  RedditLogo,
-  Paragraph,
-} from "./App.components";
-import { CSSTransition } from "react-transition-group";
+
+import { Home } from "./Pages";
+import { Container } from "./App.components";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -31,58 +23,7 @@ function App() {
 
   return (
     <Container>
-      <CSSTransition
-        in={postModal}
-        classNames="fade"
-        timeout={300}
-        unmountOnExit
-      >
-        <PostModal
-          setPosts={setPosts}
-          posts={posts}
-          user={user}
-          setPostModal={setPostModal}
-        />
-      </CSSTransition>
-      <CSSTransition
-        in={subredditModal}
-        classNames="fade"
-        timeout={300}
-        unmountOnExit
-      >
-        <SubredditModal user={user} setSubredditModal={setSubredditModal} />
-      </CSSTransition>
-      <Navbar user={user} setUser={setUser} />
-      <MainWrapper>
-        <PostsContainer>
-          <PostsHeader onClick={() => setSubredditModal(true)}>
-            <RedditLogo />
-            <Paragraph>Create a new Subreddit.</Paragraph>
-          </PostsHeader>
-          <PostsHeader onClick={() => setPostModal(true)}>
-            <PostIcon />
-            <Paragraph>Create a Post.</Paragraph>
-          </PostsHeader>
-          {posts.map((post) => (
-            <Post
-              posts={posts}
-              setPosts={setPosts}
-              user={user}
-              id={post._id}
-              key={post._id}
-              creator_id={post.user}
-              content={post.content}
-              subreddit={post.subreddit}
-              title={post.title}
-              upvotes={post.upvotes}
-              downvotes={post.downvotes}
-              upvoted={user && post.upvotes.includes(user._id) ? "yes" : "no"}
-              downvoted={user && post.downvotes.includes(user._id) ? "yes" : "no"}
-            />
-          ))}
-        </PostsContainer>
-        <Sidebar />
-      </MainWrapper>
+      <Home user={user} setUser={setUser} posts={posts} setPosts={setPosts} postModal={postModal} setPostModal={setPostModal} subredditModal={subredditModal} setSubredditModal={setSubredditModal}/>
     </Container>
   );
 }
