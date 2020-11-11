@@ -24,8 +24,8 @@ const Subreddit = ({setPostModal, postModal, posts, setPosts, user, subreddit}) 
         {
           subredditPosts.map(post => 
             <Post
-              posts={posts}
-              setPosts={setPosts}
+              posts={subredditPosts}
+              setPosts={setSubredditPosts}
               user={user}
               id={post._id}
               key={post._id}
