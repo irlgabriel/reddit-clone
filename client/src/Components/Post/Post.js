@@ -90,7 +90,7 @@ const Post = ({
   const deletePost = () => {
     if(!user) return;
     window.confirm("Are you sure you want to delete this post?") && 
-    axios.delete(`posts/${id}`, config)
+    axios.delete(`/posts/${id}`, config)
     .then(res =>
       setPosts(posts => posts.filter(post => post._id !== res.data._id))
     )
