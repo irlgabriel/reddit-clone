@@ -175,7 +175,7 @@ const Post = ({
             }
             {
               user && 
-              <CommentForm post_id={id} user_id={user._id}/>
+              <CommentForm setPosts={posts} posts={posts} post_id={id} user_id={user._id}/>
             }
             {
               postComments.length > 0 &&

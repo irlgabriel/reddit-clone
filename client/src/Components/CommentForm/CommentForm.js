@@ -26,8 +26,8 @@ const CommentForm = ({post_id, user_id}) => {
       content: commentContent,
     })
     axios.post(`/posts/${post_id}/comments/`, body, config)
-    .then(post => { 
-      console.log(post);
+    .then(comment => { 
+      setCommentContent('');
     })
   }
   return (
@@ -35,7 +35,7 @@ const CommentForm = ({post_id, user_id}) => {
 
       <Form>
         <TextWrapper borderColor={formFocus ? "black" : "lightgray"}>
-          <TextArea onChange={(e) => setCommentContent(e.target.value)} onFocus={() => setFormFocus(true)} onBlur={() => setFormFocus(false)} placeholder="What are your thoughts?" />
+          <TextArea value={commentContent} onChange={(e) => setCommentContent(e.target.value)} onFocus={() => setFormFocus(true)} onBlur={() => setFormFocus(false)} placeholder="What are your thoughts?" />
           <FormFooter>
             <Button onClick={() => createComment()} color="white" bgColor="#7549f1">COMMENT</Button>
           </FormFooter>
