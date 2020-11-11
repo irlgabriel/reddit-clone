@@ -37,7 +37,6 @@ const Post = ({
   user,
   upvotes,
   downvotes,
-  comments,
   title,
   subreddit,
   creator_id,
@@ -175,7 +174,7 @@ const Post = ({
             }
             {
               user && 
-              <CommentForm setPosts={posts} posts={posts} post_id={id} user_id={user._id}/>
+              <CommentForm setPostComments={setPostComments} postComments={postComments} post_id={id} user_id={user._id}/>
             }
             {
               postComments.length > 0 &&

@@ -9,7 +9,7 @@ import {
   FormFooter,
   P
 } from "./CommentForm.components";
-const CommentForm = ({post_id, user_id}) => {
+const CommentForm = ({postComments, setPostComments, post_id, user_id}) => {
   const [formFocus, setFormFocus] = useState(false);
   const [commentContent, setCommentContent] = useState('');
 
@@ -26,8 +26,9 @@ const CommentForm = ({post_id, user_id}) => {
       content: commentContent,
     })
     axios.post(`/posts/${post_id}/comments/`, body, config)
-    .then(comment => { 
+    .then(res => { 
       setCommentContent('');
+      setPostComments([...postComments, res.data]);
     })
   }
   return (

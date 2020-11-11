@@ -76,7 +76,6 @@ function App() {
               title={post.title}
               upvotes={post.upvotes}
               downvotes={post.downvotes}
-              comments={post.comments}
               upvoted={user && post.upvotes.includes(user._id) ? "yes" : "no"}
               downvoted={user && post.downvotes.includes(user._id) ? "yes" : "no"}
             />
