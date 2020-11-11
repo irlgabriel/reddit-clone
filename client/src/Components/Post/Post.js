@@ -73,6 +73,7 @@ const Post = ({
       const updatedPost = res.data;
       setPosts(posts.map(post => post._id === id ? updatedPost : post))
     })
+    .catch(err => console.log(err))
   }
   const downvotePost = () => {
     if(!user) return;
@@ -89,10 +90,11 @@ const Post = ({
   const deletePost = () => {
     if(!user) return;
     window.confirm("Are you sure you want to delete this post?") && 
-    axios.delete(`posts/${id}`)
+    axios.delete(`posts/${id}`, config)
     .then(res =>
       setPosts(posts => posts.filter(post => post._id !== res.data._id))
     )
+    .catch(err => console.log(err))
   }
 
   // When component renders
@@ -151,7 +153,7 @@ const Post = ({
                 <span>Save</span>
               </FooterLink>
               {user && creator_id === user._id && (
-                <FooterLink onClick={() => deletePost()} href="">
+                <FooterLink onClick={() => deletePost()}>
                   <DeleteIcon />
                   &nbsp;
                   <span style={{ color: "lightsalmon" }}>Delete</span>

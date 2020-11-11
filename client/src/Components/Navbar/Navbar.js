@@ -36,7 +36,8 @@ const Navbar = ({ subreddits, user, setUser }) => {
     setUser(undefined);
   };
   useEffect(() => {
-    setSearchResults(subreddits.filter(subreddit => subreddit.name.toLowerCase().includes(searchQuery.toLowerCase())))
+    const results = subreddits.filter(subreddit => subreddit.name.toLowerCase().includes(searchQuery.toLowerCase()))
+    setSearchResults(results);
   }, [searchQuery])
   return (
     <Nav>
@@ -70,7 +71,7 @@ const Navbar = ({ subreddits, user, setUser }) => {
         <SearchBar
           onChange={(e) => setSearchQuery(e.target.value)}
           onFocus={() => setShowSearchResults(true)}
-          onBlur={() => setShowSearchResults(false)}
+          onBlur={() => setTimeout(() => setShowSearchResults(false), 150)}
           value={searchQuery}
           type="text"
           placeholder="Search subreddits..."
@@ -79,7 +80,7 @@ const Navbar = ({ subreddits, user, setUser }) => {
           <SearchResults>
             {
               searchResults.map(res => 
-                <Result key={res._id}>{res.name}</Result>
+                <Result to={`/subreddits/${res.name}`} key={res._id}>{res.name}</Result>
               )
             }
           </SearchResults>

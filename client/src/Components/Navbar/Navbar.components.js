@@ -84,6 +84,8 @@ export const RouteLink = styled(Link)`
 `;
 export const SearchResults = styled.div`
   box-shadow: 0px 0px 13px 0px rgba(79,79,79,1);
+  border: 1px solid lightgray;
+  border-radius: 4px;
   position: absolute;
   left: 0;
   right: 0;
@@ -92,13 +94,13 @@ export const SearchResults = styled.div`
   flex-direction: column;
   align-items: center;
 `
-export const Result = styled.div`
-  user-select: none;
-  cursor: pointer;
+export const Result = styled(Link)`
+  text-decoration: none;
+  color: black;
   width: 100%;
   padding: .5rem;
   background: white;
   &:hover {
-    background: lightgray;
+    background: #f9f9f9;
   }
 `
