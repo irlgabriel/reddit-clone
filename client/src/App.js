@@ -46,7 +46,7 @@ function App() {
         {
           users.map(user => 
             <Route key={user._id} exact path={generatePath("/users/:name", {name: user.username})}>
-              <Profile user={user}/>
+              <Profile setPosts={setPosts} posts={posts} user={user}/>
             </Route>
           )
         }

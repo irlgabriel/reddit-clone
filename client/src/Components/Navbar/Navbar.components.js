@@ -70,7 +70,9 @@ export const Button = styled.a`
     margin: 0 0.25rem;
   }
 `;
-export const UserSection = styled.p`
+export const UserSection = styled(Link)`
+  text-decoration: none;
+  color: black;
   color: gray;
   padding: 0 0.5rem;
   &:hover {

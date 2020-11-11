@@ -86,7 +86,7 @@ const Navbar = ({ subreddits, user, setUser }) => {
           </SearchResults>
         }
       </SearchBarContainer>
-      {user && <UserSection>{user.username}</UserSection>}
+      {user && <UserSection to={`/users/${user.username}`}>{user.username}</UserSection>}
       <ButtonGroup>
         {!user && (
           <Button
