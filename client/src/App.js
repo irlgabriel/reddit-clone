@@ -21,11 +21,11 @@ function App() {
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     if (currentUser) setUser(currentUser);
     // retrieve all posts when 
-    axios.get("/posts").then((res) => setPosts(res.data));
+    axios.get("/posts").then((res) => setPosts([...res.data]));
     // retrieve all subreddits 
-    axios.get("/subreddits").then((res) => setSubreddits(res.data));
+    axios.get("/subreddits").then((res) => setSubreddits([...res.data]));
     // retrieve all users
-    axios.get("/users").then(res => setUsers(res.data))
+    axios.get("/users").then(res => setUsers([...res.data]))
   }, []);
     
 
@@ -44,9 +44,9 @@ function App() {
           )
         }
         {
-          users.map(user => 
-            <Route key={user._id} exact path={generatePath("/users/:name", {name: user.username})}>
-              <Profile setPosts={setPosts} posts={posts} user={user}/>
+          users.map(profileUser => 
+            <Route key={profileUser._id} exact path={generatePath("/users/:name", {name: profileUser.username})}>
+              <Profile setPosts={setPosts} posts={posts} profileUser={profileUser} user={user}/>
             </Route>
           )
         }

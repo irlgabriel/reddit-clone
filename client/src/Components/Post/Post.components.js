@@ -82,7 +82,7 @@ export const Creator = styled(Link)`
   text-decoration: none;
   font-weight: 300;
   font-size: 12px;
-  color: ${({ me }) => (me ? "lightsalmon" : "gray")};
+  color: ${({ me }) => (me === "yes" ? "lightsalmon" : "gray")};
   &:before {
     content: "posted by";
     color: gray;

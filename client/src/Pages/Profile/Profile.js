@@ -4,14 +4,11 @@ import { Sidebar, Post } from "../../Components";
 import { 
   MainWrapper, 
   UserActivities,
-  CommentsContainer,
   PostsContainer,
 } from "./Profile.components";
-const Profile = ({posts, setPosts, user}) => {
-  const [userPosts, setUserPosts] = useState([]);
-  useEffect(() => {
-    setUserPosts(posts.filter(post => post.user === user._id));
-  }, [])
+const Profile = ({user, posts, profileUser}) => {
+  const [userPosts, setUserPosts] = useState(posts.filter(post => post.user === profileUser._id));
+
   return (
     <MainWrapper>
       <UserActivities>
@@ -20,12 +17,12 @@ const Profile = ({posts, setPosts, user}) => {
         {
           userPosts.map(post => 
             <Post 
-              posts={posts}
-              setPosts={setPosts}
+              posts={userPosts}
+              setPosts={setUserPosts}
               user={user}
               id={post._id}
               key={post._id}
-              creator_id={post.user}
+              creator_id={profileUser._id}
               content={post.content}
               subreddit={post.subreddit}
               title={post.title}
