@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
   Nav,
@@ -10,13 +10,18 @@ import {
   ButtonGroup,
   UserSection,
   RouteLink as Link,
+  SearchResults,
+  Result,
 } from "./Navbar.components";
 import { LoginModal, RegisterModal } from "..";
 import { CSSTransition } from "react-transition-group";
 
-const Navbar = ({ user, setUser }) => {
+const Navbar = ({ subreddits, user, setUser }) => {
   const [showLogin, setLogin] = useState(false);
   const [showRegister, setRegister] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [showSearchResults, setShowSearchResults] = useState([]);
   const logoutUser = () => {
     /*
     const config = {
@@ -30,6 +35,9 @@ const Navbar = ({ user, setUser }) => {
     localStorage.removeItem("currentUser");
     setUser(undefined);
   };
+  useEffect(() => {
+    setSearchResults(subreddits.filter(subreddit => subreddit.name.toLowerCase().includes(searchQuery.toLowerCase())))
+  }, [searchQuery])
   return (
     <Nav>
       <CSSTransition
@@ -60,9 +68,22 @@ const Navbar = ({ user, setUser }) => {
       <SearchBarContainer>
         <SearchIcon />
         <SearchBar
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onFocus={() => setShowSearchResults(true)}
+          onBlur={() => setShowSearchResults(false)}
+          value={searchQuery}
           type="text"
-          placeholder="You can try to search but I have not implemented this feature yet"
+          placeholder="Search subreddits..."
         />
+        {showSearchResults && 
+          <SearchResults>
+            {
+              searchResults.map(res => 
+                <Result key={res._id}>{res.name}</Result>
+              )
+            }
+          </SearchResults>
+        }
       </SearchBarContainer>
       {user && <UserSection>{user.username}</UserSection>}
       <ButtonGroup>

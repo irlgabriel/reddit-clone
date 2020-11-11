@@ -24,8 +24,10 @@ export const SearchIcon = styled(FaSearch)`
   left: 15px;
   font-size: 20px;
   color: gray;
+  z-index: 4;
 `;
 export const SearchBar = styled.input`
+  position: relative;
   border-radius: 5px;
   background-color: #f9f9f9;
   border: none;
@@ -80,3 +82,23 @@ export const RouteLink = styled(Link)`
   align-items: center;
   justify-content: center;
 `;
+export const SearchResults = styled.div`
+  box-shadow: 0px 0px 13px 0px rgba(79,79,79,1);
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-top: .5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+export const Result = styled.div`
+  user-select: none;
+  cursor: pointer;
+  width: 100%;
+  padding: .5rem;
+  background: white;
+  &:hover {
+    background: lightgray;
+  }
+`
