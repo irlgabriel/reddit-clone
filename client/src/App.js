@@ -36,7 +36,7 @@ function App() {
         {
           subreddits.map(subreddit => 
             <Route key={subreddit._id} exact path={generatePath("/subreddits/:name", {name: subreddit.name})}>
-              <Subreddit user={user} setPosts={posts} posts={posts} subreddit={subreddit}/>
+              <Subreddit user={user} postModal={postModal} setPostModal={setPostModal} setPosts={posts} posts={posts} subreddit={subreddit}/>
             </Route>
           )
         }

@@ -2,15 +2,25 @@ import react, {useState, useEffect} from "react";
 import { 
   MainWrapper,
   PostsContainer,
+  PostsHeader,
+  Paragraph,
+  PostIcon
 } from "./Subreddit.components";
-import { Sidebar, Post } from "../../Components";
+import { Sidebar, Post, PostModal } from "../../Components";
 
-const Subreddit = ({posts, setPosts, user, subreddit}) => {
+const Subreddit = ({setPostModal, postModal, posts, setPosts, user, subreddit}) => {
   const [subredditPosts, setSubredditPosts] = useState(posts.filter(post => post.subreddit === subreddit.name))
 
   return (
     <MainWrapper>
+      {
+        postModal && <PostModal fromSubreddit={subreddit.name} setPostModal={setPostModal} user={user} posts={posts} setPosts={setPosts}/>
+      }
       <PostsContainer>
+      <PostsHeader onClick={() => setPostModal(true)}>
+        <PostIcon />
+        <Paragraph>Create a Post.</Paragraph>
+      </PostsHeader>
         {
           subredditPosts.map(post => 
             <Post

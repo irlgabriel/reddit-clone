@@ -66,3 +66,9 @@ export const Option = styled.option``;
 export const TextArea = styled.textarea`
   padding: 0.5rem;
 `;
+export const DisabledText = styled.p`
+  background-color: lightgray;
+  text-align: center;
+  user-select: none;
+  padding: .25rem 0;
+`
