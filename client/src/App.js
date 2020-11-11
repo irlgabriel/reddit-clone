@@ -30,6 +30,7 @@ function App() {
     
 
   return (
+    users && posts && subreddits && 
     <Container>
       <Router>
         <Navbar subreddits={subreddits} user={user} setUser={setUser} />

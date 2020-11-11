@@ -25,6 +25,7 @@ const Sidebar = ({profileUser, subreddits}) => {
       }
         <Title>Popular Subreddits</Title>
       {
+        subreddits && 
         subreddits.slice(0,3).map(sub => 
           <SubredditContainer>{sub.name}</SubredditContainer>  
         )
