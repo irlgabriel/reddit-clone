@@ -1,6 +1,6 @@
 import react from "react";
 import { CSSTransition } from "react-transition-group";
-import { Navbar, Sidebar, Post, PostModal, SubredditModal } from "../Components";
+import { Sidebar, Post, PostModal, SubredditModal } from "../Components";
 import {
   MainWrapper,
   PostsContainer,
@@ -33,7 +33,6 @@ const Home = ({posts, setPosts, user, setUser, postModal, setPostModal, subreddi
       >
         <SubredditModal user={user} setSubredditModal={setSubredditModal} />
       </CSSTransition>
-      <Navbar user={user} setUser={setUser} />
       <MainWrapper>
         <PostsContainer>
           <PostsHeader onClick={() => setSubredditModal(true)}>
