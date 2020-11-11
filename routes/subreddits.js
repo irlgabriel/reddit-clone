@@ -11,8 +11,8 @@ router.get("/", (req, res, next) => {
 });
 
 /* GET - retrieve subreddit by subreddit_id */
-router.get('/:subreddit_id', (req, res, next) => {
-  Subreddit.findById(req.params.subreddit_id, (err, subreddit) => {
+router.get('/:subreddit_name', (req, res, next) => {
+  Subreddit.find({name: req.params.subreddit_name}, (err, subreddit) => {
     if(err) res.status(400).send(err)
     res.status(200).send(subreddit);
   })
