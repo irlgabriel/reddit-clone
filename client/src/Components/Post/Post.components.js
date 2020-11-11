@@ -77,8 +77,9 @@ export const SubredditName = styled(Link)`
   font-weight: bold;
 
 `;
-export const Creator = styled.p`
+export const Creator = styled(Link)`
   font-family: "Open Sans", sans-serif;
+  text-decoration: none;
   font-weight: 300;
   font-size: 12px;
   color: ${({ me }) => (me ? "lightsalmon" : "gray")};

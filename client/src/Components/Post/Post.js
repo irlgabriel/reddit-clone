@@ -130,7 +130,7 @@ const Post = ({
             <PostHeader>
               <SubredditName to={`/subreddits/${subreddit}`}>r/{subreddit}&nbsp;</SubredditName>
               &middot;&nbsp;
-              <Creator me={user && creator_id === user.username}>&nbsp;{postUsername}</Creator>
+              <Creator to={`/users/${postUsername}`} me={user && creator_id === user.username}>&nbsp;{postUsername}</Creator>
             </PostHeader>
             <PostBody>
               <PostTitle>{title}</PostTitle>

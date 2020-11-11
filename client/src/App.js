@@ -4,13 +4,14 @@ import axios from "axios";
 import "./App.css";
 
 import { Navbar } from "./Components";
-import { Home, Subreddit } from "./Pages";
+import { Home, Subreddit, Profile } from "./Pages";
 import { Container } from "./App.components";
 
 function App() {
   const [posts, setPosts] = useState([]);
   const [subreddits, setSubreddits] = useState([])
   const [user, setUser] = useState(undefined);
+  const [users, setUsers] = useState([])
   const [postModal, setPostModal] = useState(false);
   const [subredditModal, setSubredditModal] = useState(false);
 
@@ -23,6 +24,8 @@ function App() {
     axios.get("/posts").then((res) => setPosts(res.data));
     // retrieve all subreddits 
     axios.get("/subreddits").then((res) => setSubreddits(res.data));
+    // retrieve all users
+    axios.get("/users").then(res => setUsers(res.data))
   }, []);
     
 
@@ -37,6 +40,13 @@ function App() {
           subreddits.map(subreddit => 
             <Route key={subreddit._id} exact path={generatePath("/subreddits/:name", {name: subreddit.name})}>
               <Subreddit user={user} postModal={postModal} setPostModal={setPostModal} setPosts={setPosts} posts={posts} subreddit={subreddit}/>
+            </Route>
+          )
+        }
+        {
+          users.map(user => 
+            <Route key={user._id} exact path={generatePath("/users/:name", {name: user.username})}>
+              <Profile user={user}/>
             </Route>
           )
         }

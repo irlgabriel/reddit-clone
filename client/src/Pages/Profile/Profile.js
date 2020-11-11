@@ -4,13 +4,14 @@ import {
   MainWrapper, 
   UserActivities 
 } from "./Profile.components";
-const Profile = () => {
+const Profile = ({user}) => {
+
   return (
     <MainWrapper>
       <UserActivities>
         {/** Search for posts/comments made by this user here */}
       </UserActivities>
-      <Sidebar />
+      <Sidebar profileUser={user}/>
     </MainWrapper>
   )
 }

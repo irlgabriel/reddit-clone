@@ -14,10 +14,14 @@ import {
   LogoDiv
 } from "./Sidebar.components";
 
-const Sidebar = () => {
+const Sidebar = ({profileUser}) => {
   //960px hidden
   return (
     <SidebarContainer>
+      {
+        profileUser && 
+        <Title>{profileUser.username}</Title>
+      }
       <Header>
         <LogoDiv>
           <MongoLogo />
