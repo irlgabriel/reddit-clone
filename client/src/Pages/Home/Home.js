@@ -9,7 +9,7 @@ import {
   RedditLogo,
   Paragraph,
 } from "./Home.components";
-const Home = ({posts, setPosts, user, setUser, postModal, setPostModal, subredditModal, setSubredditModal}) => {
+const Home = ({setSubreddits, subreddits, posts, setPosts, user, setUser, postModal, setPostModal, subredditModal, setSubredditModal}) => {
   return (
     <div>
       <CSSTransition
@@ -31,7 +31,7 @@ const Home = ({posts, setPosts, user, setUser, postModal, setPostModal, subreddi
         timeout={300}
         unmountOnExit
       >
-        <SubredditModal user={user} setSubredditModal={setSubredditModal} />
+        <SubredditModal user={user} setSubreddits={setSubreddits} setSubredditModal={setSubredditModal} />
       </CSSTransition>
       <MainWrapper>
         <PostsContainer>
@@ -61,7 +61,7 @@ const Home = ({posts, setPosts, user, setUser, postModal, setPostModal, subreddi
             />
           ))}
         </PostsContainer>
-        <Sidebar />
+        <Sidebar subreddits={subreddits}/>
       </MainWrapper>
     </div>
   )

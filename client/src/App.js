@@ -34,7 +34,7 @@ function App() {
       <Router>
         <Navbar subreddits={subreddits} user={user} setUser={setUser} />
         <Route exact path="/">
-          <Home user={user} setUser={setUser} posts={posts} setPosts={setPosts} postModal={postModal} setPostModal={setPostModal} subredditModal={subredditModal} setSubredditModal={setSubredditModal}/>
+          <Home user={user} setUser={setUser} posts={posts} setPosts={setPosts} setSubreddits={setSubreddits} postModal={postModal} setPostModal={setPostModal} subredditModal={subredditModal} setSubredditModal={setSubredditModal} subreddits={subreddits}/>
         </Route>
         {
           subreddits.map(subreddit => 

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { FaReddit, FaNode, FaReact } from "react-icons/fa";
 import { SiMongodb, SiHeroku } from "react-icons/si";
 export const SidebarContainer = styled.div`
@@ -58,4 +59,14 @@ export const MongoLogo = styled(SiMongodb)`
 `
 export const HerokuLogo = styled(SiHeroku)`
   color: purple;
+`
+export const SubredditContainer = styled(Link)`
+  padding: .5rem;
+  text-decoration: none;
+  border-radius: 4px;
+  display: block;
+  color: black;
+  &:hover {
+    background: lightgray;
+  }
 `

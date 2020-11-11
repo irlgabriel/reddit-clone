@@ -10,7 +10,7 @@ import {
   Label,
   Button,
 } from "./SubredditModal.components";
-const SubredditModal = ({ user, setSubredditModal }) => {
+const SubredditModal = ({ subreddits, setSubreddits, user, setSubredditModal }) => {
   const [subredditName, setSubredditName] = useState("");
   const createSubreddit = (e) => {
     e.preventDefault();
@@ -25,7 +25,8 @@ const SubredditModal = ({ user, setSubredditModal }) => {
       creator: user._id,
     };
     axios.post("/subreddits", body, config).then((res) => {
-      console.log(res);
+      setSubredditModal(false);
+      setSubreddits([...subreddits, res.data]);
     });
   };
   return (

@@ -11,16 +11,23 @@ import {
   ReactLogo,
   NodeLogo,
   HerokuLogo,
-  LogoDiv
+  LogoDiv,
+  SubredditContainer
 } from "./Sidebar.components";
 
-const Sidebar = ({profileUser}) => {
+const Sidebar = ({profileUser, subreddits}) => {
   //960px hidden
   return (
     <SidebarContainer>
       {
         profileUser && 
         <Title>{profileUser.username}</Title>
+      }
+        <Title>Popular Subreddits</Title>
+      {
+        subreddits.slice(0,3).map(sub => 
+          <SubredditContainer>{sub.name}</SubredditContainer>  
+        )
       }
       <Header>
         <LogoDiv>
