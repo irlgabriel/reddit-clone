@@ -24,7 +24,7 @@ const Sidebar = ({ profileUser, subreddits }) => {
       {subreddits &&
         subreddits
           .slice(0, 3)
-          .map((sub) => <SubredditContainer>{sub.name}</SubredditContainer>)}
+          .map((sub) => <SubredditContainer key={sub.name} to={`/subreddits/${sub.name}`}>{sub.name}</SubredditContainer>)}
       <Header>
         <LogoDiv>
           <MongoLogo />

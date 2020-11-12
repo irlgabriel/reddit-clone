@@ -9,7 +9,7 @@ router.get("/", (req, res, next) => {
     if (err) {
       res.status(400).send(err);
     } else {
-      res.json(docs);
+      res.status(200).send(docs);
     }
   });
 });
