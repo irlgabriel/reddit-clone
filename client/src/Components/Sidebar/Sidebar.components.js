@@ -57,14 +57,4 @@ export const MongoLogo = styled(SiMongodb)`
 `;
 export const HerokuLogo = styled(SiHeroku)`
   color: purple;
-`;
-export const SubredditContainer = styled(Link)`
-  padding: 0.5rem;
-  text-decoration: none;
-  border-radius: 4px;
-  display: block;
-  color: black;
-  &:hover {
-    background: lightgray;
-  }
-`;
+`

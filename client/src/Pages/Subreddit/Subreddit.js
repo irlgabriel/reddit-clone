@@ -54,7 +54,7 @@ const Subreddit = ({
           />
         ))}
       </PostsContainer>
-      <Sidebar />
+      <Sidebar user={user} />
     </MainWrapper>
   );
 };

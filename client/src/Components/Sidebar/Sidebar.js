@@ -1,4 +1,6 @@
-import React from "react";
+import Axios from "axios";
+import React, { useState, useEffect } from "react";
+import { SidebarSubreddit } from "..";
 import { CSSTransiton } from "react-transition-group";
 import {
   SidebarContainer,
@@ -12,19 +14,24 @@ import {
   NodeLogo,
   HerokuLogo,
   LogoDiv,
-  SubredditContainer,
 } from "./Sidebar.components";
 
-const Sidebar = ({ profileUser, subreddits }) => {
+const Sidebar = ({ user, profileUser, subreddits, setSubreddits }) => {
+  
+
   //960px hidden
   return (
     <SidebarContainer>
-      {profileUser && <Title>{profileUser.username}</Title>}
+      {profileUser && 
+        <Title>{profileUser.username}</Title>
+      }
       <Title>Popular Subreddits</Title>
       {subreddits &&
         subreddits
           .slice(0, 3)
-          .map((sub) => <SubredditContainer key={sub.name} to={`/subreddits/${sub.name}`}>{sub.name}</SubredditContainer>)}
+          .map(sub => 
+            <SidebarSubreddit key={sub._id} subreddits={subreddits} setSubreddits={setSubreddits} sub={sub} user={user} />
+          )}
       <Header>
         <LogoDiv>
           <MongoLogo />

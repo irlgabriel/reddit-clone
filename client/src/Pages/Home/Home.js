@@ -79,7 +79,7 @@ const Home = ({
               />
             ))}
         </PostsContainer>
-        <Sidebar subreddits={subreddits} />
+        <Sidebar setSubreddits={setSubreddits} user={user} subreddits={subreddits} />
       </MainWrapper>
     </div>
   );
