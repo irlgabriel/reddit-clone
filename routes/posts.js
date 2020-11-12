@@ -8,6 +8,7 @@ router.get("/", (req, res, next) => {
     if (err) {
       res.status(400).send(err);
     } else {
+      console.log(docs);
       res.json(docs);
     }
   });

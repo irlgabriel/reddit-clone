@@ -6,6 +6,7 @@ var Subreddit = require("../models/subreddits");
 router.get("/", (req, res, next) => {
   Subreddit.find((err, docs) => {
     if (err) res.status(400).send(err);
+    console.log(docs);
     res.json(docs);
   });
 });
