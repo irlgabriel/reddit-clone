@@ -20,12 +20,25 @@ function App() {
     // check if there's an user in localstorage
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     if (currentUser) setUser(currentUser);
-    // retrieve all posts when
-    axios.get("/posts").then((res) => setPosts([...res.data]));
+
+    // retrieve all posts
+    const fetchPosts = async () => {
+      const res = await axios.get("/posts");
+      setPosts(res.data);
+    }
+    fetchPosts();
     // retrieve all subreddits
-    axios.get("/subreddits").then((res) => setSubreddits([...res.data]));
+    const fetchSubreddits = async () => {
+      const res = await axios.get("/subreddits");
+      setSubreddits(res.data);
+    }
+    fetchSubreddits();
     // retrieve all users
-    axios.get("/users").then((res) => setUsers([...res.data]));
+    const fetchUsers = async () => {
+      const res = await axios.get("/users");
+      setUsers(res.data)
+    }
+    fetchUsers();
   }, []);
 
   return (
