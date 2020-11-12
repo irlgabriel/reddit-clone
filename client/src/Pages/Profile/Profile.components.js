@@ -9,6 +9,7 @@ export const MainWrapper = styled.div`
   padding: 1.5rem;
 `;
 export const UserActivities = styled.div`
+  width: 600px;
   min-width: 400px;
 `;
 export const PostsContainer = styled.div``;
