@@ -30,7 +30,6 @@ function App() {
     
 
   return (
-    users && posts && subreddits && 
     <Container>
       <Router>
         <Navbar subreddits={subreddits} user={user} setUser={setUser} />
@@ -38,14 +37,14 @@ function App() {
           <Home user={user} setUser={setUser} posts={posts} setPosts={setPosts} setSubreddits={setSubreddits} postModal={postModal} setPostModal={setPostModal} subredditModal={subredditModal} setSubredditModal={setSubredditModal} subreddits={subreddits}/>
         </Route>
         {
-          subreddits.map(subreddit => 
+          subreddits.length && subreddits.map(subreddit => 
             <Route key={subreddit._id} exact path={generatePath("/subreddits/:name", {name: subreddit.name})}>
               <Subreddit user={user} postModal={postModal} setPostModal={setPostModal} setPosts={setPosts} posts={posts} subreddit={subreddit}/>
             </Route>
           )
         }
         {
-          users.map(profileUser => 
+          users.length &&  users.map(profileUser => 
             <Route key={profileUser._id} exact path={generatePath("/users/:name", {name: profileUser.username})}>
               <Profile setPosts={setPosts} posts={posts} profileUser={profileUser} user={user}/>
             </Route>

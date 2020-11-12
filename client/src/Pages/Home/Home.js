@@ -43,7 +43,7 @@ const Home = ({setSubreddits, subreddits, posts, setPosts, user, setUser, postMo
             <PostIcon />
             <Paragraph>Create a Post.</Paragraph>
           </PostsHeader>
-          {posts.map((post) => (
+          {posts.length && posts.map((post) => (
             <Post
               posts={posts}
               setPosts={setPosts}
