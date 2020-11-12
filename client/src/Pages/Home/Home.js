@@ -1,13 +1,17 @@
-import react from "react";
+import react, {useState, useEffect} from "react";
 import { CSSTransition } from "react-transition-group";
 import { Sidebar, Post, PostModal, SubredditModal } from "../../Components";
 import {
   MainWrapper,
   PostsContainer,
+  SortSection,
+  SortOption,
   PostsHeader,
   PostIcon,
   RedditLogo,
   Paragraph,
+  BestIcon,
+  NewIcon
 } from "./Home.components";
 const Home = ({
   setSubreddits,
@@ -21,6 +25,10 @@ const Home = ({
   subredditModal,
   setSubredditModal,
 }) => {
+  const [sort, setSort] = useState("New");
+  useEffect(() => {
+
+  }, sort)
   return (
     <div>
       <CSSTransition
@@ -58,6 +66,14 @@ const Home = ({
             <PostIcon />
             <Paragraph>Create a Post.</Paragraph>
           </PostsHeader>
+          <SortSection>
+            <SortOption onClick={() => setSort("New")} selected={sort === "New" ? "yes" : "no"}>
+              <NewIcon />&nbsp;New  
+            </SortOption>
+            <SortOption onClick={() => setSort("Best")} selected={sort === "Best" ? "yes" : "no"}>
+              <BestIcon />&nbsp;Best
+            </SortOption>
+          </SortSection>
           {
             posts.map((post) => (
               <Post

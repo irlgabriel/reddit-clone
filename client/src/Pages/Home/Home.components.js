@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { BsFilePost } from "react-icons/bs";
+import { BsFilePost, BsGearFill } from "react-icons/bs";
 import { FaReddit } from "react-icons/fa";
+import { BiRocket } from "react-icons/bi";
 
 export const MainWrapper = styled.div`
   display: flex;
@@ -13,6 +14,30 @@ export const MainWrapper = styled.div`
 export const PostsContainer = styled.div`
   min-width: 400px;
 `;
+export const SortSection = styled.div`
+  padding: .75rem .25rem;
+  border-radius: 3px;
+  user-select: none;
+  background: white;
+  position: relative;
+  display: flex;
+  margin-top: .5rem;
+`
+export const SortOption = styled.div`
+  color: ${({selected}) => (selected === "yes" ? "royalblue" : "gray")};
+  margin-left: 1rem;
+  padding: .5rem 1rem;
+  border-radius: 15px;
+  background-color: ${({selected}) => (selected === "yes" ? "#E8E8E8" : "white" )};
+  display: flex;
+  align-items: center;
+  &:hover {
+    background: #e8e8e8;
+    color: royalblue;
+    cursor: pointer;
+    
+  }
+`
 export const PostsHeader = styled.div`
   margin-top: 0.5rem;
   cursor: pointer;
@@ -41,3 +66,9 @@ export const RedditLogo = styled(FaReddit)`
 export const Paragraph = styled.p`
   font-size: 20px;
 `;
+export const BestIcon = styled(BiRocket)`
+
+`
+export const NewIcon = styled(BsGearFill)`
+
+`
