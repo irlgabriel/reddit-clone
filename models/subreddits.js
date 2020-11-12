@@ -4,7 +4,7 @@ var SubredditSchema = mongoose.Schema(
   {
     name: { type: String, unique: true, required: [true, "can't be blank"] },
     creator: String,
-    members: { Array, default: []}
+    members: { type: Array, default: [] },
   },
   { timestamps: true }
 );

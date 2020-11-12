@@ -14,7 +14,7 @@ export const SubredditContainer = styled.div`
   font-size: 14px;
 
 `;
-export const SubredditInfo = styled.p`
+export const SubredditInfo = styled.div`
   display: flex;
   flex-direction: column;
   user-select: none;
