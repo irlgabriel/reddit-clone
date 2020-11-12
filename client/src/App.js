@@ -14,6 +14,26 @@ function App() {
   const [users, setUsers] = useState([]);
   const [postModal, setPostModal] = useState(false);
   const [subredditModal, setSubredditModal] = useState(false);
+  const [sort, setSort] = useState("New");
+
+  const compareByDate = (a, b) => {
+    return a.createdAt >= b.createdAt ? -1 : 1;
+  }
+
+  const compareByVotes = (post1, post2) => {
+    const post1_upvotes = post1.upvotes.length - post1.downvotes.length;
+    const post2_upvotes = post2.upvotes.length - post2.downvotes.length;
+    return post1_upvotes > post2_upvotes ? -1 : 1;
+  }
+
+  useEffect(() => {
+    if(sort == "New") {
+      setPosts([...posts].sort(compareByDate));
+     } else {
+      setPosts([...posts].sort(compareByVotes)); 
+     }
+    
+  }, [sort])
 
   // when comp is rendered first time
   useEffect(() => {
@@ -59,6 +79,8 @@ function App() {
             subredditModal={subredditModal}
             setSubredditModal={setSubredditModal}
             subreddits={subreddits}
+            sort={sort}
+            setSort={setSort}
           />
         </Route>
         {

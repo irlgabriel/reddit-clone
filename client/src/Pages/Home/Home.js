@@ -24,11 +24,9 @@ const Home = ({
   setPostModal,
   subredditModal,
   setSubredditModal,
+  sort,
+  setSort
 }) => {
-  const [sort, setSort] = useState("New");
-  useEffect(() => {
-
-  }, sort)
   return (
     <div>
       <CSSTransition
