@@ -24,18 +24,21 @@ function App() {
     // retrieve all posts
     const fetchPosts = async () => {
       const res = await axios.get("/posts");
+      console.log(res)
       setPosts(res.data);
     }
     fetchPosts();
     // retrieve all subreddits
     const fetchSubreddits = async () => {
       const res = await axios.get("/subreddits");
+      console.log(res)
       setSubreddits(res.data);
     }
     fetchSubreddits();
     // retrieve all users
     const fetchUsers = async () => {
       const res = await axios.get("/users");
+      console.log(res)
       setUsers(res.data)
     }
     fetchUsers();
