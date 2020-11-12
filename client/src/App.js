@@ -21,7 +21,6 @@ function App() {
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     if (currentUser) setUser(currentUser);
 
-    
     // ASYNC
     // retrieve all posts
     const fetchPosts = async () => {
@@ -41,6 +40,7 @@ function App() {
       setUsers(res.data)
     }
     fetchUsers();
+    
   }, []);
 
   return (

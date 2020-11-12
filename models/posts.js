@@ -8,7 +8,6 @@ var PostSchema = mongoose.Schema(
     content: { type: String, required: [true, "can't be blank"] },
     upvotes: { type: Array, default: [] },
     downvotes: { type: Array, default: [] },
-    comments: { type: Array, default: [] },
   },
   { timestamps: true }
 );
