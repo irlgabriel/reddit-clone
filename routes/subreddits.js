@@ -28,5 +28,27 @@ router.post("/", (req, res, next) => {
     .then((sub) => res.status(200).send(sub))
     .catch((err) => res.status(400).send(err));
 });
-
+/* POST - subscribe to subreddit */
+router.post("/:subreddit_id/subscribe", (req, res, next) => {
+  const user = req.body.user_id
+  Subreddit.findById(req.params.subreddit_id, (err, sub) => {
+    if(err) res.status(400).send(err);
+    sub.members.push(user_id);
+    sub.save((err, doc) => {
+      if(err) res.status(400).send(err);
+      res.status(200).send(sub);
+    })
+  })
+})
+/* POST - Unsubscribe from subreddit */
+router.post("/:subreddit_id/unsubscribe", (req, res, next) => {
+  Subreddit.findById(req.params.subreddit_id, (err, sub) => {
+    if(err) res.status(400).send(err);
+    sub.members.filter(member => member._id !== req.body.user_id);
+    sub.save((err, doc) => {
+      if(err) res.status(400).send(err);
+      res.status(200).send(sub);
+    })
+  })
+})
 module.exports = router;
