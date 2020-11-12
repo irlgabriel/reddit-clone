@@ -21,6 +21,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+//app.use("/", indexRouter);
+app.use("/users", usersRouter);
+app.use("/posts", postsRouter);
+app.use("/subreddits", subredditsRouter);
+app.use("/posts/:post_id/comments", commentsRouter);
+
 if (process.env.NODE_ENV == "production") {
   // Set a static folder
   app.use(express.static("client/build"));
@@ -29,12 +35,6 @@ if (process.env.NODE_ENV == "production") {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
 }
-
-//app.use("/", indexRouter);
-app.use("/users", usersRouter);
-app.use("/posts", postsRouter);
-app.use("/subreddits", subredditsRouter);
-app.use("/posts/:post_id/comments", commentsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
