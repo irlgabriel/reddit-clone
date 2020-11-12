@@ -37,7 +37,7 @@ export const Button = styled.button`
   text-decoration: none;
   border-radius: 4px;
   outline: none;
-  border: 1px solid royalblue;
+  border: 0;
   padding: 0.35rem 2rem;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: 14px;
@@ -48,5 +48,8 @@ export const Button = styled.button`
   }
   &:first-child {
     margin: 0 0.25rem;
+  }
+  &:hover {
+    opacity: .75;
   }
 `;
