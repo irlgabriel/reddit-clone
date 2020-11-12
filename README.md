@@ -8,5 +8,5 @@
 
 #### - [Very important] - ADD Flash messages! (maybe add a msg key in the response body and use a state in main component to render it when there's a message sent back?)
 
-#### - Add a feature to subscribe/unsubscribe to subreddits
+#### - Think of a better way to manage state for subscribed users. When users login/logout the state is not changed
 
