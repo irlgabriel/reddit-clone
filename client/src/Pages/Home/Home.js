@@ -9,7 +9,18 @@ import {
   RedditLogo,
   Paragraph,
 } from "./Home.components";
-const Home = ({setSubreddits, subreddits, posts, setPosts, user, setUser, postModal, setPostModal, subredditModal, setSubredditModal}) => {
+const Home = ({
+  setSubreddits,
+  subreddits,
+  posts,
+  setPosts,
+  user,
+  setUser,
+  postModal,
+  setPostModal,
+  subredditModal,
+  setSubredditModal,
+}) => {
   return (
     <div>
       <CSSTransition
@@ -31,7 +42,11 @@ const Home = ({setSubreddits, subreddits, posts, setPosts, user, setUser, postMo
         timeout={300}
         unmountOnExit
       >
-        <SubredditModal user={user} setSubreddits={setSubreddits} setSubredditModal={setSubredditModal} />
+        <SubredditModal
+          user={user}
+          setSubreddits={setSubreddits}
+          setSubredditModal={setSubredditModal}
+        />
       </CSSTransition>
       <MainWrapper>
         <PostsContainer>
@@ -43,28 +58,31 @@ const Home = ({setSubreddits, subreddits, posts, setPosts, user, setUser, postMo
             <PostIcon />
             <Paragraph>Create a Post.</Paragraph>
           </PostsHeader>
-          {posts.length && posts.map((post) => (
-            <Post
-              posts={posts}
-              setPosts={setPosts}
-              user={user}
-              id={post._id}
-              key={post._id}
-              creator_id={post.user}
-              content={post.content}
-              subreddit={post.subreddit}
-              title={post.title}
-              upvotes={post.upvotes}
-              downvotes={post.downvotes}
-              upvoted={user && post.upvotes.includes(user._id) ? "yes" : "no"}
-              downvoted={user && post.downvotes.includes(user._id) ? "yes" : "no"}
-            />
-          ))}
+          {
+            posts.map((post) => (
+              <Post
+                posts={posts}
+                setPosts={setPosts}
+                user={user}
+                id={post._id}
+                key={post._id}
+                creator_id={post.user}
+                content={post.content}
+                subreddit={post.subreddit}
+                title={post.title}
+                upvotes={post.upvotes}
+                downvotes={post.downvotes}
+                upvoted={user && post.upvotes.includes(user._id) ? "yes" : "no"}
+                downvoted={
+                  user && post.downvotes.includes(user._id) ? "yes" : "no"
+                }
+              />
+            ))}
         </PostsContainer>
-        <Sidebar subreddits={subreddits}/>
+        <Sidebar subreddits={subreddits} />
       </MainWrapper>
     </div>
-  )
-}
+  );
+};
 
 export default Home;

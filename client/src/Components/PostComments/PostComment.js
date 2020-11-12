@@ -1,5 +1,5 @@
 import axios from "axios";
-import react, {useState, useEffect } from "react";
+import react, { useState, useEffect } from "react";
 import {
   CommentWrapper,
   DotsGroup,
@@ -16,38 +16,38 @@ import {
   Content,
   CommentIcon,
   FooterItem,
-  P
-} from "./PostComment.components"
+  P,
+} from "./PostComment.components";
 
 const PostComment = ({ post_id, user, comment }) => {
-  const [upvotes, setUpvotes] = useState(comment.upvotes.length - comment.downvotes.length)
-  const [username, setUsername] = useState('');
+  const [upvotes, setUpvotes] = useState(
+    comment.upvotes.length - comment.downvotes.length
+  );
+  const [username, setUsername] = useState("");
   const config = {
     headers: {
-      "Accept": "application/json",
+      Accept: "application/json",
       "Content-Type": "application/json",
     },
   };
 
   const getUsername = (user_id) => {
-    axios.get(`/users/${user_id}`)
-    .then(res => {
+    axios.get(`/users/${user_id}`).then((res) => {
       setUsername(res.data.username);
-    })
-  }
+    });
+  };
 
   const upvoteComment = () => {
-    if(!user) return;
-    const body = JSON.stringify({user_id: user._id});
-    axios.post(`/posts/${post_id}/comments/upvote`, body, config)
-    .then()
-  }
+    if (!user) return;
+    const body = JSON.stringify({ user_id: user._id });
+    axios.post(`/posts/${post_id}/comments/upvote`, body, config).then();
+  };
   useEffect(() => {
     // set initial upvotes count
-    setUpvotes(comment.upvotes.length - comment.downvotes.length)
+    setUpvotes(comment.upvotes.length - comment.downvotes.length);
     // set comment's user
-    getUsername(user._id)
-  }, [])
+    getUsername(user._id);
+  }, []);
   return (
     <CommentWrapper>
       <CommentContainer>
@@ -67,15 +67,17 @@ const PostComment = ({ post_id, user, comment }) => {
           </CommentBody>
           <CommentFooter>
             <FooterItem>
-              <CommentIcon />&nbsp;
-              <P bold size="13" color="darkgray" color="darkgray">Reply</P>
+              <CommentIcon />
+              &nbsp;
+              <P bold size="13" color="darkgray" color="darkgray">
+                Reply
+              </P>
             </FooterItem>
           </CommentFooter>
         </CommentContent>
-
       </CommentContainer>
     </CommentWrapper>
-  )
-}
+  );
+};
 
 export default PostComment;

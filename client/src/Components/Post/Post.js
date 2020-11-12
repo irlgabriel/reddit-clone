@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { PostComment, CommentForm } from "..";
 import {
-  PostWrapper, 
+  PostWrapper,
   PostContainer,
   DotsWrapper,
   DotsContainer,
@@ -45,7 +45,7 @@ const Post = ({
   upvoted,
   downvoted,
 }) => {
-  const [postUsername, setPostUsername] = useState('')
+  const [postUsername, setPostUsername] = useState("");
   const [showComments, setShowComments] = useState(false);
   const [postComments, setPostComments] = useState([]);
   // const [commentsSortBy, setCommentsSortBy] = useState('BEST')
@@ -53,60 +53,59 @@ const Post = ({
 
   const config = {
     headers: {
-      "Accept": "application/json",
+      Accept: "application/json",
       "Content-Type": "application/json",
     },
   };
   const getUsername = (user_id) => {
-    axios.get(`/users/${user_id}`)
-    .then(res => {
+    axios.get(`/users/${user_id}`).then((res) => {
       setPostUsername(res.data.username);
-    })
-  }
+    });
+  };
   const upvotePost = () => {
-    if(!user) return;
+    if (!user) return;
     const body = JSON.stringify({
-      user_id: user._id
-    })
-    axios.post(`/posts/${id}/upvote`, body, config)
-    .then(res => {
-      const updatedPost = res.data;
-      setPosts(posts.map(post => post._id === id ? updatedPost : post))
-    })
-    .catch(err => console.log(err))
-  }
+      user_id: user._id,
+    });
+    axios
+      .post(`/posts/${id}/upvote`, body, config)
+      .then((res) => {
+        const updatedPost = res.data;
+        setPosts(posts.map((post) => (post._id === id ? updatedPost : post)));
+      })
+      .catch((err) => console.log(err));
+  };
   const downvotePost = () => {
-    if(!user) return;
+    if (!user) return;
     const body = JSON.stringify({
-      user_id: user._id
-    })
-    axios.post(`/posts/${id}/downvote`, body, config)
-    .then(res => {
-      const updatedPost = res.data;
-      setPosts(posts.map(post => post._id === id ? updatedPost : post))
-    })
-    .catch(err => console.log(err))
-  }
+      user_id: user._id,
+    });
+    axios
+      .post(`/posts/${id}/downvote`, body, config)
+      .then((res) => {
+        const updatedPost = res.data;
+        setPosts(posts.map((post) => (post._id === id ? updatedPost : post)));
+      })
+      .catch((err) => console.log(err));
+  };
   const deletePost = () => {
-    if(!user) return;
-    window.confirm("Are you sure you want to delete this post?") && 
-    axios.delete(`/posts/${id}`, config)
-    .then(res =>
-      setPosts(posts => posts.filter(post => post._id !== res.data._id))
-    )
-    .catch(err => console.log(err))
-  }
+    if (!user) return;
+    window.confirm("Are you sure you want to delete this post?") &&
+      axios
+        .delete(`/posts/${id}`, config)
+        .then((res) =>
+          setPosts((posts) => posts.filter((post) => post._id !== res.data._id))
+        )
+        .catch((err) => console.log(err));
+  };
 
   // When component renders
   useEffect(() => {
     // Retrieve post's comments
-    axios.get(`/posts/${id}/comments`)
-    .then(res => setPostComments(res.data));
+    axios.get(`/posts/${id}/comments`).then((res) => setPostComments(res.data));
     // Get post's username using user_id
     getUsername(creator_id);
-  }, [])
-
- 
+  }, []);
 
   return (
     <PostWrapper>
@@ -114,30 +113,36 @@ const Post = ({
         {/* Votes Container */}
         <DotsWrapper>
           <DotsContainer>
-            <UpDot
-              onClick={() => upvotePost()} 
-              upvoted={upvoted}
-            />
-            <DotsCount upvoted={upvoted} downvoted={downvoted}>{upvotes.length - downvotes.length}</DotsCount>
-            <DownDot
-              onClick={() => downvotePost()}
-              downvoted={downvoted}
-            />
+            <UpDot onClick={() => upvotePost()} upvoted={upvoted} />
+            <DotsCount upvoted={upvoted} downvoted={downvoted}>
+              {upvotes.length - downvotes.length}
+            </DotsCount>
+            <DownDot onClick={() => downvotePost()} downvoted={downvoted} />
           </DotsContainer>
         </DotsWrapper>
         <PostContentWrapper>
           <PostContentContainer>
             <PostHeader>
-              <SubredditName to={`/subreddits/${subreddit}`}>r/{subreddit}&nbsp;</SubredditName>
+              <SubredditName to={`/subreddits/${subreddit}`}>
+                r/{subreddit}&nbsp;
+              </SubredditName>
               &middot;&nbsp;
-              <Creator to={`/users/${postUsername}`} me={user ? creator_id === user._id ? "yes" : "false" : ""}>&nbsp;{postUsername}</Creator>
+              <Creator
+                to={`/users/${postUsername}`}
+                me={user ? (creator_id === user._id ? "yes" : "false") : ""}
+              >
+                &nbsp;{postUsername}
+              </Creator>
             </PostHeader>
             <PostBody>
               <PostTitle>{title}</PostTitle>
               <PostContent>{content}</PostContent>
             </PostBody>
             <PostFooter>
-              <FooterLink onClick={() => setShowComments(!showComments)} href="">
+              <FooterLink
+                onClick={() => setShowComments(!showComments)}
+                href=""
+              >
                 <CommentIcon />
                 &nbsp;
                 <span>{postComments.length} Comments</span>
@@ -161,38 +166,52 @@ const Post = ({
               )}
             </PostFooter>
           </PostContentContainer>
-          {
-            showComments && 
+          {showComments && (
             <CommentsWrapper>
-            {
-              !user &&
+              {!user && (
                 <NotLoggedIn>
                   <P color="darkgray">Log in or sign up to leave a comment</P>
                   <ButtonGroup>
-                    <Button color="royalblue" bgColor="white">LOG IN</Button>
-                    <Button color="white" bgColor="royalblue">SIGN UP</Button>
+                    <Button color="royalblue" bgColor="white">
+                      LOG IN
+                    </Button>
+                    <Button color="white" bgColor="royalblue">
+                      SIGN UP
+                    </Button>
                   </ButtonGroup>
                 </NotLoggedIn>
-            }
-            {
-              user && 
-              <CommentForm setPostComments={setPostComments} postComments={postComments} post_id={id} user_id={user._id}/>
-            }
-            {
-              postComments.length > 0 &&
-              <SortBy>
-                <P onClick={() => setShowCommentsSortBy(!showCommentsSortBy)} size="11px" color="darkgray">SORT BY</P>
-                <SortByDropdown>
-                </SortByDropdown>
-              </SortBy>
-            }
-              {
-                postComments.map(comment => 
-                  <PostComment key={comment._id} getUsername={getUsername} post_id={id} user={user} comment={comment} />
-                )
-              }
+              )}
+              {user && (
+                <CommentForm
+                  setPostComments={setPostComments}
+                  postComments={postComments}
+                  post_id={id}
+                  user_id={user._id}
+                />
+              )}
+              {postComments.length > 0 && (
+                <SortBy>
+                  <P
+                    onClick={() => setShowCommentsSortBy(!showCommentsSortBy)}
+                    size="11px"
+                    color="darkgray"
+                  >
+                    SORT BY
+                  </P>
+                  <SortByDropdown></SortByDropdown>
+                </SortBy>
+              )}
+              {postComments.map((comment) => (
+                <PostComment
+                  key={comment._id}
+                  getUsername={getUsername}
+                  post_id={id}
+                  user={user}
+                  comment={comment}
+                />
+              ))}
             </CommentsWrapper>
-          }
+          )}
         </PostContentWrapper>
       </PostContainer>
     </PostWrapper>

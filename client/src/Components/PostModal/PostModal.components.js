@@ -70,5 +70,5 @@ export const DisabledText = styled.p`
   background-color: lightgray;
   text-align: center;
   user-select: none;
-  padding: .25rem 0;
-`
+  padding: 0.25rem 0;
+`;

@@ -5,13 +5,11 @@ import { BsDot } from "react-icons/bs";
 import { RiMessageFill, RiShareForwardFill } from "react-icons/ri";
 import { FaSave, FaTrash } from "react-icons/fa";
 
-
 export const PostWrapper = styled.div`
   background-color: white;
   border-radius: 4px;
   margin: 0.5rem 0;
-
-`
+`;
 export const PostContainer = styled.div`
   background-color: white;
   width: 600px;
@@ -35,7 +33,7 @@ export const DotsWrapper = styled.div`
 `;
 export const DotsContainer = styled.div`
   height: 80px;
-  width: 100%;  
+  width: 100%;
   padding: 0.5rem 0;
   display: flex;
   flex-direction: column;
@@ -56,16 +54,14 @@ export const DownDot = styled(GoArrowDown)`
   font-size: 24px;
   cursor: pointer;
 `;
-export const PostContentWrapper = styled.div`
- 
-`;
+export const PostContentWrapper = styled.div``;
 export const PostContentContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: .5rem;
+  padding: 0.5rem;
   padding-bottom: 0;
-`
+`;
 export const PostHeader = styled.div`
   display: flex;
   align-items: center;
@@ -75,7 +71,6 @@ export const SubredditName = styled(Link)`
   color: black;
   font-size: 14px;
   font-weight: bold;
-
 `;
 export const Creator = styled(Link)`
   font-family: "Open Sans", sans-serif;
@@ -122,12 +117,9 @@ export const FooterLink = styled.div`
     text-decoration: none;
   }
 `;
-export const CommentIcon = styled(RiMessageFill)`
-`;
-export const ShareIcon = styled(RiShareForwardFill)`
-`;
-export const SaveIcon = styled(FaSave)`
-`;
+export const CommentIcon = styled(RiMessageFill)``;
+export const ShareIcon = styled(RiShareForwardFill)``;
+export const SaveIcon = styled(FaSave)``;
 export const DeleteIcon = styled(FaTrash)`
   color: red;
 `;
@@ -135,9 +127,9 @@ export const DeleteIcon = styled(FaTrash)`
 export const CommentsWrapper = styled.div`
   width: 100%;
   min-height: 50px;
-  padding: .5rem 0;
+  padding: 0.5rem 0;
   padding-top: 0;
-`
+`;
 export const NotLoggedIn = styled.div`
   width: 90%;
   margin: 0 auto;
@@ -146,9 +138,8 @@ export const NotLoggedIn = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: .5rem;
-
-`
+  padding: 0.5rem;
+`;
 export const Button = styled.a`
   cursor: pointer;
   display: inline-block;
@@ -159,7 +150,7 @@ export const Button = styled.a`
   padding: 0.5rem 1rem;
   font-weight: bold;
   font-size: 12px;
-  margin-right: .25rem;
+  margin-right: 0.25rem;
   background-color: ${({ bgColor }) => `${bgColor}`};
   color: ${({ color }) => `${color}`};
   &:hover {
@@ -171,35 +162,34 @@ export const Button = styled.a`
 `;
 
 export const Bold = styled.b`
-  color: ${({color}) => (color)}
-`
+  color: ${({ color }) => color};
+`;
 
 export const P = styled.p`
-  font-size: ${({size}) => (size)};
-  color: ${({color}) => (color)};
-`
+  font-size: ${({ size }) => size};
+  color: ${({ color }) => color};
+`;
 
-export const ButtonGroup = styled.div`
-`
+export const ButtonGroup = styled.div``;
 
 export const SortBy = styled.div`
   display: flex;
   align-items: center;
   width: 90%;
   margin: 0 auto;
-  padding: .25rem 0;
+  padding: 0.25rem 0;
   border-bottom: 1px solid lightgray;
-`
+`;
 export const SortByDropdown = styled.div`
   display: flex;
   flex-direction: column;
   &:hover {
     background: lightskyblue;
   }
-`
+`;
 export const OptionContainer = styled.div`
   background: white;
   &:hover {
     background: lightskyblue;
   }
-`
+`;

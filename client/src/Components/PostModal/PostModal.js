@@ -12,10 +12,10 @@ import {
   Select,
   TextArea,
   Header,
-  DisabledText
+  DisabledText,
 } from "./PostModal.components";
 
-const PostModal = ({fromSubreddit, setPosts, posts, user, setPostModal }) => {
+const PostModal = ({ fromSubreddit, setPosts, posts, user, setPostModal }) => {
   const [subreddits, setSubreddits] = useState([]);
   const [subreddit, setSubreddit] = useState();
   const [title, setTitle] = useState("");
@@ -56,20 +56,17 @@ const PostModal = ({fromSubreddit, setPosts, posts, user, setPostModal }) => {
           <Header>Create a new Post</Header>
           <FormGroup>
             <Label>Subreddit</Label>
-            {
-              fromSubreddit && <DisabledText>{fromSubreddit}</DisabledText>
-            }
-            {
-              !fromSubreddit && 
+            {fromSubreddit && <DisabledText>{fromSubreddit}</DisabledText>}
+            {!fromSubreddit && (
               <Select
-              onChange={(e) => setSubreddit(e.target.value)}
-              name="subreddits"
-            >
-              {subreddits.map((subreddit) => (
-                <Option value={`${subreddit.name}`}>{subreddit.name}</Option>
-              ))}
-            </Select>
-            }
+                onChange={(e) => setSubreddit(e.target.value)}
+                name="subreddits"
+              >
+                {subreddits.map((subreddit) => (
+                  <Option value={`${subreddit.name}`}>{subreddit.name}</Option>
+                ))}
+              </Select>
+            )}
           </FormGroup>
           <FormGroup>
             <Label>Title</Label>

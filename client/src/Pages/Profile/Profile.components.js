@@ -10,10 +10,6 @@ export const MainWrapper = styled.div`
 `;
 export const UserActivities = styled.div`
   min-width: 400px;
-`
-export const PostsContainer = styled.div`
-
-`
-export const CommentsContainer = styled.div`
-  
-`
+`;
+export const PostsContainer = styled.div``;
+export const CommentsContainer = styled.div``;

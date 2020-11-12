@@ -19,7 +19,7 @@ import { CSSTransition } from "react-transition-group";
 const Navbar = ({ subreddits, user, setUser }) => {
   const [showLogin, setLogin] = useState(false);
   const [showRegister, setRegister] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showSearchResults, setShowSearchResults] = useState([]);
   const logoutUser = () => {
@@ -36,9 +36,11 @@ const Navbar = ({ subreddits, user, setUser }) => {
     setUser(undefined);
   };
   useEffect(() => {
-    const results = subreddits.filter(subreddit => subreddit.name.toLowerCase().includes(searchQuery.toLowerCase()))
+    const results = subreddits.filter((subreddit) =>
+      subreddit.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
     setSearchResults(results);
-  }, [searchQuery])
+  }, [searchQuery]);
   return (
     <Nav>
       <CSSTransition
@@ -76,17 +78,21 @@ const Navbar = ({ subreddits, user, setUser }) => {
           type="text"
           placeholder="Search subreddits..."
         />
-        {showSearchResults && 
+        {showSearchResults && (
           <SearchResults>
-            {
-              searchResults.map(res => 
-                <Result to={`/subreddits/${res.name}`} key={res._id}>{res.name}</Result>
-              )
-            }
+            {searchResults.map((res) => (
+              <Result to={`/subreddits/${res.name}`} key={res._id}>
+                {res.name}
+              </Result>
+            ))}
           </SearchResults>
-        }
+        )}
       </SearchBarContainer>
-      {user && <UserSection to={`/users/${user.username}`}>{user.username}</UserSection>}
+      {user && (
+        <UserSection to={`/users/${user.username}`}>
+          {user.username}
+        </UserSection>
+      )}
       <ButtonGroup>
         {!user && (
           <Button

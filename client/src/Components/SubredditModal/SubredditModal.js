@@ -10,7 +10,12 @@ import {
   Label,
   Button,
 } from "./SubredditModal.components";
-const SubredditModal = ({ subreddits, setSubreddits, user, setSubredditModal }) => {
+const SubredditModal = ({
+  subreddits,
+  setSubreddits,
+  user,
+  setSubredditModal,
+}) => {
   const [subredditName, setSubredditName] = useState("");
   const createSubreddit = (e) => {
     e.preventDefault();

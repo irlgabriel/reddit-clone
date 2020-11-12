@@ -85,24 +85,24 @@ export const RouteLink = styled(Link)`
   justify-content: center;
 `;
 export const SearchResults = styled.div`
-  box-shadow: 0px 0px 13px 0px rgba(79,79,79,1);
+  box-shadow: 0px 0px 13px 0px rgba(79, 79, 79, 1);
   border: 1px solid lightgray;
   border-radius: 4px;
   position: absolute;
   left: 0;
   right: 0;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-`
+`;
 export const Result = styled(Link)`
   text-decoration: none;
   color: black;
   width: 100%;
-  padding: .5rem;
+  padding: 0.5rem;
   background: white;
   &:hover {
     background: #f9f9f9;
   }
-`
+`;

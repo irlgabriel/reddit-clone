@@ -27,41 +27,39 @@ export const LogoDiv = styled.div`
   display: flex;
   align-items: center;
   font-size: 32px;
-  svg, img {
-    margin-left: .5rem;
+  svg,
+  img {
+    margin-left: 0.5rem;
   }
-`
-export const Title = styled.p`
 `;
+export const Title = styled.p``;
 export const Subtitle = styled.p`
   font-family: "Open Sans", sans-serif;
   font-weight: 300;
   font-size: 16px;
   display: flex;
   align-items: center;
-  margin-bottom: .25rem;
-
-`
-export const Description = styled.p`
+  margin-bottom: 0.25rem;
 `;
+export const Description = styled.p``;
 export const RedditLogo = styled(FaReddit)`
   color: red;
   margin: 0 0.5rem;
 `;
 export const NodeLogo = styled(FaNode)`
   color: green;
-`
+`;
 export const ReactLogo = styled(FaReact)`
   color: lightblue;
-`
+`;
 export const MongoLogo = styled(SiMongodb)`
   color: green;
-`
+`;
 export const HerokuLogo = styled(SiHeroku)`
   color: purple;
-`
+`;
 export const SubredditContainer = styled(Link)`
-  padding: .5rem;
+  padding: 0.5rem;
   text-decoration: none;
   border-radius: 4px;
   display: block;
@@ -69,4 +67,4 @@ export const SubredditContainer = styled(Link)`
   &:hover {
     background: lightgray;
   }
-`
+`;

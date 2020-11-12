@@ -1,20 +1,17 @@
 import styled from "styled-components";
 
 export const FormWrapper = styled.div`
-  padding: .5rem;
+  padding: 0.5rem;
   padding-top: 0;
   width: 100%;
-`
-export const Form = styled.div`
-
-`
+`;
+export const Form = styled.div``;
 export const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  border: ${({borderColor}) => `1px solid ${borderColor}`};
+  border: ${({ borderColor }) => `1px solid ${borderColor}`};
   border-radius: 5px;
-
-`
+`;
 export const TextArea = styled.textarea`
   width: 100%;
   margin: 0 auto;
@@ -22,13 +19,12 @@ export const TextArea = styled.textarea`
   min-height: 100px;
   border: none;
   resize: vertical;
-  padding: .5rem;
+  padding: 0.5rem;
   border-radius: 5px;
   &:focus {
     outline: 0;
   }
-
-`
+`;
 export const Button = styled.a`
   cursor: pointer;
   display: inline-block;
@@ -48,14 +44,13 @@ export const Button = styled.a`
 `;
 export const FormFooter = styled.div`
   display: flex;
-  padding: .25rem .5rem;
+  padding: 0.25rem 0.5rem;
   width: 100%;
   background: #f9f9f9;
   margin-bottom: auto;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
-
-`
+`;
 export const P = styled.p`
   font-size: 14px;
-`
+`;
