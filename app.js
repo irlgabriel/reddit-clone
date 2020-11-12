@@ -30,7 +30,7 @@ if (process.env.NODE_ENV == "production") {
   });
 }
 
-app.use("/", indexRouter);
+//app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
 app.use("/subreddits", subredditsRouter);
