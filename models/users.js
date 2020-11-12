@@ -19,7 +19,7 @@ var UserSchema = new mongoose.Schema(
       index: true,
     },
     password: { type: String, required: [true, "can't be blank"] },
-    posts: { type: Array, default: [] },
+    
   },
   { timestamps: true }
 );
