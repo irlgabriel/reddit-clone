@@ -61,3 +61,41 @@ export const MongoLogo = styled(SiMongodb)`
 export const HerokuLogo = styled(SiHeroku)`
   color: purple;
 `
+export const FlexColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+export const FlexRow = styled.div`
+  display: flex;
+`
+export const Button = styled.button`
+  cursor: pointer;
+  text-decoration: none;
+  border-radius: 4px;
+  outline: none;
+  border: 0;
+  padding: 0.35rem 2rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  background-color: ${({ bgColor }) => `${bgColor}`};
+  color: ${({ color }) => `${color}`};
+  &:hover {
+    text-decoration: none;
+  }
+  &:first-child {
+    margin: 0 0.25rem;
+  }
+  &:hover {
+    opacity: .75;
+  }
+`;
+export const DisabledButton = styled.button`
+  border: 0;
+  outline: 0;
+  background-color: ${({ bgColor }) => `${bgColor}`};
+  color: ${({ color }) => `${color}`};
+  padding: 0.35rem 2rem;
+  font-family: 'Open-sans';
+  font-size: 13px;
+  cursor: not-allowed;
+`

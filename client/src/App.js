@@ -36,7 +36,6 @@ function App() {
      } else {
       setPosts([...posts].sort(compareByVotes)); 
      }
-    
   }, [sort])
 
   // fetch data when app is rendered
@@ -107,6 +106,8 @@ function App() {
               path={generatePath("/subreddits/:name", { name: subreddit.name })}
             >
               <Subreddit
+                subreddits={subreddits}
+                setSubreddits={setSubreddits}
                 setRegister={setRegister}
                 setLogin={setLogin}
                 user={user}

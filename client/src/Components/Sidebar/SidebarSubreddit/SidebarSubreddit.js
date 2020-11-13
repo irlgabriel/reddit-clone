@@ -10,7 +10,7 @@ import {
   DisabledButton
 } from "./SidebarSubreddit.components";
 
-const SidebarSubreddit = ({subreddits, setSubreddits, user, sub}) => {
+const SidebarSubreddit = ({ subreddits, setSubreddits, user, sub}) => {
   const [subscribed, setSubscribed] = useState(false)
   const [members, setMembers] = useState(sub.members.length)
 

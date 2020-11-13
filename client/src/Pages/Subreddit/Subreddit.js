@@ -18,8 +18,11 @@ const Subreddit = ({
   subreddit,
   setRegister,
   setLogin,
+  subreddits,
+  setSubreddits
 
 }) => {
+  // only show posts from this subreddits
   const [subredditPosts, setSubredditPosts] = useState(
     posts.filter((post) => post.subreddit === subreddit.name)
   );
@@ -70,7 +73,7 @@ const Subreddit = ({
           />
         ))}
       </PostsContainer>
-      <Sidebar user={user} />
+      <Sidebar subreddits={subreddits} setSubreddits={setSubreddits} subreddit={subreddit} user={user} />
     </MainWrapper>
   );
 };

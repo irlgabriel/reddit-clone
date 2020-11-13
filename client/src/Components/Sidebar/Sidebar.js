@@ -1,4 +1,4 @@
-import Axios from "axios";
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { SidebarSubreddit } from "..";
 import { CSSTransiton } from "react-transition-group";
@@ -14,24 +14,41 @@ import {
   NodeLogo,
   HerokuLogo,
   LogoDiv,
+  FlexColumn,
+  FlexRow,
+  Button,
+  DisabledButton
 } from "./Sidebar.components";
 
-const Sidebar = ({ user, profileUser, subreddits, setSubreddits }) => {
-  
+const Sidebar = ({ subreddit, user, profileUser, subreddits, setSubreddits }) => {
 
   //960px hidden
   return (
     <SidebarContainer>
-      {profileUser && 
+      
+      {
+        /* show some info about user if sidebar is shown in the Profile Page */
+        profileUser && 
         <Title>{profileUser.username}</Title>
       }
-      <Title>Popular Subreddits</Title>
-      {subreddits &&
+      {
+        /* if subreddits prop is provided we show some info about popular subreddits with links to them */
+        subreddits && 
+        <Title>Popular Subreddits</Title>
+      }     
+      {
+        subreddits && !subreddit && 
         subreddits
-          .slice(0, 3)
-          .map(sub => 
-            <SidebarSubreddit key={sub._id} subreddits={subreddits} setSubreddits={setSubreddits} sub={sub} user={user} />
-          )}
+        .slice(0, 3)
+        .map(sub => 
+          <SidebarSubreddit key={sub._id} subreddits={subreddits} setSubreddits={setSubreddits} sub={sub} user={user} />
+        )
+      }
+      {
+        /* if subreddit prop is provided we show some info about this particular subreddit like the amount of members */
+        subreddit && 
+        <SidebarSubreddit subreddits={subreddits} setSubreddits={setSubreddits} sub={subreddit} user={user}/>
+      }
       <Header>
         <LogoDiv>
           <MongoLogo />
