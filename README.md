@@ -10,3 +10,4 @@
 
 #### - Think of a better way to manage state for subscribed users. When users login/logout the state is not changed
 
+#### - Do not show create post/reddit when user is not logged in. Also do not show JOIN/LEAVE subreddit options
