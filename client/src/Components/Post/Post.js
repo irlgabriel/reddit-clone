@@ -203,8 +203,9 @@ const Post = ({
               )}
               {postComments.map((comment) => (
                 <PostComment
+                  comments={postComments}
+                  setComments={setPostComments}
                   key={comment._id}
-                  getUsername={getUsername}
                   post_id={id}
                   user={user}
                   comment={comment}

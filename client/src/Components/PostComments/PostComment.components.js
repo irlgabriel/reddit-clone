@@ -24,7 +24,7 @@ export const Username = styled.span`
 `;
 export const Upvotes = styled.span`
   font-size: 11px;
-  color: darkgray;
+  color: ${({downvoted, upvoted}) => (downvoted === "yes" ? "blue" : upvoted === "yes" ? "red" : "darkgray")};
 `;
 export const TimeAgo = styled.span`
   font-size: 11px;
@@ -32,14 +32,14 @@ export const TimeAgo = styled.span`
 `;
 export const Upvote = styled(GoArrowUp)`
   font-size: 24px;
-  color: darkgray;
+  color: ${({upvoted}) => (upvoted === "yes" ? "red" : "darkgray")};
   &:hover {
     cursor: pointer;
   }
 `;
 export const Downvote = styled(GoArrowDown)`
   font-size: 24px;
-  color: darkgray;
+  color: ${({downvoted}) => (downvoted === "yes" ? "blue" : "darkgray")};
   &:hover {
     cursor: pointer;
   }
