@@ -19,13 +19,8 @@ import {
   P,
 } from "./PostComment.components";
 
-const PostComment = ({ comments, setComments, post_id, user, comment }) => {
-  const [upvotes, setUpvotes] = useState(
-    comment.upvotes.length - comment.downvotes.length
-  );
+const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_id, user, comment }) => {
   const [username, setUsername] = useState("");
-  const [upvoted, setUpvoted] = useState("");
-  const [downvoted, setDownvoted] = useState("");
   const config = {
     headers: {
       Accept: "application/json",
@@ -44,30 +39,24 @@ const PostComment = ({ comments, setComments, post_id, user, comment }) => {
     const body = JSON.stringify({ user_id: user._id });
     axios.post(`/posts/${post_id}/comments/${comment._id}/upvote`, body, config)
     .then(res => {
-      setComments([...comments, res.data]);
+      setComments(comments.map(comm => comm._id === comment._id ? res.data : comm)); 
     })
-    .catch(e => console.log(e))
+    .catch(e => console.log(e));
   };
   const downvoteComment = () => {
     if (!user) return;
     const body = JSON.stringify({ user_id: user._id });
     axios.post(`/posts/${post_id}/comments/${comment._id}/downvote`, body, config)
     .then(res => {
-      setComments([...comments, res.data]);
+      setComments(comments.map(comm => comm._id === comment._id ? res.data : comm)); 
     })
-    .catch(e => console.log(e))
+    .catch(e => console.log(e));
   };
 
   useEffect(() => {
-    // set initial upvotes count
-    setUpvotes(comment.upvotes.length - comment.downvotes.length);
     // set comment's user
     user && getUsername(user._id);
     // set upvote/downvote state
-    if(user) {
-      comment.upvotes.includes(user._id) ? setUpvoted("yes") : setUpvoted("no");
-      comment.downvotes.includes(user._id) ? setDownvoted("yes") : setDownvoted("no");
-    }
   }, []);
   return (
     <CommentWrapper>
