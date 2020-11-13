@@ -12,10 +12,12 @@ import {
 const SidebarSubreddit = ({subreddits, setSubreddits, user, sub}) => {
   const [subscribed, setSubscribed] = useState(false)
   const [members, setMembers] = useState(sub.members.length)
+
   useEffect(() => {
-    if(!user) return;
-    sub.members.includes(user._id) ? setSubscribed(true) : setSubscribed(false);
-  }, [])
+    !user 
+    ? setSubscribed(false) 
+    : sub.members.includes(user._id) ? setSubscribed(true) : setSubscribed(false);
+  }, [user])
 
   const config = {
     headers: {

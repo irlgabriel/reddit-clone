@@ -30,8 +30,8 @@ router.post("/", (req, res, next) => {
 });
 /* POST - subscribe to subreddit */
 router.post("/:subreddit_id/subscribe", (req, res, next) => {
-
   const user = req.body.user_id
+  if(!user) return;
   Subreddit.findById(req.params.subreddit_id, (err, sub) => {
     if(err) res.status(400).send(err);
     console.log(sub)
@@ -46,6 +46,7 @@ router.post("/:subreddit_id/subscribe", (req, res, next) => {
 /* POST - Unsubscribe from subreddit */
 router.post("/:subreddit_id/unsubscribe", (req, res, next) => {
   const user = req.body.user_id
+  if(!user) return;
   Subreddit.findById(req.params.subreddit_id, (err, sub) => {
     if(err) res.status(400).send(err);
     sub.members = sub.members.filter(member_id => member_id !== user);

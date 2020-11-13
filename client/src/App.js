@@ -28,6 +28,8 @@ function App() {
     return post1_upvotes > post2_upvotes ? -1 : 1;
   }
 
+
+  // SORT LOGIC
   useEffect(() => {
     if(sort == "New") {
       setPosts([...posts].sort(compareByDate));
@@ -37,7 +39,7 @@ function App() {
     
   }, [sort])
 
-  // when comp is rendered first time
+  // fetch data when app is rendered
   useEffect(() => {
     // check if there's an user in localstorage
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
