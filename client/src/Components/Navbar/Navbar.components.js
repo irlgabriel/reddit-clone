@@ -98,6 +98,9 @@ export const SearchResults = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 4;
+  max-height: 150px;
+  overflow-y: scroll;
 `;
 export const Result = styled(Link)`
   text-decoration: none;
