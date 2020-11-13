@@ -107,4 +107,21 @@ router.post("/:comment_id/downvote", (req, res, next) => {
     
   })
 })
+/* PUT - edit post route */
+router.put("/:comment_id", (req, res, next) => {
+  // send id of use who sends the request and see if it matches comment creator
+  const user_id = req.body.user_id;
+  const comment_id = req.params.comment_id;
+  const updated_obj = {};
+  Object.keys(req.body).forEach(obj => {
+    if(obj !== 'user_id') {
+      updated_obj[obj] = req.body[obj];
+    }
+  })
+  Comment.findByIdAndUpdate(comment_id, updated_obj, {new: true}, (err, doc) => {
+    if(user_id !== doc.user_id) res.status(403).send({msg: "Forbidden"})
+    if(err) res.status(400).send(err);
+    res.status(200).send(doc);
+  })
+})
 module.exports = router;
