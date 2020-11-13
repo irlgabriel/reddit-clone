@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { FaReddit, FaNode, FaReact } from "react-icons/fa";
 import { SiMongodb, SiHeroku } from "react-icons/si";
 export const SidebarContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   margin-top: 0.5rem;
   width: 300px;
   min-height: 500px;
@@ -21,6 +23,7 @@ export const SidebarContainer = styled.div`
   }
 `;
 export const Header = styled.div`
+  margin-top: auto;
   font-size: 24px;
 `;
 export const LogoDiv = styled.div`
