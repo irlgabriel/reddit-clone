@@ -16,9 +16,8 @@ import {
 import { LoginModal, RegisterModal } from "..";
 import { CSSTransition } from "react-transition-group";
 
-const Navbar = ({ subreddits, user, setUser }) => {
-  const [showLogin, setLogin] = useState(false);
-  const [showRegister, setRegister] = useState(false);
+const Navbar = ({ showLogin, setLogin, showRegister, setRegister, subreddits, user, setUser }) => {
+  
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showSearchResults, setShowSearchResults] = useState([]);

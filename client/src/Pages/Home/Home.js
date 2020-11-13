@@ -11,9 +11,12 @@ import {
   RedditLogo,
   Paragraph,
   BestIcon,
-  NewIcon
+  NewIcon,
+  Button
 } from "./Home.components";
 const Home = ({
+  setLogin,
+  setRegister,
   setSubreddits,
   subreddits,
   posts,
@@ -28,7 +31,8 @@ const Home = ({
   setSort
 }) => {
   return (
-    <div>
+    <div> 
+      {/* PostModal and SubredditModal transitions */}
       <CSSTransition
         in={postModal}
         classNames="fade"
@@ -56,14 +60,29 @@ const Home = ({
       </CSSTransition>
       <MainWrapper>
         <PostsContainer>
-          <PostsHeader onClick={() => setSubredditModal(true)}>
-            <RedditLogo />
-            <Paragraph>Create a new Subreddit.</Paragraph>
-          </PostsHeader>
-          <PostsHeader onClick={() => setPostModal(true)}>
-            <PostIcon />
-            <Paragraph>Create a Post.</Paragraph>
-          </PostsHeader>
+          {
+            user && 
+            <PostsHeader onClick={() => setSubredditModal(true)}>
+              <RedditLogo />
+              <Paragraph>Create a new Subreddit.</Paragraph>
+            </PostsHeader>
+          }
+          {
+            user &&
+            <PostsHeader onClick={() => setPostModal(true)}>
+              <PostIcon />
+              <Paragraph>Create a Post.</Paragraph>
+            </PostsHeader>
+          }
+          {
+            !user &&
+            <PostsHeader>
+              <Button onClick={() => setRegister(true)} color="royalblue" bgColor="white">SIGN UP</Button>
+              <Paragraph>or</Paragraph>&nbsp;
+              <Button onClick={() => setLogin(true)} color="white" bgColor="royalblue">SIGN IN</Button>
+              <Paragraph>to create posts/subreddits</Paragraph>
+            </PostsHeader>
+          }
           <SortSection>
             <SortOption onClick={() => setSort("New")} selected={sort === "New" ? "yes" : "no"}>
               <NewIcon />&nbsp;New  

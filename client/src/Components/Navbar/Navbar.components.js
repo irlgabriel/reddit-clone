@@ -69,6 +69,9 @@ export const Button = styled.a`
   &:first-child {
     margin: 0 0.25rem;
   }
+  &:hover {
+    opacity: .75;
+  }
 `;
 export const UserSection = styled(Link)`
   text-decoration: none;

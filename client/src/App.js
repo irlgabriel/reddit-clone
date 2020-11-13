@@ -15,6 +15,8 @@ function App() {
   const [postModal, setPostModal] = useState(false);
   const [subredditModal, setSubredditModal] = useState(false);
   const [sort, setSort] = useState("New");
+  const [showLogin, setLogin] = useState(false);
+  const [showRegister, setRegister] = useState(false);
 
   const compareByDate = (a, b) => {
     return a.createdAt >= b.createdAt ? -1 : 1;
@@ -66,9 +68,21 @@ function App() {
   return (
     <Container>
       <Router>
-        <Navbar subreddits={subreddits} user={user} setUser={setUser} />
+        <Navbar 
+          showLogin={showLogin}
+          setLogin={setLogin}
+          showRegister={showRegister}
+          setRegister={setRegister}
+          subreddits={subreddits}
+          user={user} 
+          setUser={setUser} 
+        />
         <Route exact path="/">
           <Home
+            showLogin={showLogin}
+            setLogin={setLogin}
+            showRegister={showRegister}
+            setRegister={setRegister}
             user={user}
             setUser={setUser}
             posts={posts}
@@ -91,6 +105,8 @@ function App() {
               path={generatePath("/subreddits/:name", { name: subreddit.name })}
             >
               <Subreddit
+                setRegister={setRegister}
+                setLogin={setLogin}
                 user={user}
                 postModal={postModal}
                 setPostModal={setPostModal}

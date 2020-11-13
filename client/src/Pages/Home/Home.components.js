@@ -65,7 +65,8 @@ export const RedditLogo = styled(FaReddit)`
   margin: 0 0.25rem;
 `;
 export const Paragraph = styled.p`
-  font-size: 20px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
 `;
 export const BestIcon = styled(BiRocket)`
 
@@ -73,3 +74,26 @@ export const BestIcon = styled(BiRocket)`
 export const NewIcon = styled(BsGearFill)`
 
 `
+export const Button = styled.a`
+  cursor: pointer;
+  display: inline-block;
+  text-decoration: none;
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid royalblue;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  font-size: 12px;
+  margin-right: 0.25rem;
+  background-color: ${({ bgColor }) => `${bgColor}`};
+  color: ${({ color }) => `${color}`};
+  &:hover {
+    text-decoration: none;
+  }
+  &:first-child {
+    margin: 0 0.25rem;
+  }
+  &:hover {
+    opacity: .75;
+  }
+`;

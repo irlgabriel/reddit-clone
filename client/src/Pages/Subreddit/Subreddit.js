@@ -5,6 +5,7 @@ import {
   PostsHeader,
   Paragraph,
   PostIcon,
+  Button,
 } from "./Subreddit.components";
 import { Sidebar, Post, PostModal } from "../../Components";
 
@@ -15,6 +16,9 @@ const Subreddit = ({
   setPosts,
   user,
   subreddit,
+  setRegister,
+  setLogin,
+
 }) => {
   const [subredditPosts, setSubredditPosts] = useState(
     posts.filter((post) => post.subreddit === subreddit.name)
@@ -32,10 +36,22 @@ const Subreddit = ({
         />
       )}
       <PostsContainer>
-        <PostsHeader onClick={() => setPostModal(true)}>
-          <PostIcon />
-          <Paragraph>Create a Post.</Paragraph>
-        </PostsHeader>
+        {
+          user &&
+          <PostsHeader onClick={() => setPostModal(true)}>
+            <PostIcon />
+            <Paragraph>Create a Post.</Paragraph>
+          </PostsHeader>
+        }
+        {
+          !user &&
+          <PostsHeader>
+            <Button onClick={() => setRegister(true)} color="royalblue" bgColor="white">SIGN UP</Button>
+            <Paragraph>or</Paragraph>&nbsp;
+            <Button onClick={() => setLogin(true)} color="white" bgColor="royalblue">SIGN IN</Button>
+            <Paragraph>to create posts/subreddits</Paragraph>
+          </PostsHeader>
+        }
         {subredditPosts.map((post) => (
           <Post
             posts={subredditPosts}
