@@ -212,6 +212,7 @@ const Post = ({
                   post_id={id}
                   user={user}
                   comment={comment}
+                  
                 />
               ))}
             </CommentsWrapper>

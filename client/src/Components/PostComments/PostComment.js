@@ -15,12 +15,20 @@ import {
   Downvote,
   Content,
   CommentIcon,
+  EditIcon,
   FooterItem,
   P,
+  TextArea,
+  EditContainer,
+  TextWrapper,
+  Button
+
 } from "./PostComment.components";
 
 const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_id, user, comment }) => {
   const [username, setUsername] = useState("");
+  const [showEditComment, setShowEditComment] = useState(false);
+  const [commentContent, setCommentContent] = useState(comment.content)
   const config = {
     headers: {
       Accept: "application/json",
@@ -33,7 +41,15 @@ const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_
       setUsername(res.data.username);
     });
   };
-
+  const editComment = (updated_comment) => {
+    if(!user) return;
+    axios.put(`/posts/${post_id}/comments/${comment._id}`, {...updated_comment, user_id: user._id}, config)
+    .then(res => {
+      setShowEditComment(false);
+      setComments(comments.map(comm => comm._id === comment._id ? res.data : comm))
+    })
+    .catch(err => console.log(err))
+  }
   const upvoteComment = () => {
     if (!user) return;
     const body = JSON.stringify({ user_id: user._id });
@@ -55,7 +71,7 @@ const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_
 
   useEffect(() => {
     // set comment's user
-    user && getUsername(user._id);
+    getUsername(comment.user_id);
     // set upvote/downvote state
   }, []);
   return (
@@ -73,7 +89,18 @@ const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_
             <TimeAgo>12h ago</TimeAgo>
           </CommentHeader>
           <CommentBody>
+            {
+              !showEditComment && 
             <Content>{comment.content}</Content>
+            }
+            {
+              showEditComment && 
+              <EditContainer>
+                <TextWrapper>
+                  <TextArea rows={6} defaultValue={comment.content} onChange={(e) => setCommentContent(e.target.value)}></TextArea>
+                </TextWrapper>
+              </EditContainer>
+            }
           </CommentBody>
           <CommentFooter>
             <FooterItem>
@@ -83,6 +110,20 @@ const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_
                 Reply
               </P>
             </FooterItem>
+            { 
+            comment.user_id === user._id && 
+            <FooterItem onClick={() => setShowEditComment(!showEditComment)}>
+              <EditIcon />
+              &nbsp;
+              <P bold size="13">
+                {showEditComment ? 'Cancel' : 'Edit'}
+              </P>
+            </FooterItem>
+            }
+            {
+              showEditComment && 
+              <Button toRight="yes" onClick={() => editComment({content: commentContent})} color="white" bgColor="royalblue">EDIT</Button>
+            }
           </CommentFooter>
         </CommentContent>
       </CommentContainer>
