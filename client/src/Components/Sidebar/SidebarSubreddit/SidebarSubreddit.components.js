@@ -53,3 +53,13 @@ export const Button = styled.button`
     opacity: .75;
   }
 `;
+export const DisabledButton = styled.button`
+  border: 0;
+  outline: 0;
+  background-color: ${({ bgColor }) => `${bgColor}`};
+  color: ${({ color }) => `${color}`};
+  padding: 0.35rem 2rem;
+  font-family: 'Open-sans';
+  font-size: 13px;
+  cursor: not-allowed;
+`

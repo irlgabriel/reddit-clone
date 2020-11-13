@@ -7,6 +7,7 @@ import {
   SubredditName,
   SubredditMembers,
   Button,
+  DisabledButton
 } from "./SidebarSubreddit.components";
 
 const SidebarSubreddit = ({subreddits, setSubreddits, user, sub}) => {
@@ -52,12 +53,16 @@ const SidebarSubreddit = ({subreddits, setSubreddits, user, sub}) => {
         <SubredditName to={`/subreddits/${sub.name}`} >r/{sub.name}</SubredditName>
         <SubredditMembers>{members} members</SubredditMembers>
       </SubredditInfo>
-      { !subscribed && 
+      { !subscribed && user &&  
         <Button onClick={() => joinSubreddit(sub)} color="white" bgColor="royalblue">JOIN</Button>
       }
       {
-        subscribed &&
+        subscribed && user && 
         <Button type="button" onClick={() => leaveSubreddit(sub)}color="white" bgColor="red">LEAVE</Button>
+      }
+      {
+        !user &&
+        <DisabledButton disabled type="button" color="black" bgColor="#e9e9e9">JOIN</DisabledButton>
       }
     </SubredditContainer>
   )
