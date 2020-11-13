@@ -77,6 +77,28 @@ router.post("/:post_id/downvote", (req, res, next) => {
     
   })
 })
+
+// PUT - Edit a post 
+
+router.put("/:post_id", (req, res, next) => {
+  // send an user_id as well just to make sure it's the user that submits the edit req
+  const user_id = req.params.user_id;
+
+  const updated_obj = {
+    
+  }
+  Object.keys(req.body).forEach(obj => {
+    updated_obj[obj] = req.body[obj];
+  })
+  // res.status(200).send(updated_obj)
+  Post.findByIdAndUpdate(req.params.post_id, updated_obj, {new: true}, (err, doc) => {
+    // Check if user that submited the request is the creator
+    if(doc.user !== user_id) res.status(404).send({msg: "Forbidden"})
+    if(err) res.status(400).send(err);
+    res.status(200).send(doc);
+  })
+})
+
 // POST - deletes a post
 router.delete("/:post_id", (req, res, next) => {
   const postId = req.params.post_id;
