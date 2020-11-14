@@ -22,7 +22,7 @@ export const CommentContent = styled.div`
 export const Username = styled.span`
   font-size: 12px;
   font-weight: 100;
-  color: black;
+  color: ${({me}) => ( me === "yes" ? "lightcoral" : "black")}
 `;
 export const Upvotes = styled.span`
   font-size: 11px;

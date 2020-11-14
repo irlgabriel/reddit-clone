@@ -84,7 +84,7 @@ const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_
 
         <CommentContent>
           <CommentHeader>
-            <Username>{username}</Username>&nbsp;&middot;&nbsp;
+            <Username me={user && user._id === comment.user_id ? "yes" : "no"}>{username}</Username>&nbsp;&middot;&nbsp;
             <Upvotes downvoted={downvoted} upvoted={upvoted}>{upvotes} points</Upvotes>&nbsp;&middot;&nbsp;
             <TimeAgo>12h ago</TimeAgo>
           </CommentHeader>
