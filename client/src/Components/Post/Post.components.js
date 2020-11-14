@@ -264,3 +264,8 @@ export const EditFooter = styled.div`
   display: flex;
   padding: .25rem 0;
 `
+export const PostedAt = styled.p`
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+`

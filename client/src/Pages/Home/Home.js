@@ -105,6 +105,8 @@ const Home = ({
                 title={post.title}
                 upvotes={post.upvotes}
                 downvotes={post.downvotes}
+                createdAt={post.createdAt}
+                updatedAt={post.updatedAt}
                 upvoted={user && post.upvotes.includes(user._id) ? "yes" : "no"}
                 downvoted={
                   user && post.downvotes.includes(user._id) ? "yes" : "no"

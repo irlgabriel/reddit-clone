@@ -26,6 +26,8 @@ const Profile = ({ user, posts, profileUser }) => {
               creator_id={profileUser._id}
               content={post.content}
               subreddit={post.subreddit}
+              createdAt={post.createdAt}
+              updatedAt={post.updatedAt}
               title={post.title}
               upvotes={post.upvotes}
               downvotes={post.downvotes}

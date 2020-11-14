@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import moment from "moment";
 import { PostComment, CommentForm } from "..";
 import {
   PostWrapper,
@@ -38,7 +39,8 @@ import {
   EditTitleWrapper,
   ContentAbsolute,
   TitleAbsolute,
-  EditFooter
+  EditFooter,
+  PostedAt,
 } from "./Post.components";
 const Post = ({
   posts,
@@ -51,6 +53,8 @@ const Post = ({
   creator_id,
   content,
   id,
+  createdAt,
+  postedAt,
   upvoted,
   downvoted,
 }) => {
@@ -156,6 +160,9 @@ const Post = ({
               >
                 &nbsp;{postUsername}
               </Creator>
+              <PostedAt>
+               &nbsp;{moment(createdAt).fromNow()}
+              </PostedAt>
             </PostHeader>
             { 
               !showEditPost && 
