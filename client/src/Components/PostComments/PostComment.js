@@ -21,8 +21,8 @@ import {
   TextArea,
   EditContainer,
   TextWrapper,
-  Button
-
+  Button,
+  EditFooter,
 } from "./PostComment.components";
 
 const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_id, user, comment }) => {
@@ -41,9 +41,9 @@ const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_
       setUsername(res.data.username);
     });
   };
-  const editComment = (updated_comment) => {
+  const editComment = () => {
     if(!user) return;
-    axios.put(`/posts/${post_id}/comments/${comment._id}`, {...updated_comment, user_id: user._id}, config)
+    axios.put(`/posts/${post_id}/comments/${comment._id}`, {content: commentContent, user_id: user._id}, config)
     .then(res => {
       setShowEditComment(false);
       setComments(comments.map(comm => comm._id === comment._id ? res.data : comm))
@@ -99,6 +99,9 @@ const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_
                 <TextWrapper>
                   <TextArea rows={6} defaultValue={comment.content} onChange={(e) => setCommentContent(e.target.value)}></TextArea>
                 </TextWrapper>
+                <EditFooter>
+                  <Button onClick={() => editComment()} toRight="yes" color="white" bgColor="royalblue">EDIT</Button>
+                </EditFooter>
               </EditContainer>
             }
           </CommentBody>
@@ -119,10 +122,6 @@ const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_
                 {showEditComment ? 'Cancel' : 'Edit'}
               </P>
             </FooterItem>
-            }
-            {
-              showEditComment && 
-              <Button toRight="yes" onClick={() => editComment({content: commentContent})} color="white" bgColor="royalblue">EDIT</Button>
             }
           </CommentFooter>
         </CommentContent>

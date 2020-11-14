@@ -92,6 +92,7 @@ export const TextArea = styled.textarea`
   max-width: 100%;
   margin: 0 auto;
   resize: vertical;
+  padding: .25rem .5rem;
 `
 export const TextWrapper = styled.div`
   display: flex;
@@ -100,7 +101,6 @@ export const TextWrapper = styled.div`
   border-radius: 5px;
 `
 export const EditContainer = styled.div`
-  padding: 0.5rem;
   padding-top: 0;
   width: 100%;
 `
@@ -110,20 +110,20 @@ export const Button = styled.a`
   border-radius: 4px;
   outline: none;
   border: 1px solid royalblue;
-  padding: 0.25rem 2rem;
+  padding: 0.35rem 2rem;
   font-weight: bold;
   font-size: 12px;
-  margin-right: .5rem;  
   background-color: ${({ bgColor }) => `${bgColor}`};
   color: ${({ color }) => `${color}`};
   margin-left: ${({toRight}) => (toRight === "yes" ? "auto" : "0")};
   &:hover {
     text-decoration: none;
   }
-  &:first-child {
-    margin: 0 0.25rem;
-  }
   &:hover {
     opacity: .75;
   }
 `;
+export const EditFooter = styled.div`
+  display: flex;
+  padding: .25rem 0;
+`

@@ -230,6 +230,9 @@ export const EditTitle = styled.input`
   font-weight: bold;
   font-size: 14px;
   border: 0;
+  &:focus {
+    outline: none;
+  }
 `
 export const EditContentWrapper = styled.div`
   position: relative;
