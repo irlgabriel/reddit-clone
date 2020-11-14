@@ -31,7 +31,7 @@ function App() {
 
   // SORT LOGIC
   useEffect(() => {
-    if(sort == "New") {
+    if(sort === "New") {
       setPosts([...posts].sort(compareByDate));
      } else {
       setPosts([...posts].sort(compareByVotes)); 
@@ -48,7 +48,7 @@ function App() {
     // retrieve all posts
     const fetchPosts = async () => {
       const res = await axios.get("/posts");
-      setPosts(res.data);
+      setPosts(res.data.sort(compareByDate));
     }
     fetchPosts();
     // retrieve all subreddits

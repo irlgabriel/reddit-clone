@@ -39,7 +39,7 @@ const Profile = ({ user, posts, profileUser }) => {
           ))}
         </PostsContainer>
       </UserActivities>
-      <Sidebar user={user} profileUser={profileUser} />
+      <Sidebar profilePage user={user} profileUser={profileUser} />
     </MainWrapper>
   );
 };

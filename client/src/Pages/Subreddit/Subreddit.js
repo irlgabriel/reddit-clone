@@ -75,7 +75,7 @@ const Subreddit = ({
           />
         ))}
       </PostsContainer>
-      <Sidebar subreddits={subreddits} setSubreddits={setSubreddits} subreddit={subreddit} user={user} />
+      <Sidebar subredditPage subreddits={subreddits} setSubreddits={setSubreddits} subreddit={subreddit} user={user} />
     </MainWrapper>
   );
 };

@@ -20,7 +20,7 @@ import {
   DisabledButton
 } from "./Sidebar.components";
 
-const Sidebar = ({ subreddit, user, profileUser, subreddits, setSubreddits }) => {
+const Sidebar = ({ profilePage, subredditPage, subreddit, user, profileUser, subreddits, setSubreddits }) => {
 
   //960px hidden
   return (
@@ -33,7 +33,7 @@ const Sidebar = ({ subreddit, user, profileUser, subreddits, setSubreddits }) =>
       }
       {
         /* if subreddits prop is provided we show some info about popular subreddits with links to them */
-        subreddits && 
+        !subredditPage && !profilePage && 
         <Title>Popular Subreddits</Title>
       }     
       {
