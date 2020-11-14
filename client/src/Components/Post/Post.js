@@ -31,9 +31,13 @@ import {
   SaveIcon,
   DeleteIcon,
   EditIcon,
-  EditContainer,
-  TextWrapper,
-  TextArea,
+  EditPost,
+  EditTitle,
+  EditContent,
+  EditContentWrapper,
+  EditTitleWrapper,
+  ContentAbsolute,
+  TitleAbsolute,
   EditFooter
 } from "./Post.components";
 const Post = ({
@@ -54,7 +58,10 @@ const Post = ({
   const [showComments, setShowComments] = useState(false);
   const [postComments, setPostComments] = useState([]);
   const [showEditPost, setShowEditPost] = useState(false);
-  const [postContent, setPostContent] =  useState(content)
+
+  // State for editing Post
+  const [postTitle, setPostTitle] = useState(title);
+  const [postContent, setPostContent] =  useState(content);
   // const [commentsSortBy, setCommentsSortBy] = useState('BEST')
   const [showCommentsSortBy, setShowCommentsSortBy] = useState(false);
 
@@ -70,12 +77,12 @@ const Post = ({
     });
   };
 
-  const editPost = (updated_obj) => {
+  const editPost = () => {
     if(!user) return;
-    axios.put(`/posts/${id}`, {...updated_obj, user_id: user._id}, config)
+    axios.put(`/posts/${id}`, {title: postTitle, content: postContent, user_id: user._id}, config)
     .then(res => {
       setShowEditPost(false);
-      setPosts(posts.map(post => post.id === id ? res.data : post))
+      setPosts(posts.map(post => post._id === id ? res.data : post))
     })
   }
   const upvotePost = () => {
@@ -150,22 +157,29 @@ const Post = ({
                 &nbsp;{postUsername}
               </Creator>
             </PostHeader>
-            <PostBody>
-              <PostTitle>{title}</PostTitle>
-              {
-                !showEditPost && 
+            { 
+              !showEditPost && 
+              <PostBody>
+                <PostTitle>{title}</PostTitle>
                 <PostContent>{content}</PostContent>
-              }
-              {
-                showEditPost && 
-                <EditContainer>
-                  <TextWrapper>
-                    <TextArea onChange={(e) => setPostContent(e.target.value)} defaultValue={postContent} rows={5} />
-                  </TextWrapper>
-                  <EditFooter></EditFooter>
-                </EditContainer>
-              }
-            </PostBody>
+              </PostBody>
+            }
+            {
+              showEditPost && 
+              <EditPost>
+                <EditTitleWrapper>
+                  <TitleAbsolute>Title:</TitleAbsolute>
+                  <EditTitle type="text" value={postTitle} onChange={(e) => setPostTitle(e.target.value)}/>
+                </EditTitleWrapper>
+                <EditContentWrapper>
+                  <ContentAbsolute>Content:</ContentAbsolute>
+                  <EditContent rows={6} value={postContent} onChange={(e) =>  setPostContent(e.target.value)}/>
+                </EditContentWrapper>
+                <EditFooter>
+                  <Button onClick={() => editPost()} toRight="yes" color="white" bgColor="royalblue">EDIT</Button>
+                </EditFooter>
+              </EditPost>
+            }
             <PostFooter>
               <FooterLink
                 onClick={() => setShowComments(!showComments)}

@@ -145,25 +145,23 @@ export const NotLoggedIn = styled.div`
   justify-content: space-between;
   padding: 0.5rem;
 `;
-export const Button = styled.a`
+export const Button = styled.button`
   cursor: pointer;
   display: inline-block;
   text-decoration: none;
   border-radius: 4px;
   outline: none;
-  padding: 0.5rem 1rem;
+  border: 0;
+  padding: 0.3rem 1.5rem;
   font-weight: bold;
   font-size: 12px;
-  margin-right: 0.25rem;
   margin-left: ${({toRight}) => (toRight === "yes" ? "auto" : "0")};
   background-color: ${({ bgColor }) => `${bgColor}`};
   color: ${({ color }) => `${color}`};
   &:hover {
     text-decoration: none;
   }
-  &:first-child {
-    margin: 0 0.25rem;
-  }
+
 `;
 
 export const Bold = styled.b`
@@ -201,28 +199,65 @@ export const OptionContainer = styled.div`
 export const EditIcon = styled(RiPencilFill)`
 
 `
-export const EditContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`
-export const TextWrapper = styled.div`
-  width: 100%;
+export const EditPost = styled.div`
   flex: 1;
-`
-export const TextArea = styled.textarea`
-  resize: vertical;
   width: 100%;
   font-family: "Open Sans", sans-serif;
   font-weight: 300;
   font-size: 14px;
-  padding: .5rem;
+`
+export const EditTitleWrapper = styled.div`
+  position: relative;
+  padding-left: 75px;
+  border: 1px solid darkgray;
 
+  width: 100%;
+`
+export const TitleAbsolute = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #dae0e6;
+  padding: 0 .25rem;
+  width: 65px;
+  font-weight: bold;
+`
+export const EditTitle = styled.input`
+  width: 100%;
+  background: white;
+  font-family: "Open Sans", sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  border: 0;
+`
+export const EditContentWrapper = styled.div`
+  position: relative;
+  padding-left: 75px;
+  width: 100%;
+  border: 1px solid darkgray;
+  border-top: 0;
+`
+export const ContentAbsolute = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: #dae0e6;
+  padding: 0 .25rem;
+  width: 65px;
+`
+export const EditContent = styled.textarea`
+  width: 100%;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  border: 0;
+`
+export const SumbitEdit = styled(Button)`
+  
 `
 export const EditFooter = styled.div`
   display: flex;
-  height: 40px;
-  border: 1px solid black;
-  border-top: 0;
-  margin-bottom: auto;
+  padding: .25rem 0;
 `

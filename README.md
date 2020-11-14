@@ -10,4 +10,3 @@
 
 #### - Think of a better way to manage state for subscribed users. When users login/logout the state is not changed
 
-#### - Add routes for editing posts/subreddits
