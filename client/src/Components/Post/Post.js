@@ -30,6 +30,11 @@ import {
   ShareIcon,
   SaveIcon,
   DeleteIcon,
+  EditIcon,
+  EditContainer,
+  TextWrapper,
+  TextArea,
+  EditFooter
 } from "./Post.components";
 const Post = ({
   posts,
@@ -48,6 +53,8 @@ const Post = ({
   const [postUsername, setPostUsername] = useState("");
   const [showComments, setShowComments] = useState(false);
   const [postComments, setPostComments] = useState([]);
+  const [showEditPost, setShowEditPost] = useState(false);
+  const [postContent, setPostContent] =  useState(content)
   // const [commentsSortBy, setCommentsSortBy] = useState('BEST')
   const [showCommentsSortBy, setShowCommentsSortBy] = useState(false);
 
@@ -62,6 +69,15 @@ const Post = ({
       setPostUsername(res.data.username);
     });
   };
+
+  const editPost = (updated_obj) => {
+    if(!user) return;
+    axios.put(`/posts/${id}`, {...updated_obj, user_id: user._id}, config)
+    .then(res => {
+      setShowEditPost(false);
+      setPosts(posts.map(post => post.id === id ? res.data : post))
+    })
+  }
   const upvotePost = () => {
     if (!user) return;
     const body = JSON.stringify({
@@ -136,7 +152,19 @@ const Post = ({
             </PostHeader>
             <PostBody>
               <PostTitle>{title}</PostTitle>
-              <PostContent>{content}</PostContent>
+              {
+                !showEditPost && 
+                <PostContent>{content}</PostContent>
+              }
+              {
+                showEditPost && 
+                <EditContainer>
+                  <TextWrapper>
+                    <TextArea onChange={(e) => setPostContent(e.target.value)} defaultValue={postContent} rows={5} />
+                  </TextWrapper>
+                  <EditFooter></EditFooter>
+                </EditContainer>
+              }
             </PostBody>
             <PostFooter>
               <FooterLink
@@ -157,13 +185,20 @@ const Post = ({
                 &nbsp;
                 <span>Save</span>
               </FooterLink>
-              {user && creator_id === user._id && (
+              {user && creator_id === user._id && 
                 <FooterLink onClick={() => deletePost()}>
                   <DeleteIcon />
                   &nbsp;
                   <span style={{ color: "lightsalmon" }}>Delete</span>
                 </FooterLink>
-              )}
+              }
+              {user && creator_id === user._id && 
+                <FooterLink onClick={() => setShowEditPost(!showEditPost)}>
+                  <EditIcon />
+                  &nbsp;
+                  <span style={{ color: "orange" }}>{!showEditPost ? 'Edit' : "Cancel"}</span>
+                </FooterLink>
+              }
             </PostFooter>
           </PostContentContainer>
           {showComments && (

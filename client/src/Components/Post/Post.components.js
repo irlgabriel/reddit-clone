@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { GoArrowDown, GoArrowUp } from "react-icons/go";
 import { BsDot } from "react-icons/bs";
-import { RiMessageFill, RiShareForwardFill } from "react-icons/ri";
+import { RiMessageFill, RiShareForwardFill, RiPencilFill } from "react-icons/ri";
 import { FaSave, FaTrash } from "react-icons/fa";
 
 export const PostWrapper = styled.div`
@@ -54,11 +54,14 @@ export const DownDot = styled(GoArrowDown)`
   font-size: 24px;
   cursor: pointer;
 `;
-export const PostContentWrapper = styled.div``;
+export const PostContentWrapper = styled.div`
+  width: 100%;
+`;
 export const PostContentContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
+  width: 100%;
   padding: 0.5rem;
   padding-bottom: 0;
 `;
@@ -88,6 +91,7 @@ export const CreatedAt = styled.p``;
 
 export const PostBody = styled.div`
   flex: 1;
+  width: 100%;
 `;
 export const PostTitle = styled.p`
   font-size: 24px;
@@ -102,6 +106,7 @@ export const PostFooter = styled.div`
   align-items: center;
   margin-top: auto;
   padding: 4px 0;
+  width: 100%;
 `;
 export const FooterLink = styled.div`
   padding: 0.25rem;
@@ -146,11 +151,11 @@ export const Button = styled.a`
   text-decoration: none;
   border-radius: 4px;
   outline: none;
-  border: 1px solid royalblue;
   padding: 0.5rem 1rem;
   font-weight: bold;
   font-size: 12px;
   margin-right: 0.25rem;
+  margin-left: ${({toRight}) => (toRight === "yes" ? "auto" : "0")};
   background-color: ${({ bgColor }) => `${bgColor}`};
   color: ${({ color }) => `${color}`};
   &:hover {
@@ -193,3 +198,31 @@ export const OptionContainer = styled.div`
     background: lightskyblue;
   }
 `;
+export const EditIcon = styled(RiPencilFill)`
+
+`
+export const EditContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`
+export const TextWrapper = styled.div`
+  width: 100%;
+  flex: 1;
+`
+export const TextArea = styled.textarea`
+  resize: vertical;
+  width: 100%;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  padding: .5rem;
+
+`
+export const EditFooter = styled.div`
+  display: flex;
+  height: 40px;
+  border: 1px solid black;
+  border-top: 0;
+  margin-bottom: auto;
+`
