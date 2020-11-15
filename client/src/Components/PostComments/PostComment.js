@@ -165,7 +165,7 @@ const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_
       </CommentContainer>
       {
         replies.map(reply => 
-          <Reply setReplies={setReplies} comment_id={comment._id} post_id={post_id} reply={reply} user={user}/>  
+          <Reply replies={replies} setReplies={setReplies} comment_id={comment._id} post_id={post_id} reply={reply} user={user}/>  
         )
       }
     </CommentWrapper>

@@ -20,7 +20,7 @@ import {
   EditReplyFooter
 } from "./Reply.components"
 import { set } from "mongoose";
-const Reply = ({comment_id, post_id, reply, user, setReplies}) => {
+const Reply = ({comment_id, post_id, replies, reply, user, setReplies}) => {
   const [replyUser, setReplyUser] = useState('')
   const [showReplyEdit, setShowReplyEdit] = useState(false);
   const [replyContent, setReplyContent] = useState(reply.content);
@@ -40,11 +40,12 @@ const Reply = ({comment_id, post_id, reply, user, setReplies}) => {
     }
     axios.put(`posts/${post_id}/comments/${comment_id}/${reply._id}`, data, config)
     .then(res => {
-      setReplies([...setReplies, res.data]);
+      setReplies(replies.map(doc => doc._id === reply._id ? res.data : doc));
+      setShowReplyEdit(false);
     })
     .catch(err => console.log(err))
   }
-  
+
   useEffect(() => {
     axios.get(`users/${reply.user_id}`)
     .then(res=> setReplyUser(res.data.username))

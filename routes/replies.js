@@ -29,5 +29,14 @@ router.post("/", (req, res, next) => {
     res.status(400).send(err);
   })
 })
+router.put('/:reply_id', (req, res, next) => {
+  const user = req.body.user_id;
+  const content = req.body.content;
 
+  Reply.findByIdAndUpdate(req.params.reply_id, {content: content}, {new: true}, (err, doc) => {
+    if(doc.user_id !== user) res.status(403).send({msg: "Forbidden"});
+    if(err) res.status(400).send(err);
+    res.status(200).send(doc);
+  })
+})
 module.exports = router;
