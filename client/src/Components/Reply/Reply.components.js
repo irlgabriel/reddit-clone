@@ -64,7 +64,11 @@ export const DownVote = styled(GoArrowDown)`
 `;
 export const P = styled.span`
   font-size: ${({size}) => (size)};
-  color: ${({color}) => (color)}
+  color: ${({me, color}) => ( me === "yes" ? "lightcoral" : color)};
+`
+export const Upvotes = styled.span`
+  font-size: ${({size}) => (size)};
+  color: ${({upvoted, downvoted}) => ( upvoted === "yes" ? "red" : downvoted === "yes" ? "blue" : "gray")};
 `
 export const EditReplyWrapper = styled.div`
   width: 100%;

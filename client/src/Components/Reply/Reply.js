@@ -17,7 +17,8 @@ import {
   Button,
   EditReplyText,
   EditReplyWrapper,
-  EditReplyFooter
+  EditReplyFooter,
+  Upvotes
 } from "./Reply.components"
 import { set } from "mongoose";
 const Reply = ({comment_id, post_id, replies, reply, user, setReplies}) => {
@@ -45,6 +46,28 @@ const Reply = ({comment_id, post_id, replies, reply, user, setReplies}) => {
     })
     .catch(err => console.log(err))
   }
+  const upvoteReply = () => {
+    if(!user) return;
+    const data = {
+      user_id: user._id
+    }
+    axios.post(`posts/${post_id}/comments/${comment_id}/${reply._id}/upvote`, data, config)
+    .then(res => {
+      setReplies(replies.map(doc => doc._id === reply._id ? res.data : doc));
+    })
+    .catch(err => console.log(err))
+  }
+  const downvoteReply = () => {
+    if(!user) return;
+    const data = {
+      user_id: user._id
+    }
+    axios.post(`posts/${post_id}/comments/${comment_id}/${reply._id}/downvote`, data, config)
+    .then(res => {
+      setReplies(replies.map(doc => doc._id === reply._id ? res.data : doc));
+    })
+    .catch(err => console.log(err))
+  }
 
   useEffect(() => {
     axios.get(`users/${reply.user_id}`)
@@ -54,13 +77,19 @@ const Reply = ({comment_id, post_id, replies, reply, user, setReplies}) => {
   return(
     <ReplyWrapper>
       <UpvotesWrapper>
-        <UpVote />
-        <DownVote />
+        <UpVote upvoted={user && reply.upvotes.includes(user._id) ? "yes" : "no"} onClick={() => upvoteReply()} />
+        <DownVote downvoted={user && reply.downvotes.includes(user._id) ? "yes" : "no" } onClick={() => downvoteReply()} />
       </UpvotesWrapper>
       <ReplyContainer>
         <ReplyHeader>
-          <P size="12px" color="black">{replyUser}&nbsp;&middot;&nbsp;</P>
-          <P size="12px" color="darkgray">{reply.upvotes.length - reply.downvotes.length} points&nbsp;&middot;&nbsp;</P>
+          <P size="12px" color="black" me={replyUser === user.username ? "yes" : "no"}>{replyUser}&nbsp;&middot;&nbsp;</P>
+          <Upvotes 
+          upvoted={user && reply.upvotes.includes(user._id) ? "yes" : "no"} 
+          size="12px" color="darkgray"
+          downvoted={user && reply.downvotes.includes(user._id) ? "yes" : "no"}
+          >
+            {reply.upvotes.length - reply.downvotes.length} points&nbsp;&middot;&nbsp;
+          </Upvotes>
           <P size="12px" color="darkgray">{moment(reply.createdAt).fromNow()}</P>
         </ReplyHeader>
         {
