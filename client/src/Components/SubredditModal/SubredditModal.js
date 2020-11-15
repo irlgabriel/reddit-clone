@@ -9,7 +9,9 @@ import {
   Input,
   Label,
   Button,
+  TextArea
 } from "./SubredditModal.components";
+
 const SubredditModal = ({
   subreddits,
   setSubreddits,
@@ -45,6 +47,10 @@ const SubredditModal = ({
               onChange={(e) => setSubredditName(e.target.value)}
               type="text"
             />
+          </FormGroup>
+          <FormGroup>
+            <Label>Description</Label>
+            <TextArea rows={5} />
           </FormGroup>
           <FormGroup>
             <Button color="white" bgColor="royalblue">

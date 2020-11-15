@@ -61,3 +61,9 @@ export const Button = styled.button`
     text-decoration: none;
   }
 `;
+export const TextArea = styled.textarea`
+  resize: vertical;
+  width: 100%;
+  padding: .5rem;
+  
+`
