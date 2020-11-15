@@ -117,6 +117,9 @@ export const KarmaCount = styled.p`
 export const ProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  padding: .5rem;
 `
 export const ProfileHeader = styled.div`
   display: flex;

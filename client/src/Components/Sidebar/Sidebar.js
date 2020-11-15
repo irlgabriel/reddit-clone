@@ -36,7 +36,9 @@ const Sidebar = ({ profilePage, subredditPage, homePage, subreddit, user, profil
             <RedditAge>Account created {moment(profileUser.createdAt).fromNow()}</RedditAge>
           </ProfileHeader>
           <ProfileBody>
-            <KarmaCount >Karma: </KarmaCount>
+            <KarmaCount count={profileUser.upvotes.length - profileUser.downvotes.length}>
+              Karma: {profileUser.upvotes.length - profileUser.downvotes.length}
+            </KarmaCount>
           </ProfileBody> 
         </ProfileContainer>
       }
