@@ -7,7 +7,7 @@ const CommentsSchema = mongoose.Schema({
   upvotes: {type: Array, default: []},
   downvotes: {type: Array, default: []},
   replies: {type: Array, default: []}
-})
+}, {timestamps: true})
 const Comment = mongoose.model('Comment', CommentsSchema);
 
 module.exports = Comment;

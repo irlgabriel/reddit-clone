@@ -26,11 +26,12 @@ router.post("/", (req, res, next) => {
     res.status(200).send(doc);
   })
   .catch(err => {
+    console.log(err)
     res.status(400).send(err);
   })
 })
 
-// POSt = Upvote Reply
+// POST = Upvote Reply
 router.post("/:reply_id/upvote", (req, res, next) => {
   const user = req.body.user_id;
   Reply.findById(req.params.reply_id, (err, doc) => {

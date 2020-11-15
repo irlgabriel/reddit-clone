@@ -1,5 +1,6 @@
 import axios from "axios";
 import react, { useState, useEffect } from "react";
+import moment from "moment";
 import {
   CommentWrapper,
   DotsGroup,
@@ -55,6 +56,7 @@ const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_
     axios.post(`/posts/${post_id}/comments/${comment._id}`, data, config)
     .then(res => {
       setReplies([...replies, res.data]);
+      setReplyForm(false);
     })
     .catch(err => console.log(err));
   }
@@ -107,7 +109,7 @@ const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_
           <CommentHeader>
             <Username me={user && user._id === comment.user_id ? "yes" : "no"}>{username}</Username>&nbsp;&middot;&nbsp;
             <Upvotes downvoted={downvoted} upvoted={upvoted}>{upvotes} points</Upvotes>&nbsp;&middot;&nbsp;
-            <TimeAgo>12h ago</TimeAgo>
+            <TimeAgo>{moment(comment.createdAt).fromNow()}</TimeAgo>
           </CommentHeader>
           <CommentBody>
             {
@@ -131,7 +133,7 @@ const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_
             showReplyForm && 
               <ReplyWrapper>
                 <P size="13" color="darkgray">Reply to {username}'s comment</P>
-                <ReplyForm placeholder="What is on your mind?"/>
+                <ReplyForm onChange={(e) => setReplyContent(e.target.value)} placeholder="What is on your mind?"/>
                 <ReplyFooter>
                   <Button color="white" bgColor="royalblue" onClick={() => createReply()}>REPLY</Button>
                 </ReplyFooter>
