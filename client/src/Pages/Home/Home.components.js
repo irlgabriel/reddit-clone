@@ -18,11 +18,15 @@ export const PostsContainer = styled.div`
 export const SortSection = styled.div`
   padding: .75rem .25rem;
   border-radius: 3px;
+  border: 1px solid lightgray;
   user-select: none;
   background: white;
   position: relative;
   display: flex;
   margin-top: .5rem;
+  &:hover {
+    border: 1px solid black;
+  }
 `
 export const SortOption = styled.div`
   color: ${({selected}) => (selected === "yes" ? "royalblue" : "gray")};
