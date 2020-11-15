@@ -8,5 +8,6 @@
 
 #### - FIX Logic for user's karma or think of a better way to handle it. (i.e. maybe getting all user's posts and comments then adding their upvotes and subtracting downvotes)
 
+#### - Set up HOME/ALL/POPULAR pages like in the real reddit app
 
 
