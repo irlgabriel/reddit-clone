@@ -8,3 +8,4 @@ export { default as SubredditModal } from "./SubredditModal/SubredditModal";
 export { default as PostComment } from "./PostComments/PostComment";
 export { default as CommentForm } from "./CommentForm/CommentForm";
 export { default as SidebarSubreddit } from "./Sidebar/SidebarSubreddit/SidebarSubreddit";
+export { default as Reply } from "./Reply/Reply";

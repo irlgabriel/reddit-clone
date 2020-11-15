@@ -259,8 +259,8 @@ const Post = ({
               )}
               {postComments.map((comment) => (
                 <PostComment
-                  upvoted={comment.upvotes.includes(user._id) ? "yes" : "no"}
-                  downvoted={comment.downvotes.includes(user._id) ? "yes" : "no"}
+                  upvoted={user && comment.upvotes.includes(user._id) ? "yes" : "no"}
+                  downvoted={user && comment.downvotes.includes(user._id) ? "yes" : "no"}
                   upvotes={comment.upvotes.length - comment.downvotes.length}
                   comments={postComments}
                   setComments={setPostComments}

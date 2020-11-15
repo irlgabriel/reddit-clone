@@ -23,11 +23,16 @@ import {
   TextWrapper,
   Button,
   EditFooter,
+  ReplyFooter,
+  ReplyWrapper,
+  ReplyForm
 } from "./PostComment.components";
-
+import { Reply } from "..";
 const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_id, user, comment }) => {
   const [replies, setReplies] = useState([]);
   const [username, setUsername] = useState("");
+  const [showReplyForm, setReplyForm] = useState(false);
+  const [replyContent, setReplyContent] = useState("");
   const [showEditComment, setShowEditComment] = useState(false);
   const [commentContent, setCommentContent] = useState(comment.content)
   const config = {
@@ -42,6 +47,17 @@ const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_
       setUsername(res.data.username);
     });
   };
+  const createReply = () => {
+    const data = {
+      user_id: user._id,
+      content: replyContent,
+    }
+    axios.post(`/posts/${post_id}/comments/${comment._id}`, data, config)
+    .then(res => {
+      setReplies([...replies, res.data]);
+    })
+    .catch(err => console.log(err));
+  }
   const editComment = () => {
     if(!user) return;
     axios.put(`/posts/${post_id}/comments/${comment._id}`, {content: commentContent, user_id: user._id}, config)
@@ -74,7 +90,10 @@ const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_
     // set comment's user
     getUsername(comment.user_id);
     // get comment's replies
-    setReplies()
+    axios.get(`/posts/${post_id}/comments/${comment._id}`)
+    .then(res => setReplies(res.data))
+    .catch(err => console.log(err))
+    
   }, []);
   return (
     <CommentWrapper>
@@ -108,15 +127,31 @@ const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_
             }
           </CommentBody>
           <CommentFooter>
-            <FooterItem>
+            {
+            showReplyForm && 
+              <ReplyWrapper>
+                <P size="13" color="darkgray">Reply to {username}'s comment</P>
+                <ReplyForm placeholder="What is on your mind?"/>
+                <ReplyFooter>
+                  <Button color="white" bgColor="royalblue" onClick={() => createReply()}>REPLY</Button>
+                </ReplyFooter>
+              </ReplyWrapper>
+            }
+            <FooterItem onClick={() => setReplyForm(!showReplyForm)}>
               <CommentIcon />
               &nbsp;
-              <P bold size="13" color="darkgray" color="darkgray">
-                Reply
-              </P>
+              {
+                !showReplyForm  
+                ? <P bold size="13" color="darkgray">
+                  Reply
+                </P>
+                : <P bold size="13" color="darkgray">
+                  Cancel
+                </P>
+              }
             </FooterItem>
             { 
-            comment.user_id === user._id && 
+            user && comment.user_id === user._id && 
             <FooterItem onClick={() => setShowEditComment(!showEditComment)}>
               <EditIcon />
               &nbsp;
@@ -128,6 +163,11 @@ const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_
           </CommentFooter>
         </CommentContent>
       </CommentContainer>
+      {
+        replies.map(reply => 
+          <Reply setReplies={setReplies} comment_id={comment._id} post_id={post_id} reply={reply} user={user}/>  
+        )
+      }
     </CommentWrapper>
   );
 };

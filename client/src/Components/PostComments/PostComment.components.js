@@ -56,6 +56,7 @@ export const CommentBody = styled.div`
 
 export const CommentFooter = styled.div`
   display: flex;
+  flex-wrap: wrap;
 `;
 export const Content = styled.p`
   font-family: "Open Sans", sans-serif;
@@ -64,7 +65,7 @@ export const Content = styled.p`
 `;
 export const P = styled.p`
   font-size: ${({ size }) => size + "px"};
-  font-weight: ${({ bold }) => (bold ? "bold" : "")};
+  font-weight: ${({ bold }) => (bold ? "bold" : "300")};
   color: ${({ color }) => color};
   user-select: none;
   cursor: pointer;
@@ -126,4 +127,20 @@ export const Button = styled.a`
 export const EditFooter = styled.div`
   display: flex;
   padding: .25rem 0;
+`
+export const ReplyWrapper = styled.div`
+  margin-top: 1rem;
+  width: 100%;
+`
+export const ReplyForm = styled.textarea`
+  padding: .5rem;
+  font-family: 'Open-sans', sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  width: 100%;
+  resize: vertical;
+`
+export const ReplyFooter = styled.div`
+  display: flex;
+  justify-content: flex-end;
 `
