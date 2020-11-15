@@ -3,6 +3,8 @@ var router = express.Router({mergeParams: true});
 // Comments base route : /posts/:post_id/comments 
 
 const Comment = require("../models/comments");
+const User = require("../models/users");
+
 
 // GET - Get comments of post_id
 router.get("/", (req, res, next) => {
@@ -43,12 +45,21 @@ router.post("/:comment_id/upvote", (req, res, next) => {
     if(err) res.status(400).send(err);
 
     // Check if user downvoted this previously and remove it!
-    if(comm.downvotes.includes(user_id)) comm.downvotes = comm.downvotes.filter(downvote => downvote !== user_id);
+    if(comm.downvotes.includes(user_id)) {
+      // Remove downvote from comment;
+      comm.downvotes = comm.downvotes.filter(downvote => downvote !== user_id);
+      // Remove it from user's model
+      User.findByIdAndUpdate(comm.user_id, {$pull: {downvotes: user_id}});
+    }
 
     // Check if current user upvoted this previously
-    comm.upvotes.includes(user_id) 
-    ? comm.upvotes = comm.upvotes.filter(upvote => upvote !== user_id)
-    : comm.upvotes.push(user_id);
+    if(comm.upvotes.includes(user_id)) {
+      comm.upvotes = comm.upvotes.filter(upvote => upvote !== user_id)
+      User.findByIdAndUpdate(comm.user_id, {$pull: {upvotes: user_id}});
+    } else {
+      comm.upvotes.push(user_id);
+      User.findByIdAndUpdate(comm.user_id, {$push: {upvotes: user_id}});
+    }
     // Save and send res back
     comm.save((err, doc) => {
       if(err) res.status(400).send(err);

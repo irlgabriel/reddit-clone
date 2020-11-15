@@ -109,7 +109,8 @@ export const ProfileUsername = styled.p`
 
 `
 export const RedditAge = styled.p`
-
+  margin-left: auto;
+  width: 40%;
 `
 export const KarmaCount = styled.p`
   color: ${({count}) => (count > 0 ? "red" : count < 0 ? "blue" : "black")};
@@ -123,7 +124,7 @@ export const ProfileContainer = styled.div`
 `
 export const ProfileHeader = styled.div`
   display: flex;
-  align-items: center;
+  justify-content: space-between;
 `
 export const ProfileBody = styled.div`
   display: flex;

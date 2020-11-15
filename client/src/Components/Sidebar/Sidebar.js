@@ -32,7 +32,7 @@ const Sidebar = ({ profilePage, subredditPage, homePage, subreddit, user, profil
         profilePage && 
         <ProfileContainer>
           <ProfileHeader>
-            <ProfileUsername>{profileUser.username}&nbsp;&middot;&nbsp;</ProfileUsername>
+            <ProfileUsername>{profileUser.username}</ProfileUsername>
             <RedditAge>Account created {moment(profileUser.createdAt).fromNow()}</RedditAge>
           </ProfileHeader>
           <ProfileBody>
