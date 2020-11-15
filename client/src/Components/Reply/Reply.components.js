@@ -112,3 +112,8 @@ export const Username = styled(Link)`
   text-decoration: none;
   color: ${({me}) => (me === "yes") ? "lightcoral" : "black"}
 `
+export const ReplyFooterNotLoggedIn = styled.div`
+  display: flex;
+  
+  align-items: center;
+`

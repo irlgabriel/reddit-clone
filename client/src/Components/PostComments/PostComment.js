@@ -139,7 +139,7 @@ const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_
                 </ReplyFooter>
               </ReplyWrapper>
             }
-            <FooterItem onClick={() => setReplyForm(!showReplyForm)}>
+            <FooterItem onClick={() => user && setReplyForm(!showReplyForm)}>
               <CommentIcon />
               &nbsp;
               {

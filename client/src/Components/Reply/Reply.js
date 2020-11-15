@@ -19,7 +19,8 @@ import {
   EditReplyWrapper,
   EditReplyFooter,
   Upvotes,
-  Username
+  Username,
+  ReplyFooterNotLoggedIn
 } from "./Reply.components"
 import { set } from "mongoose";
 const Reply = ({comment_id, post_id, replies, reply, user, setReplies}) => {
@@ -99,31 +100,39 @@ const Reply = ({comment_id, post_id, replies, reply, user, setReplies}) => {
             {reply.content}  
           </ReplyBody>
         }
-        
-        <ReplyFooter>
-          {
-            showReplyEdit && 
-            <EditReplyWrapper>
-              <EditReplyText value={replyContent} onChange={(e) => setReplyContent(e.target.value)} >
+        {
+          user &&
+          <ReplyFooter>
+            {
+              showReplyEdit && 
+              <EditReplyWrapper>
+                <EditReplyText value={replyContent} onChange={(e) => setReplyContent(e.target.value)} >
 
-              </EditReplyText>
-              <EditReplyFooter>
-                <Button onClick={() => editReply()} color="white" bgColor="royalblue">EDIT</Button>
-              </EditReplyFooter>
-            </EditReplyWrapper>
-          }
-          <FooterItem>
-            <ReplyIcon/>&nbsp;
-            <p style={{color: "darkgray"}}>Reply</p>
-          </FooterItem>
-          {
-            user && replyUser === user.username && 
-            <FooterItem onClick={() => setShowReplyEdit(!showReplyEdit)}>
-              <EditIcon />&nbsp;
-              {!showReplyEdit ?  <p>Edit</p> : <p>Cancel</p>}
+                </EditReplyText>
+                <EditReplyFooter>
+                  <Button onClick={() => editReply()} color="white" bgColor="royalblue">EDIT</Button>
+                </EditReplyFooter>
+              </EditReplyWrapper>
+            }
+            <FooterItem>
+              <ReplyIcon/>&nbsp;
+              <p style={{color: "darkgray"}}>Reply</p>
             </FooterItem>
-          }
-        </ReplyFooter>
+            {
+              user && replyUser === user.username && 
+              <FooterItem onClick={() => setShowReplyEdit(!showReplyEdit)}>
+                <EditIcon />&nbsp;
+                {!showReplyEdit ?  <p>Edit</p> : <p>Cancel</p>}
+              </FooterItem>
+            }
+          </ReplyFooter>
+        }
+        {
+          !user && 
+          <ReplyFooterNotLoggedIn>
+            
+          </ReplyFooterNotLoggedIn>
+        }
       </ReplyContainer>
     </ReplyWrapper>
   )
