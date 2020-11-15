@@ -83,7 +83,7 @@ const Reply = ({comment_id, post_id, replies, reply, user, setReplies}) => {
       </UpvotesWrapper>
       <ReplyContainer>
         <ReplyHeader>
-          <Username to={`/users/${replyUser}`} me={replyUser === user.username ? "yes" : "no"}>{replyUser}&nbsp;</Username>
+          <Username to={`/users/${replyUser}`} me={user && replyUser === user.username ? "yes" : "no"}>{replyUser}&nbsp;</Username>
           <Upvotes 
           upvoted={user && reply.upvotes.includes(user._id) ? "yes" : "no"} 
           size="12px" color="darkgray"
