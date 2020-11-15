@@ -66,8 +66,6 @@ const Post = ({
   // State for editing Post
   const [postTitle, setPostTitle] = useState(title);
   const [postContent, setPostContent] =  useState(content);
-  // const [commentsSortBy, setCommentsSortBy] = useState('BEST')
-  const [showCommentsSortBy, setShowCommentsSortBy] = useState(false);
 
   const config = {
     headers: {
@@ -244,18 +242,6 @@ const Post = ({
                   post_id={id}
                   user_id={user._id}
                 />
-              )}
-              {postComments.length > 0 && (
-                <SortBy>
-                  <P
-                    onClick={() => setShowCommentsSortBy(!showCommentsSortBy)}
-                    size="11px"
-                    color="darkgray"
-                  >
-                    SORT BY
-                  </P>
-                  <SortByDropdown></SortByDropdown>
-                </SortBy>
               )}
               {postComments.map((comment) => (
                 <PostComment

@@ -105,3 +105,26 @@ export const SubredditSection = styled.div`
   border: 1px solid lightgray;  
   border-radius: 4px;
 `
+export const ProfileUsername = styled.p`
+
+`
+export const RedditAge = styled.p`
+
+`
+export const KarmaCount = styled.p`
+  color: ${({count}) => (count > 0 ? "red" : count < 0 ? "blue" : "black")};
+`
+export const ProfileContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+export const ProfileHeader = styled.div`
+  display: flex;
+  align-items: center;
+`
+export const ProfileBody = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: .5rem .25rem;
+`

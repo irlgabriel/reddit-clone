@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import { SidebarSubreddit } from "..";
 import {
   SidebarContainer,
@@ -11,8 +12,13 @@ import {
   NodeLogo,
   HerokuLogo,
   LogoDiv,
-
-  SubredditSection
+  RedditAge,
+  ProfileUsername,
+  SubredditSection,
+  KarmaCount,
+  ProfileContainer,
+  ProfileBody,
+  ProfileHeader,
 } from "./Sidebar.components";
 
 const Sidebar = ({ profilePage, subredditPage, homePage, subreddit, user, profileUser, subreddits, setSubreddits }) => {
@@ -24,7 +30,15 @@ const Sidebar = ({ profilePage, subredditPage, homePage, subreddit, user, profil
       {
         /* show some info about user if sidebar is shown in the Profile Page */
         profilePage && 
-        <Title>{profileUser.username}</Title>
+        <ProfileContainer>
+          <ProfileHeader>
+            <ProfileUsername>{profileUser.username}&nbsp;&middot;&nbsp;</ProfileUsername>
+            <RedditAge>Account created {moment(profileUser.createdAt).fromNow()}</RedditAge>
+          </ProfileHeader>
+          <ProfileBody>
+            <KarmaCount >Karma: </KarmaCount>
+          </ProfileBody> 
+        </ProfileContainer>
       }
       {
         /* if subreddits prop is provided we show some info about popular subreddits with links to them */
