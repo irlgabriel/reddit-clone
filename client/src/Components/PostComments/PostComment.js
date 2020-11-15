@@ -107,7 +107,7 @@ const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_
 
         <CommentContent>
           <CommentHeader>
-            <Username me={user && user._id === comment.user_id ? "yes" : "no"}>{username}</Username>&nbsp;&middot;&nbsp;
+            <Username to={`/users/${username}`} me={user && user._id === comment.user_id ? "yes" : "no"}>{username}</Username>&nbsp;&middot;&nbsp;
             <Upvotes downvoted={downvoted} upvoted={upvoted}>{upvotes} points</Upvotes>&nbsp;&middot;&nbsp;
             <TimeAgo>{moment(comment.createdAt).fromNow()}</TimeAgo>
           </CommentHeader>

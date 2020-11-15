@@ -18,7 +18,8 @@ import {
   EditReplyText,
   EditReplyWrapper,
   EditReplyFooter,
-  Upvotes
+  Upvotes,
+  Username
 } from "./Reply.components"
 import { set } from "mongoose";
 const Reply = ({comment_id, post_id, replies, reply, user, setReplies}) => {
@@ -82,7 +83,7 @@ const Reply = ({comment_id, post_id, replies, reply, user, setReplies}) => {
       </UpvotesWrapper>
       <ReplyContainer>
         <ReplyHeader>
-          <P size="12px" color="black" me={replyUser === user.username ? "yes" : "no"}>{replyUser}&nbsp;&middot;&nbsp;</P>
+          <Username to={`/users/${replyUser}`} me={replyUser === user.username ? "yes" : "no"}>{replyUser}&nbsp;</Username>
           <Upvotes 
           upvoted={user && reply.upvotes.includes(user._id) ? "yes" : "no"} 
           size="12px" color="darkgray"

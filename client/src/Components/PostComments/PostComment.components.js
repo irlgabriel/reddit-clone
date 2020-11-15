@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { GoArrowDown, GoArrowUp } from "react-icons/go";
 import { RiMessageFill, RiPencilFill } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 export const CommentWrapper = styled.div``;
 export const DotsGroup = styled.div`
@@ -19,9 +20,10 @@ export const CommentContent = styled.div`
   padding: 0;
   margin-bottom: auto;
 `;
-export const Username = styled.span`
+export const Username = styled(Link)`
   font-size: 12px;
   font-weight: 100;
+  text-decoration: none;
   color: ${({me}) => ( me === "yes" ? "lightcoral" : "black")}
 `;
 export const Upvotes = styled.span`
