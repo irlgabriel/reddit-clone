@@ -4,9 +4,9 @@
 
 ### TO-DO/FIX
 
-#### - Add comments(done) and replies (and replies to replies? - how to nest those and how much?)
-
 #### - [Very important] - ADD Flash messages! (maybe add a msg key in the response body and use a state in main component to render it when there's a message sent back?)
 
-#### - Think of a better way to manage state for subscribed users. When users login/logout the state is not changed
+#### - FIX Logic for user's karma or think of a better way to handle it. (i.e. maybe getting all user's posts and comments then adding their upvotes and subtracting downvotes)
+
+
 
