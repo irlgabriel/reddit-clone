@@ -26,6 +26,7 @@ import {
 } from "./PostComment.components";
 
 const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_id, user, comment }) => {
+  const [replies, setReplies] = useState([]);
   const [username, setUsername] = useState("");
   const [showEditComment, setShowEditComment] = useState(false);
   const [commentContent, setCommentContent] = useState(comment.content)
@@ -72,7 +73,8 @@ const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_
   useEffect(() => {
     // set comment's user
     getUsername(comment.user_id);
-    // set upvote/downvote state
+    // get comment's replies
+    setReplies()
   }, []);
   return (
     <CommentWrapper>

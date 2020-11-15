@@ -30,7 +30,7 @@ const SidebarSubreddit = ({ subreddits, setSubreddits, user, sub}) => {
     if(!user) return;
     axios.post(`/subreddits/${sub._id}/subscribe`, {user_id: user._id}, config)
     .then(res => {
-      setSubreddits([...subreddits, res.data])
+      setSubreddits(subreddits.map(sub => sub._id === res.data._id ? res.data : sub))
       setSubscribed(true);
       setMembers(members + 1);
     })
@@ -40,7 +40,7 @@ const SidebarSubreddit = ({ subreddits, setSubreddits, user, sub}) => {
     if(!user) return;
     axios.post(`/subreddits/${sub._id}/unsubscribe`, {user_id: user._id}, config)
     .then(res => {
-      setSubreddits([...subreddits, res.data])
+      setSubreddits(subreddits.map(sub => sub._id === res.data._id ? res.data : sub))
       setSubscribed(false);
       setMembers(members - 1);
     })

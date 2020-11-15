@@ -1,4 +1,4 @@
-import react, {useState, useEffect} from "react";
+import React from "react";
 import { CSSTransition } from "react-transition-group";
 import { Sidebar, Post, PostModal, SubredditModal } from "../../Components";
 import {
@@ -114,7 +114,7 @@ const Home = ({
               />
             ))}
         </PostsContainer>
-        <Sidebar setSubreddits={setSubreddits} user={user} subreddits={subreddits} />
+        <Sidebar homePage setSubreddits={setSubreddits} user={user} subreddits={subreddits} />
       </MainWrapper>
     </div>
   );

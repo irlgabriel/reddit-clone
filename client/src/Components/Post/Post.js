@@ -158,10 +158,10 @@ const Post = ({
                 to={`/users/${postUsername}`}
                 me={user ? (creator_id === user._id ? "yes" : "false") : ""}
               >
-                &nbsp;{postUsername}
+                &nbsp;{postUsername}&nbsp;
               </Creator>
               <PostedAt>
-               &nbsp;{moment(createdAt).fromNow()}
+               &middot;&nbsp;{moment(createdAt).fromNow()}
               </PostedAt>
             </PostHeader>
             { 

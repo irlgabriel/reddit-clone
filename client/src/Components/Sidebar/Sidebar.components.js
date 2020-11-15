@@ -99,3 +99,9 @@ export const DisabledButton = styled.button`
   font-size: 13px;
   cursor: not-allowed;
 `
+export const SubredditSection = styled.div`
+  margin: .5rem;
+  padding: .25rem;
+  border: 1px solid lightgray;  
+  border-radius: 4px;
+`

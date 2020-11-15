@@ -9,6 +9,7 @@ var usersRouter = require("./routes/users");
 var postsRouter = require("./routes/posts");
 var subredditsRouter = require("./routes/subreddits");
 var commentsRouter = require("./routes/comments");
+var repliesRouter = require("./routes/replies");
 var app = express();
 
 // view engine setup
@@ -26,6 +27,7 @@ app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
 app.use("/subreddits", subredditsRouter);
 app.use("/posts/:post_id/comments", commentsRouter);
+app.use("/posts/:post_id/comments/:comment_id", repliesRouter);
 
 if (process.env.NODE_ENV == "production") {
   // Set a static folder

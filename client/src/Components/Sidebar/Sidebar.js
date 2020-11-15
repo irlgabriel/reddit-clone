@@ -1,26 +1,21 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { SidebarSubreddit } from "..";
-import { CSSTransiton } from "react-transition-group";
 import {
   SidebarContainer,
   Header,
   Title,
   Subtitle,
   Description,
-  RedditLogo,
   MongoLogo,
   ReactLogo,
   NodeLogo,
   HerokuLogo,
   LogoDiv,
-  FlexColumn,
-  FlexRow,
-  Button,
-  DisabledButton
+
+  SubredditSection
 } from "./Sidebar.components";
 
-const Sidebar = ({ profilePage, subredditPage, subreddit, user, profileUser, subreddits, setSubreddits }) => {
+const Sidebar = ({ profilePage, subredditPage, homePage, subreddit, user, profileUser, subreddits, setSubreddits }) => {
 
   //960px hidden
   return (
@@ -28,16 +23,16 @@ const Sidebar = ({ profilePage, subredditPage, subreddit, user, profileUser, sub
       
       {
         /* show some info about user if sidebar is shown in the Profile Page */
-        profileUser && 
+        profilePage && 
         <Title>{profileUser.username}</Title>
       }
       {
         /* if subreddits prop is provided we show some info about popular subreddits with links to them */
-        !subredditPage && !profilePage && 
+        homePage && 
         <Title>Popular Subreddits</Title>
       }     
       {
-        subreddits && !subreddit && 
+        homePage && 
         subreddits
         .slice(0, 3)
         .map(sub => 
@@ -45,9 +40,13 @@ const Sidebar = ({ profilePage, subredditPage, subreddit, user, profileUser, sub
         )
       }
       {
-        /* if subreddit prop is provided we show some info about this particular subreddit like the amount of members */
-        subreddit && 
-        <SidebarSubreddit subreddits={subreddits} setSubreddits={setSubreddits} sub={subreddit} user={user}/>
+        /* if subredditPage prop is provided we show some info about this particular subreddit like the amount of members
+        sub status and sub description */
+        subredditPage && 
+        <SubredditSection>
+          <SidebarSubreddit subreddits={subreddits} setSubreddits={setSubreddits} sub={subreddit} user={user}/>
+          <Description>{subreddit.description}</Description>
+        </SubredditSection>
       }
       <Header>
         <LogoDiv>

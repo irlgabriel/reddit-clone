@@ -34,7 +34,8 @@ router.post("/", (req, res, next) => {
     res.status(400).send(err);
   })
 })
-// Post - Upvote a comment
+
+// POST - Upvote a comment
 router.post("/:comment_id/upvote", (req, res, next) => {
   const comment_id = req.params.comment_id;
   const user_id = req.body.user_id;
