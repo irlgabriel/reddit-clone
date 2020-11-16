@@ -13,12 +13,15 @@ import {
 } from "./SubredditModal.components";
 
 const SubredditModal = ({
+  setShowFlash,
+  setFlash,
   subreddits,
   setSubreddits,
   user,
   setSubredditModal,
 }) => {
   const [subredditName, setSubredditName] = useState("");
+
   const createSubreddit = (e) => {
     e.preventDefault();
     const config = {
@@ -31,10 +34,18 @@ const SubredditModal = ({
       name: subredditName,
       creator: user._id,
     };
-    axios.post("/subreddits", body, config).then((res) => {
-      setSubredditModal(false);
-      setSubreddits([...subreddits, res.data]);
-    });
+    axios.post("/subreddits", body, config)
+    .then((res) => {
+    setSubredditModal(false);
+    setSubreddits([...subreddits, res.data]);
+      setFlash(res.data.message);
+      setShowFlash(true);
+    })
+    .catch(err => {
+      console.log(err);
+      setFlash(err);
+      setShowFlash(true);
+    })
   };
   return (
     <SubredditModalWrapper onClick={() => setSubredditModal(false)}>

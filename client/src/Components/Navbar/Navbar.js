@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import {
   Nav,
   RedditLogo,
@@ -16,7 +15,7 @@ import {
 import { LoginModal, RegisterModal } from "..";
 import { CSSTransition } from "react-transition-group";
 
-const Navbar = ({ showLogin, setLogin, showRegister, setRegister, subreddits, user, setUser }) => {
+const Navbar = ({ setFlash, setShowFlash, showLogin, setLogin, showRegister, setRegister, subreddits, user, setUser }) => {
   
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -33,6 +32,8 @@ const Navbar = ({ showLogin, setLogin, showRegister, setRegister, subreddits, us
     */
     localStorage.removeItem("currentUser");
     setUser(undefined);
+    setShowFlash(true);
+    setFlash("Logged out successfully!");
   };
   useEffect(() => {
     const results = subreddits.filter((subreddit) =>
@@ -48,7 +49,7 @@ const Navbar = ({ showLogin, setLogin, showRegister, setRegister, subreddits, us
         classNames="fade"
         unmountOnExit
       >
-        <LoginModal setLogin={setLogin} user={user} setUser={setUser} />
+        <LoginModal setFlash={setFlash} setShowFlash={setShowFlash} setLogin={setLogin} user={user} setUser={setUser} />
       </CSSTransition>
 
       <CSSTransition
@@ -58,6 +59,8 @@ const Navbar = ({ showLogin, setLogin, showRegister, setRegister, subreddits, us
         unmountOnExit
       >
         <RegisterModal
+          setFlash={setFlash}
+          setShowFlash={setShowFlash}
           setRegister={setRegister}
           user={user}
           setUser={setUser}

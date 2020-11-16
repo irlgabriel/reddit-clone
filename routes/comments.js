@@ -29,7 +29,7 @@ router.post("/", (req, res, next) => {
     content: content,
   })
   .then(comm => {
-    res.status(200).send(comm);
+    res.status(200).send({message: "Comment posted!", comment: comm});
   })
   .catch(err => {
     res.status(400).send(err);
@@ -86,7 +86,7 @@ router.post("/:comment_id/downvote", (req, res, next) => {
     })
   })
 })
-/* PUT - edit post route */
+/* PUT - edit comment route */
 router.put("/:comment_id", (req, res, next) => {
   // send id of use who sends the request and see if it matches comment creator
   const user_id = req.body.user_id;
@@ -98,17 +98,19 @@ router.put("/:comment_id", (req, res, next) => {
     }
   })
   Comment.findByIdAndUpdate(comment_id, updated_obj, {new: true}, (err, doc) => {
-    if(user_id !== doc.user_id) res.status(403).send({msg: "Forbidden"})
+    if(user_id !== doc.user_id) res.status(403).send({message: "Forbidden"})
     if(err) res.status(400).send(err);
-    res.status(200).send(doc);
+    res.status(200).send({message: "Comment edited!", doc});
   })
 })
+
+// DELETE - delete a comment
 router.delete("/:comment_id", (req, res, next) => {
   const user_id = req.body.user_id;
   const comment_id = req.params.comment_id;
   Comment.findByIdAndDelete(comment_id, (err, doc) => {
     if(err) res.status(400).send(err);
-    res.status(200).send(doc);
+    res.status(200).send({message:"Comment deleted!", comment: doc});
   })
 })
 module.exports = router;

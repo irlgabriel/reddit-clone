@@ -10,7 +10,7 @@ import {
   Button,
   LoginHeader,
 } from "./LoginModal.components";
-const LoginModal = ({ setLogin, user, setUser }) => {
+const LoginModal = ({ setFlash, setShowFlash, setLogin, user, setUser }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -30,11 +30,17 @@ const LoginModal = ({ setLogin, user, setUser }) => {
       .post("/users/login", body, config)
       .then((res) => {
         // Logged in Successfully!
+        console.log(res.data);
         localStorage.setItem("currentUser", JSON.stringify(res.data.user));
         setUser(res.data.user);
-        setLogin(false);
+        setFlash(res.data.message);
+        setShowFlash(true);
+        setLogin(false); // hide login modal       
       })
-      .catch((err) => console.log(err));
+      .catch(err => {
+        setFlash(err.response.data.message);
+        setShowFlash(true);
+      })
   };
 
   return (

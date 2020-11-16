@@ -9,7 +9,7 @@ import {
   FormFooter,
   P,
 } from "./CommentForm.components";
-const CommentForm = ({ postComments, setPostComments, post_id, user_id }) => {
+const CommentForm = ({ setFlash, setShowFlash, postComments, setPostComments, post_id, user_id }) => {
   const [formFocus, setFormFocus] = useState(false);
   const [commentContent, setCommentContent] = useState("");
 
@@ -25,10 +25,17 @@ const CommentForm = ({ postComments, setPostComments, post_id, user_id }) => {
       user_id: user_id,
       content: commentContent,
     });
-    axios.post(`/posts/${post_id}/comments/`, body, config).then((res) => {
+    axios.post(`/posts/${post_id}/comments/`, body, config)
+    .then((res) => {
       setCommentContent("");
-      setPostComments([...postComments, res.data]);
-    });
+      setPostComments([...postComments, res.data.comment]);
+      setFlash(res.data.message);
+      setShowFlash(true);
+    })
+    .catch(err => {
+      setFlash(err.response.data.message);
+      setShowFlash(true);
+    })
   };
   return (
     <FormWrapper>

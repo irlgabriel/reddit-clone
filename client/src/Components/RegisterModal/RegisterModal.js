@@ -10,7 +10,7 @@ import {
   Button,
   RegisterHeader,
 } from "./RegisterModal.components";
-const RegisterModal = ({ setUser, setRegister }) => {
+const RegisterModal = ({ setFlash, setShowFlash, setUser, setRegister }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -33,9 +33,15 @@ const RegisterModal = ({ setUser, setRegister }) => {
       .then((res) => {
         localStorage.setItem("currentUser", JSON.stringify(res.data.user));
         setUser(res.data.user);
+        setFlash(res.data.message);
+        setShowFlash(true);
         setRegister(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err.response)
+        setFlash(err.response.data.message)
+        setShowFlash(true);
+      });
   };
 
   return (

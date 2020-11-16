@@ -10,6 +10,8 @@ import {
 import { Sidebar, Post, PostModal } from "../../Components";
 
 const Subreddit = ({
+  setFlash,
+  setShowFlash,
   setPostModal,
   postModal,
   posts,
@@ -75,7 +77,7 @@ const Subreddit = ({
           />
         ))}
       </PostsContainer>
-      <Sidebar subredditPage subreddits={subreddits} setSubreddits={setSubreddits} subreddit={subreddit} user={user} />
+      <Sidebar setFlash={setFlash} setShowFlash={setShowFlash} subredditPage subreddits={subreddits} setSubreddits={setSubreddits} subreddit={subreddit} user={user} />
     </MainWrapper>
   );
 };

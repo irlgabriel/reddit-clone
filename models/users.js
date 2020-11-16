@@ -4,7 +4,7 @@ var UserSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      unique: true,
+      unique: [true, "username already used"],
       lowercase: true,
       required: [true, "can't be blank"],
       match: [/^[a-zA-Z0-9]+$/, "is invalid"],
@@ -12,7 +12,7 @@ var UserSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      unique: true,
+      unique: [true, "email already used"],
       lowercase: true,
       required: [true, "can't be blank"],
       match: [/\S+@\S+\.\S+/, "is invalid"],

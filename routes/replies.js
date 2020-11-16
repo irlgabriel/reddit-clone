@@ -78,7 +78,7 @@ router.put('/:reply_id', (req, res, next) => {
   const content = req.body.content;
 
   Reply.findByIdAndUpdate(req.params.reply_id, {content: content}, {new: true}, (err, doc) => {
-    if(doc.user_id !== user) res.status(403).send({msg: "Forbidden"});
+    if(doc.user_id !== user) res.status(403).send({message: "Forbidden"});
     if(err) res.status(400).send(err);
     res.status(200).send(doc);
   })

@@ -22,8 +22,8 @@ router.post("/", (req, res, next) => {
     user: user._id, // object!
     content: content,
   })
-    .then((post) => res.status(200).send(post))
-    .catch((err) => res.status(400).send(err));
+    .then((post) => res.status(200).send({message: "Post created!", post: post}))
+    .catch(err => res.status(400).send(err));
 });
 // POST - upvote a post
 router.post("/:post_id/upvote", (req, res, next) => {
@@ -95,9 +95,9 @@ router.put("/:post_id", (req, res, next) => {
   // res.status(200).send(updated_obj)
   Post.findByIdAndUpdate(req.params.post_id, updated_obj, {new: true}, (err, doc) => {
     // Check if user that submited the request is the creator
-    if(doc.user !== user_id) res.status(403).send({msg: "Forbidden"})
+    if(doc.user !== user_id) res.status(403).send({message: "Forbidden"})
     if(err) res.status(400).send(err);
-    res.status(200).send(doc);
+    res.status(200).send({message: "Post edited!", doc});
   })
 })
 
@@ -106,7 +106,7 @@ router.delete("/:post_id", (req, res, next) => {
   const postId = req.params.post_id;
   // Find and delete the post form the "posts" collection
   Post.findByIdAndDelete(postId)
-    .then((post) => res.status(200).send(post))
+    .then((post) => res.status(200).send({message: "Post deleted!", post}))
     .catch((err) => res.status(400).send(err));
 });
 module.exports = router;

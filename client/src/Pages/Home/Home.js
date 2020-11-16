@@ -15,6 +15,8 @@ import {
   Button
 } from "./Home.components";
 const Home = ({
+  setFlash,
+  setShowFlash,
   setLogin,
   setRegister,
   setSubreddits,
@@ -40,6 +42,8 @@ const Home = ({
         unmountOnExit
       >
         <PostModal
+          setFlash={setFlash}
+          setShowFlash={setShowFlash}
           setPosts={setPosts}
           posts={posts}
           user={user}
@@ -53,6 +57,8 @@ const Home = ({
         unmountOnExit
       >
         <SubredditModal
+          setFlash={setFlash}
+          setShowFlash={setShowFlash}
           user={user}
           setSubreddits={setSubreddits}
           setSubredditModal={setSubredditModal}
@@ -94,6 +100,8 @@ const Home = ({
           {
             posts.map((post) => (
               <Post
+                setFlash={setFlash}
+                setShowFlash={setShowFlash}
                 posts={posts}
                 setPosts={setPosts}
                 user={user}
@@ -108,13 +116,11 @@ const Home = ({
                 createdAt={post.createdAt}
                 updatedAt={post.updatedAt}
                 upvoted={user && post.upvotes.includes(user._id) ? "yes" : "no"}
-                downvoted={
-                  user && post.downvotes.includes(user._id) ? "yes" : "no"
-                }
+                downvoted={user && post.downvotes.includes(user._id) ? "yes" : "no"}
               />
             ))}
         </PostsContainer>
-        <Sidebar homePage setSubreddits={setSubreddits} user={user} subreddits={subreddits} />
+        <Sidebar setFlash={setFlash} setShowFlash={setShowFlash} homePage setSubreddits={setSubreddits} user={user} subreddits={subreddits} />
       </MainWrapper>
     </div>
   );

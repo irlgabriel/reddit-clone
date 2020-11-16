@@ -10,7 +10,7 @@ import {
   DisabledButton
 } from "./SidebarSubreddit.components";
 
-const SidebarSubreddit = ({ subreddits, setSubreddits, user, sub}) => {
+const SidebarSubreddit = ({ setFlash, setShowFlash, subreddits, setSubreddits, user, sub}) => {
   const [subscribed, setSubscribed] = useState(false)
   const [members, setMembers] = useState(sub.members.length)
 
@@ -33,6 +33,8 @@ const SidebarSubreddit = ({ subreddits, setSubreddits, user, sub}) => {
       setSubreddits(subreddits.map(sub => sub._id === res.data._id ? res.data : sub))
       setSubscribed(true);
       setMembers(members + 1);
+      setFlash(res.data.message);
+      setShowFlash(true);
     })
     .catch(e => console.log(e))
   }
@@ -43,6 +45,8 @@ const SidebarSubreddit = ({ subreddits, setSubreddits, user, sub}) => {
       setSubreddits(subreddits.map(sub => sub._id === res.data._id ? res.data : sub))
       setSubscribed(false);
       setMembers(members - 1);
+      setFlash(res.data.message);
+      setShowFlash(true);
     })
     .catch(e => console.log(e));
   }

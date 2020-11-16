@@ -30,7 +30,7 @@ import {
   ReplyForm
 } from "./PostComment.components";
 import { Reply } from "..";
-const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_id, user, comment }) => {
+const PostComment = ({ setFlash, setShowFlash, upvotes, comments, setComments, upvoted, downvoted, post_id, user, comment }) => {
   const [replies, setReplies] = useState([]);
   const [username, setUsername] = useState("");
   const [showReplyForm, setReplyForm] = useState(false);
@@ -53,7 +53,18 @@ const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_
     if(!user) return;
     window.confirm("Are you sure you want to delete this comment?") &&      
     axios.delete(`/posts/${post_id}/comments/${comment._id}`, {user_id: user._id}, config)
-    .then(res => setComments(comments.filter(comm => comm._id !== comment._id)))
+    .then(res => {
+      setComments(comments.filter(comm => comm._id !== res.data.comment._id))
+      setFlash(res.data.message);
+      setShowFlash(true);
+    })
+    .catch(err => {
+      console.log(err);
+      console.log(err.response);
+      setFlash(err.response.data.message);
+      setShowFlash(true);
+    })
+    
   }
   const createReply = () => {
     const data = {
@@ -72,9 +83,14 @@ const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_
     axios.put(`/posts/${post_id}/comments/${comment._id}`, {content: commentContent, user_id: user._id}, config)
     .then(res => {
       setShowEditComment(false);
-      setComments(comments.map(comm => comm._id === comment._id ? res.data : comm))
+      setComments(comments.map(comm => comm._id === comment._id ? res.data : comm));
+      setFlash(res.data.message);
+      setShowFlash(true);
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+      setFlash(err.response.data.message);
+      setShowFlash(true);
+    })
   }
   const upvoteComment = () => {
     if (!user) return;

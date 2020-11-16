@@ -6,7 +6,7 @@ import {
   UserActivities,
   PostsContainer,
 } from "./Profile.components";
-const Profile = ({ user, posts, profileUser }) => {
+const Profile = ({ setFlash, setShowFlash, user, posts, profileUser }) => {
   const [userPosts, setUserPosts] = useState(
     posts.filter((post) => post.user === profileUser._id)
   );
@@ -39,7 +39,7 @@ const Profile = ({ user, posts, profileUser }) => {
           ))}
         </PostsContainer>
       </UserActivities>
-      <Sidebar profilePage user={user} profileUser={profileUser} />
+      <Sidebar setFlash={setFlash} setShowFlash={setShowFlash} profilePage user={user} profileUser={profileUser} />
     </MainWrapper>
   );
 };

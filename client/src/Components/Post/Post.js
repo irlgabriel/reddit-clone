@@ -25,8 +25,6 @@ import {
   ButtonGroup,
   Button,
   P,
-  SortBy,
-  SortByDropdown,
   CommentIcon,
   ShareIcon,
   SaveIcon,
@@ -43,6 +41,8 @@ import {
   PostedAt,
 } from "./Post.components";
 const Post = ({
+  setFlash,
+  setShowFlash,
   posts,
   setPosts,
   user,
@@ -85,6 +85,12 @@ const Post = ({
     .then(res => {
       setShowEditPost(false);
       setPosts(posts.map(post => post._id === id ? res.data : post))
+      setFlash(res.data.message);
+      setShowFlash(true);
+    })
+    .catch(err => {
+      setFlash(err.response.data.msg);
+      setShowFlash(true);
     })
   }
   const upvotePost = () => {
@@ -118,10 +124,16 @@ const Post = ({
     window.confirm("Are you sure you want to delete this post?") &&
       axios
         .delete(`/posts/${id}`, config)
-        .then((res) =>
-          setPosts((posts) => posts.filter((post) => post._id !== res.data._id))
-        )
-        .catch((err) => console.log(err));
+        .then((res) => {
+          console.log(res);
+          setPosts(posts.filter(post => post._id !== res.data.post._id))
+          setFlash(res.data.message);
+          setShowFlash(true);
+        })
+        .catch(err => {
+          setFlash(err.response.data.message);
+          setShowFlash(true);
+        });
   };
 
   // When component renders
@@ -237,6 +249,8 @@ const Post = ({
               )}
               {user && (
                 <CommentForm
+                  setFlash={setFlash}
+                  setShowFlash={setShowFlash}
                   setPostComments={setPostComments}
                   postComments={postComments}
                   post_id={id}
@@ -245,6 +259,8 @@ const Post = ({
               )}
               {postComments.map((comment) => (
                 <PostComment
+                  setFlash={setFlash}
+                  setShowFlash={setShowFlash}
                   upvoted={user && comment.upvotes.includes(user._id) ? "yes" : "no"}
                   downvoted={user && comment.downvotes.includes(user._id) ? "yes" : "no"}
                   upvotes={comment.upvotes.length - comment.downvotes.length}

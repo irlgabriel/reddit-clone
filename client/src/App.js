@@ -3,9 +3,12 @@ import { BrowserRouter as Router, Route, generatePath } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
 
+
+// Components
+import { CSSTransition } from "react-transition-group";
 import { Navbar } from "./Components";
 import { Home, Subreddit, Profile } from "./Pages";
-import { Container } from "./App.components";
+import { Container, FlashContainer} from "./App.components";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -17,6 +20,8 @@ function App() {
   const [sort, setSort] = useState("New");
   const [showLogin, setLogin] = useState(false);
   const [showRegister, setRegister] = useState(false);
+  const [showFlash, setShowFlash] = useState(false);
+  const [flashMessage, setFlash] = useState("");
 
   const compareByDate = (a, b) => {
     return a.createdAt >= b.createdAt ? -1 : 1;
@@ -66,10 +71,32 @@ function App() {
     
   }, []);
 
+  // Everytime a flash message is displayed we reset the state after 3000ms.
+  useEffect(() => {
+    setTimeout(() => {
+      setFlash("");
+      setShowFlash(false);
+    }, 3000)
+  }, [showFlash])
   return (
     <Container>
+      {
+        
+        <CSSTransition
+          in={showFlash}
+          timeout={300}
+          unmountOnExit
+          classNames="fade"
+        >
+          <FlashContainer>
+            <p>{flashMessage}</p>
+          </FlashContainer>
+        </CSSTransition>
+      }
       <Router>
-        <Navbar 
+        <Navbar
+          setFlash={setFlash}
+          setShowFlash={setShowFlash}
           showLogin={showLogin}
           setLogin={setLogin}
           showRegister={showRegister}
@@ -80,6 +107,8 @@ function App() {
         />
         <Route exact path="/">
           <Home
+            setFlash={setFlash}
+            setShowFlash={setShowFlash}
             showLogin={showLogin}
             setLogin={setLogin}
             showRegister={showRegister}
@@ -106,6 +135,8 @@ function App() {
               path={generatePath("/subreddits/:name", { name: subreddit.name })}
             >
               <Subreddit
+                setFlash={setFlash}
+                setShowFlash={setShowFlash}
                 subreddits={subreddits}
                 setSubreddits={setSubreddits}
                 setRegister={setRegister}
@@ -129,6 +160,8 @@ function App() {
               })}
             >
               <Profile
+                setFlash={setFlash}
+                setShowFlash={setShowFlash}
                 setPosts={setPosts}
                 posts={posts}
                 profileUser={profileUser}

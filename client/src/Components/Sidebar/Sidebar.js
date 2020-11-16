@@ -21,7 +21,7 @@ import {
   ProfileHeader,
 } from "./Sidebar.components";
 
-const Sidebar = ({ profilePage, subredditPage, homePage, subreddit, user, profileUser, subreddits, setSubreddits }) => {
+const Sidebar = ({ setFlash, setShowFlash, profilePage, subredditPage, homePage, subreddit, user, profileUser, subreddits, setSubreddits }) => {
 
   //960px hidden
   return (
@@ -52,7 +52,7 @@ const Sidebar = ({ profilePage, subredditPage, homePage, subreddit, user, profil
         subreddits
         .slice(0, 3)
         .map(sub => 
-          <SidebarSubreddit key={sub._id} subreddits={subreddits} setSubreddits={setSubreddits} sub={sub} user={user} />
+          <SidebarSubreddit setFlash={setFlash} setShowFlash={setShowFlash} key={sub._id} subreddits={subreddits} setSubreddits={setSubreddits} sub={sub} user={user} />
         )
       }
       {
@@ -60,7 +60,7 @@ const Sidebar = ({ profilePage, subredditPage, homePage, subreddit, user, profil
         sub status and sub description */
         subredditPage && 
         <SubredditSection>
-          <SidebarSubreddit subreddits={subreddits} setSubreddits={setSubreddits} sub={subreddit} user={user}/>
+          <SidebarSubreddit setFlash={setFlash} setShowFlash={setShowFlash} subreddits={subreddits} setSubreddits={setSubreddits} sub={subreddit} user={user}/>
           <Description>{subreddit.description}</Description>
         </SubredditSection>
       }

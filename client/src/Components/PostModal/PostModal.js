@@ -15,7 +15,7 @@ import {
   DisabledText,
 } from "./PostModal.components";
 
-const PostModal = ({ fromSubreddit, setPosts, posts, user, setPostModal }) => {
+const PostModal = ({ setFlash, setShowFlash, fromSubreddit, setPosts, posts, user, setPostModal }) => {
   const [subreddits, setSubreddits] = useState([]);
   const [subreddit, setSubreddit] = useState();
   const [title, setTitle] = useState("");
@@ -44,10 +44,16 @@ const PostModal = ({ fromSubreddit, setPosts, posts, user, setPostModal }) => {
     axios
       .post("/posts", body, config)
       .then((res) => {
+        console.log(res);
         setPostModal(false);
-        setPosts([...posts, res.data]);
+        setPosts([res.data.post, ...posts])
+        setFlash(res.data.message);
+        setShowFlash(true);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setFlash(err.response.data.message);
+        setShowFlash(true);
+      })
   };
   return (
     <PostModalWrapper onClick={() => setPostModal(false)}>
@@ -63,7 +69,7 @@ const PostModal = ({ fromSubreddit, setPosts, posts, user, setPostModal }) => {
                 name="subreddits"
               >
                 {subreddits.map((subreddit) => (
-                  <Option value={`${subreddit.name}`}>{subreddit.name}</Option>
+                  <Option key={subreddit.name} value={`${subreddit.name}`}>{subreddit.name}</Option>
                 ))}
               </Select>
             )}

@@ -34,12 +34,10 @@ router.post("/:subreddit_id/subscribe", (req, res, next) => {
   if(!user) return;
   Subreddit.findById(req.params.subreddit_id, (err, sub) => {
     if(err) res.status(400).send(err);
-    console.log(sub)
-    console.log(typeof sub.members);
     sub.members.push(user);
     sub.save((err, sub) => {
       if(err) res.status(400).send(err);
-      res.status(200).send(sub);
+      res.status(200).send({message: `Subscribed to r/${sub.name}`, sub});
     })
   })
 })
@@ -52,8 +50,9 @@ router.post("/:subreddit_id/unsubscribe", (req, res, next) => {
     sub.members = sub.members.filter(member_id => member_id !== user);
     sub.save((err, sub) => {
       if(err) res.status(400).send(err);
-      res.status(200).send(sub);
+      res.status(200).send({message: `Unsubscribed from r/${sub.name}`, sub});
     })
   })
 })
 module.exports = router;
+
