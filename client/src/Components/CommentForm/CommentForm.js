@@ -1,4 +1,4 @@
-import react, { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import {
   FormWrapper,
@@ -7,7 +7,6 @@ import {
   TextWrapper,
   Button,
   FormFooter,
-  P,
 } from "./CommentForm.components";
 const CommentForm = ({ setFlash, setShowFlash, postComments, setPostComments, post_id, user_id }) => {
   const [formFocus, setFormFocus] = useState(false);

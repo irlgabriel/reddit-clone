@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { GoArrowDown, GoArrowUp } from "react-icons/go";
-import { RiMessageFill, RiShareForwardFill, RiPencilFill } from "react-icons/ri";
+import { RiMessageFill, RiPencilFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 export const ReplyIcon = styled(RiMessageFill)`
   color: darkgray;

@@ -1,5 +1,4 @@
-import react, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import { Sidebar, Post } from "../../Components";
 import {
   MainWrapper,

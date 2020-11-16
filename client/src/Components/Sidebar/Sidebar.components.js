@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { FaReddit, FaNode, FaReact } from "react-icons/fa";
 import { SiMongodb, SiHeroku } from "react-icons/si";
 export const SidebarContainer = styled.div`

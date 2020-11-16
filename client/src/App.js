@@ -37,9 +37,9 @@ function App() {
   // SORT LOGIC
   useEffect(() => {
     if(sort === "New") {
-      setPosts([...posts].sort(compareByDate));
+      setPosts(posts => [...posts].sort(compareByDate));
      } else {
-      setPosts([...posts].sort(compareByVotes)); 
+      setPosts(posts => [...posts].sort(compareByVotes)); 
      }
   }, [sort])
 

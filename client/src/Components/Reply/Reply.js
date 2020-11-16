@@ -22,7 +22,6 @@ import {
   Username,
   ReplyFooterNotLoggedIn
 } from "./Reply.components"
-import { set } from "mongoose";
 const Reply = ({comment_id, post_id, replies, reply, user, setReplies}) => {
   const [replyUser, setReplyUser] = useState('')
   const [showReplyEdit, setShowReplyEdit] = useState(false);

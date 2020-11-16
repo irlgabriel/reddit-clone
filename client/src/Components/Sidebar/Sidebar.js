@@ -67,7 +67,7 @@ const Sidebar = ({ setFlash, setShowFlash, profilePage, subredditPage, homePage,
       <Header>
         <LogoDiv>
           <MongoLogo />
-          <img src="/expressjs-icon.svg" width="32px" />
+          <img alt="express-logo" src="/expressjs-icon.svg" width="32px" />
           <ReactLogo />
           <NodeLogo />
         </LogoDiv>
