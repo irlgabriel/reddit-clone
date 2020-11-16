@@ -17,6 +17,7 @@ import {
   Content,
   CommentIcon,
   EditIcon,
+  DeleteIcon,
   FooterItem,
   P,
   TextArea,
@@ -48,6 +49,12 @@ const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_
       setUsername(res.data.username);
     });
   };
+  const deleteComment = () => {
+    if(!user) return;
+    window.confirm("Are you sure you want to delete this comment?") &&      
+    axios.delete(`/posts/${post_id}/comments/${comment._id}`, {user_id: user._id}, config)
+    .then(res => setComments(comments.filter(comm => comm._id !== comment._id)))
+  }
   const createReply = () => {
     const data = {
       user_id: user._id,
@@ -159,6 +166,16 @@ const PostComment = ({ upvotes, comments, setComments, upvoted, downvoted, post_
               &nbsp;
               <P bold size="13">
                 {showEditComment ? 'Cancel' : 'Edit'}
+              </P>
+            </FooterItem>
+            }
+            { 
+            user && comment.user_id === user._id && 
+            <FooterItem onClick={() => deleteComment()}>
+              <DeleteIcon />
+              &nbsp;
+              <P bold color="red" size="13">
+                Delete
               </P>
             </FooterItem>
             }

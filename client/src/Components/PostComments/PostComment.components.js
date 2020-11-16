@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { GoArrowDown, GoArrowUp } from "react-icons/go";
 import { RiMessageFill, RiPencilFill } from "react-icons/ri";
+import { FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 export const CommentWrapper = styled.div``;
@@ -145,4 +146,7 @@ export const ReplyForm = styled.textarea`
 export const ReplyFooter = styled.div`
   display: flex;
   justify-content: flex-end;
+`
+export const DeleteIcon = styled(FaTrash)`
+  color: red;
 `

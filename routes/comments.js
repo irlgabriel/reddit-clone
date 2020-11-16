@@ -103,4 +103,12 @@ router.put("/:comment_id", (req, res, next) => {
     res.status(200).send(doc);
   })
 })
+router.delete("/:comment_id", (req, res, next) => {
+  const user_id = req.body.user_id;
+  const comment_id = req.params.comment_id;
+  Comment.findByIdAndDelete(comment_id, (err, doc) => {
+    if(err) res.status(400).send(err);
+    res.status(200).send(doc);
+  })
+})
 module.exports = router;
