@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import {
   Nav,
   RedditLogo,
@@ -14,13 +15,17 @@ import {
   PageFilter,
   FilterOption,
   DropdownContainer,
-  DropdownIcon
+  DropdownIcon,
+  DropdownCollapse,
+  HomeIcon,
+  RiseIcon,
 } from "./Navbar.components";
 import { LoginModal, RegisterModal } from "..";
 import { CSSTransition } from "react-transition-group";
 
-const Navbar = ({ setFlash, setShowFlash, showLogin, setLogin, showRegister, setRegister, subreddits, user, setUser }) => {
-  
+const Navbar = ({ filter, setFilter, setFlash, setShowFlash, showLogin, setLogin, showRegister, setRegister, subreddits, user, setUser }) => {
+  const location = useLocation();
+  const [showDropdown, setDropdown] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showSearchResults, setShowSearchResults] = useState([]);
@@ -66,12 +71,18 @@ const Navbar = ({ setFlash, setShowFlash, showLogin, setLogin, showRegister, set
         <RedditLogo color="red" size="32px" />
       </Link>
       {
-        user &&
-        <PageFilter>
-          <FilterOption>ALL</FilterOption>
+        user && (location.pathname === "/" || location.pathname === "/all") && 
+        <PageFilter onBlur={() => setDropdown(false)} onClick={() => setDropdown(!showDropdown)}>
+          <FilterOption>{filter === "HOME" ? <HomeIcon/> : <RiseIcon />}{filter}</FilterOption>
           <DropdownContainer>
-            <DropdownIcon />
+            <DropdownIcon /> 
           </DropdownContainer>
+          {
+            showDropdown && 
+            <DropdownCollapse>
+              <FilterOption onClick={(e) => setFilter(e.target.innerText)}>{filter === "HOME" ? "ALL" : "HOME"}</FilterOption>
+            </DropdownCollapse>
+          }
         </PageFilter>
       }
       <SearchBarContainer>

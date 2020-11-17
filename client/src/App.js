@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, generatePath } from "react-router-dom";
+import { BrowserRouter as Router, Route, generatePath} from "react-router-dom";
 import axios from "axios";
 import "./App.css";
 // Components
@@ -10,6 +10,7 @@ import { Container, FlashContainer} from "./App.components";
 
 function App() {
   const [posts, setPosts] = useState([]);
+  const [filter, setFilter] = useState("ALL");
   const [subscribedPosts, setSubscribedPosts] = useState([]);
   const [subreddits, setSubreddits] = useState([]);
   const [user, setUser] = useState(undefined);
@@ -87,9 +88,11 @@ function App() {
             <p>{flashMessage}</p>
           </FlashContainer>
         </CSSTransition>
-      }
+      } 
       <Router>
         <Navbar
+          filter={filter}
+          setFilter={setFilter}
           setFlash={setFlash}
           setShowFlash={setShowFlash}
           showLogin={showLogin}

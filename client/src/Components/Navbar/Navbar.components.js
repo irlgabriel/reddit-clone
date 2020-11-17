@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FaReddit, FaSearch } from "react-icons/fa";
-import { IoIosArrowDropdownCircle } from "react-icons/io"
+import { IoIosArrowDropdownCircle } from "react-icons/io";
+import { AiFillHome, AiOutlineRise } from "react-icons/ai";
 
 export const Nav = styled.div`
   height: 50px;
@@ -120,15 +121,17 @@ export const PageFilter = styled.div`
   border-radius: 4px;
   display: flex;
   align-items: center;
-  padding: .5rem;
-  width: 100px;  
+  width: 120px;  
   margin: 0 .5rem;
 
-  &:hover{
-    border: 1px solid black;
-  }
 `
 export const FilterOption = styled.p`
+  padding: .5rem;
+  flex: 1;
+  &:hover {
+    cursor: pointer;
+    background: royalblue;
+  }
 
 `
 export const DropdownIcon = styled(IoIosArrowDropdownCircle)`
@@ -137,17 +140,30 @@ export const DropdownIcon = styled(IoIosArrowDropdownCircle)`
 `
 export const DropdownContainer = styled.div`
   background-color: #dae0e6;
-  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
-  top: 0;
-  bottom: 0;
-  right: 0;
+  height: 36px;
   width: 30px;
   &:hover {
     cursor: pointer;
   }
+`
+export const DropdownCollapse = styled.div`
+  border-radius: 4px;
+  box-shadow: 0px 0px 13px 0px rgba(79, 79, 79, 1);
+  background: white;  
+  position: absolute;
+  top: 50px;
+  left: 0;
+  right: 0;
+  z-index: 6;
+`
+export const HomeIcon = styled(AiFillHome)`
+  color: red;
+`
+export const RiseIcon = styled(AiOutlineRise)`
+  color: red;
 `
