@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, generatePath } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
-
-
 // Components
 import { CSSTransition } from "react-transition-group";
 import { Navbar } from "./Components";
@@ -12,6 +10,7 @@ import { Container, FlashContainer} from "./App.components";
 
 function App() {
   const [posts, setPosts] = useState([]);
+  const [subscribedPosts, setSubscribedPosts] = useState([]);
   const [subreddits, setSubreddits] = useState([]);
   const [user, setUser] = useState(undefined);
   const [users, setUsers] = useState([]);
@@ -26,14 +25,11 @@ function App() {
   const compareByDate = (a, b) => {
     return a.createdAt >= b.createdAt ? -1 : 1;
   }
-
   const compareByVotes = (post1, post2) => {
     const post1_upvotes = post1.upvotes.length - post1.downvotes.length;
     const post2_upvotes = post2.upvotes.length - post2.downvotes.length;
-    return post1_upvotes > post2_upvotes ? -1 : 1;
+    return post1_upvotes >= post2_upvotes ? -1 : 1;
   }
-
-
   // SORT LOGIC
   useEffect(() => {
     if(sort === "New") {
@@ -48,7 +44,6 @@ function App() {
     // check if there's an user in localstorage
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     if (currentUser) setUser(currentUser);
-
     // ASYNC
     // retrieve all posts
     const fetchPosts = async () => {
@@ -74,18 +69,18 @@ function App() {
   // Everytime a flash message is displayed we reset the state after 3000ms.
   useEffect(() => {
     setTimeout(() => {
-      setFlash("");
       setShowFlash(false);
+      setTimeout(() => setFlash(""), 300)
     }, 3000)
-  }, [showFlash])
+  }, [flashMessage])
   return (
     <Container>
       {
-        
         <CSSTransition
           in={showFlash}
           timeout={300}
           unmountOnExit
+          mountOnEnter
           classNames="fade"
         >
           <FlashContainer>
@@ -125,7 +120,8 @@ function App() {
             subreddits={subreddits}
             sort={sort}
             setSort={setSort}
-          />
+          >
+          </Home>
         </Route>
         {
           subreddits.map((subreddit) => (

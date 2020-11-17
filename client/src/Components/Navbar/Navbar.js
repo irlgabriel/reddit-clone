@@ -11,6 +11,10 @@ import {
   RouteLink as Link,
   SearchResults,
   Result,
+  PageFilter,
+  FilterOption,
+  DropdownContainer,
+  DropdownIcon
 } from "./Navbar.components";
 import { LoginModal, RegisterModal } from "..";
 import { CSSTransition } from "react-transition-group";
@@ -21,15 +25,6 @@ const Navbar = ({ setFlash, setShowFlash, showLogin, setLogin, showRegister, set
   const [searchResults, setSearchResults] = useState([]);
   const [showSearchResults, setShowSearchResults] = useState([]);
   const logoutUser = () => {
-    /*
-    const config = {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-    }
-    axios.post("http://localhost:4000/users/logout", user, config)
-    */
     localStorage.removeItem("currentUser");
     setUser(undefined);
     setShowFlash(true);
@@ -70,6 +65,15 @@ const Navbar = ({ setFlash, setShowFlash, showLogin, setLogin, showRegister, set
       <Link to="/">
         <RedditLogo color="red" size="32px" />
       </Link>
+      {
+        user &&
+        <PageFilter>
+          <FilterOption>ALL</FilterOption>
+          <DropdownContainer>
+            <DropdownIcon />
+          </DropdownContainer>
+        </PageFilter>
+      }
       <SearchBarContainer>
         <SearchIcon />
         <SearchBar

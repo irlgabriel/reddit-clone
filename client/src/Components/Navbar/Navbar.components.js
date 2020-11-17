@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FaReddit, FaSearch } from "react-icons/fa";
+import { IoIosArrowDropdownCircle } from "react-icons/io"
 
 export const Nav = styled.div`
   height: 50px;
@@ -112,3 +113,41 @@ export const Result = styled(Link)`
     background: #f9f9f9;
   }
 `;
+
+export const PageFilter = styled.div`
+  position: relative;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding: .5rem;
+  width: 100px;  
+  margin: 0 .5rem;
+
+  &:hover{
+    border: 1px solid black;
+  }
+`
+export const FilterOption = styled.p`
+
+`
+export const DropdownIcon = styled(IoIosArrowDropdownCircle)`
+  font-size: 1.5rem;
+  color: red;
+`
+export const DropdownContainer = styled.div`
+  background-color: #dae0e6;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 30px;
+  &:hover {
+    cursor: pointer;
+  }
+`

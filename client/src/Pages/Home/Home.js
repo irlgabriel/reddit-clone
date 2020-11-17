@@ -119,6 +119,12 @@ const Home = ({
                 downvoted={user && post.downvotes.includes(user._id) ? "yes" : "no"}
               />
             ))}
+          {
+            !posts.length && 
+            <PostsHeader>
+              <Paragraph>No posts? Subscribe to some communities!</Paragraph>
+            </PostsHeader>
+          }
         </PostsContainer>
         <Sidebar setFlash={setFlash} setShowFlash={setShowFlash} homePage setSubreddits={setSubreddits} user={user} subreddits={subreddits} />
       </MainWrapper>
