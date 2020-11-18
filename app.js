@@ -1,8 +1,11 @@
 var express = require("express");
+require('dotenv').config();
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var passport = require('passport');
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 
 
 // import ROUTES
@@ -23,6 +26,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(passport.initialize());
+/*app.use(session({
+  store: new MongoStore({})
+}))*/
 
 
 //app.use("/", indexRouter);

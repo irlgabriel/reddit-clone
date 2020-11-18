@@ -12,7 +12,7 @@ var mongoose = require('mongoose');
 /**
  * Connect to mongodb cluster
  */
-const uri = `mongodb+srv://irlgabriel:4737e2c7@cluster0.gle0a.mongodb.net/test?retryWrites=true&w=majority`
+const uri = process.env.DB_STRING;
 mongoose.connect(uri,{
   useNewUrlParser: true,
   useUnifiedTopology: true,
