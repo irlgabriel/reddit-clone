@@ -30,7 +30,7 @@ const Navbar = ({ filter, setFilter, setFlash, setShowFlash, showLogin, setLogin
   const [searchResults, setSearchResults] = useState([]);
   const [showSearchResults, setShowSearchResults] = useState([]);
   const logoutUser = () => {
-    localStorage.removeItem("currentUser");
+    //localStorage.removeItem("currentUser");
     setUser(undefined);
     setShowFlash(true);
     setFlash("Logged out successfully!");

@@ -31,7 +31,7 @@ const RegisterModal = ({ setFlash, setShowFlash, setUser, setRegister }) => {
     axios
       .post("/users/register", body, config)
       .then((res) => {
-        localStorage.setItem("currentUser", JSON.stringify(res.data.user));
+        //localStorage.setItem("currentUser", JSON.stringify(res.data.user));
         setUser(res.data.user);
         setFlash(res.data.message);
         setShowFlash(true);

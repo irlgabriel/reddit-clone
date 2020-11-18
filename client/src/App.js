@@ -43,8 +43,8 @@ function App() {
   // fetch data when app is rendered
   useEffect(() => {
     // check if there's an user in localstorage
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    if (currentUser) setUser(currentUser);
+    //const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    //if (currentUser) setUser(currentUser);
     // ASYNC
     // retrieve all posts
     const fetchPosts = async () => {
