@@ -49,6 +49,8 @@ router.post("/register", async (req, res, next) => {
 });
 // POST - Login
 router.post("/login", passport.authenticate('local', {session: false}), (req,res) => {
+  console.log(req.user);
+  const username = req.user.username;
   return User.find({username: username})
   .then(user => {
     if(!user) return res.sendStatus(400);
