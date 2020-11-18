@@ -1,3 +1,4 @@
+require('dotenv').config();
 var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
@@ -20,8 +21,7 @@ app.use(passport.initialize());
 const port = process.env.PORT || 4000;
 app.listen(port, () => console.log(`Server listening on ${port}`));
 
-const uri = `mongodb+srv://irlgabriel:4737e2c7@cluster0.gle0a.mongodb.net/test?retryWrites=true&w=majority`
-mongoose.connect(uri,{
+mongoose.connect(process.env.DB_STRING,{
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,

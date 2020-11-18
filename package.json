@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "client-install": "npm i --prefix client",
-    "server": "node ./bin/www",
-    "serverDev": "nodemon ./bin/www",
+    "server": "node app.js",
+    "serverDev": "nodemon app.js",
     "client": "npm start --prefix client",
-    "start": "node ./bin/www",
+    "start": "node app.js",
     "startDev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm i --prefix client && npm run build --prefix client"
   },
@@ -18,6 +18,7 @@
     "connect-mongo": "^3.2.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "dotenv": "^8.2.0",
     "express": "~4.16.1",
     "express-session": "^1.17.1",
     "http-errors": "~1.6.3",
