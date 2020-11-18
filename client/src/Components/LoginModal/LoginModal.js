@@ -30,8 +30,8 @@ const LoginModal = ({ setFlash, setShowFlash, setLogin, user, setUser }) => {
       .post("/users/login", body, config)
       .then((res) => {
         // Logged in Successfully!
-        console.log(res.data);
-        localStorage.setItem("currentUser", JSON.stringify(res.data.user));
+        //localStorage.setItem("currentUser", JSON.stringify(res.data.user));
+        console.log(res);
         setUser(res.data.user);
         setFlash(res.data.message);
         setShowFlash(true);

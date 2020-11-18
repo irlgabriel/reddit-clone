@@ -1,4 +1,5 @@
 var mongoose = require("mongoose");
+var bcrypt = require('bcryptjs');
 
 var UserSchema = new mongoose.Schema(
   {
@@ -19,11 +20,13 @@ var UserSchema = new mongoose.Schema(
       index: true,
     },
     password: { type: String, required: [true, "can't be blank"] },
-    upvotes: { type: Array, default: []},
-    downvotes: { type: Array, default: []}
   },
   { timestamps: true }
 );
+
+UserSchema.methods.verifyPassword = async function(password) {
+  return await bcrypt.compare(password, this.password);
+}
 
 var User = mongoose.model("User", UserSchema);
 

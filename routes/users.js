@@ -1,8 +1,8 @@
 var express = require("express");
 var router = express.Router();
 var bcrypt = require("bcryptjs");
+var passport = require('../config/passport'); 
 var User = require("../models/users");
-const createHttpError = require("http-errors");
 
 /* GET - Retrieve all users */
 router.get("/", (req, res, next) => {
@@ -48,17 +48,9 @@ router.post("/register", async (req, res, next) => {
   });
 });
 // POST - Login
-router.post("/login", async (req, res, next) => {
-  const { username, password } = req.body;
-  if (!username || !password) return res.status(400).send({ message: "Please enter all fields" });
-
-  const user = await User.findOne({username: username});
-
-  if(!user) return res.status(400).send({message: "Username does not exist"})
-  const match = await bcrypt.compare(password, user.password)
-  match ? res.status(200).send({message: "Logged in Successfully", user: user}) : res.status(400).send({message: "Incorrect Password"});
-    
-});
+router.post("/login", passport.authenticate('local', {session: false}), (req,res) => {
+  res.redirect('/');
+})
 
 router.post("/logout", (req, res, next) => {
   const user = req.body.username;

@@ -2,8 +2,10 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var passport = require('./config/passport');
 
-//var indexRouter = require("./routes/index");
+
+// import ROUTES
 var usersRouter = require("./routes/users");
 var postsRouter = require("./routes/posts");
 var subredditsRouter = require("./routes/subreddits");
@@ -20,6 +22,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(passport.initialize());
+
 
 //app.use("/", indexRouter);
 app.use("/users", usersRouter);
