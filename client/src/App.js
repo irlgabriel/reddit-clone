@@ -66,7 +66,7 @@ function App() {
     fetchUsers();
     
   }, []);
-
+  
   // Everytime a flash message is displayed we reset the state after 3000ms.
   useEffect(() => {
     setTimeout(() => {
@@ -103,7 +103,7 @@ function App() {
           user={user} 
           setUser={setUser} 
         />
-        <Route exact path="/">
+        <Route exact path="/all">
           <Home
             setFlash={setFlash}
             setShowFlash={setShowFlash}
@@ -115,6 +115,29 @@ function App() {
             setUser={setUser}
             posts={posts}
             setPosts={setPosts}
+            setSubreddits={setSubreddits}
+            postModal={postModal}
+            setPostModal={setPostModal}
+            subredditModal={subredditModal}
+            setSubredditModal={setSubredditModal}
+            subreddits={subreddits}
+            sort={sort}
+            setSort={setSort}
+          >
+          </Home>
+        </Route>
+        <Route exact path="/">
+          <Home
+            setFlash={setFlash}
+            setShowFlash={setShowFlash}
+            showLogin={showLogin}
+            setLogin={setLogin}
+            showRegister={showRegister}
+            setRegister={setRegister}
+            user={user}
+            setUser={setUser}
+            posts={subscribedPosts}
+            setPosts={setSubscribedPosts}
             setSubreddits={setSubreddits}
             postModal={postModal}
             setPostModal={setPostModal}

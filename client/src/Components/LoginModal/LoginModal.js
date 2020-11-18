@@ -32,7 +32,7 @@ const LoginModal = ({ setFlash, setShowFlash, setLogin, user, setUser }) => {
         // Logged in Successfully!
         //localStorage.setItem("currentUser", JSON.stringify(res.data.user));
         console.log(res);
-        setUser(res.data.user);
+        setUser(...res.data.user); //spread because passport sends an array? idk - it works
         setFlash(res.data.message);
         setShowFlash(true);
         setLogin(false); // hide login modal       

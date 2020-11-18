@@ -89,14 +89,17 @@ const Home = ({
               <Paragraph>to create posts/subreddits</Paragraph>
             </PostsHeader>
           }
-          <SortSection>
-            <SortOption onClick={() => setSort("New")} selected={sort === "New" ? "yes" : "no"}>
-              <NewIcon />&nbsp;New  
-            </SortOption>
-            <SortOption onClick={() => setSort("Best")} selected={sort === "Best" ? "yes" : "no"}>
-              <BestIcon />&nbsp;Best
-            </SortOption>
-          </SortSection>
+          {
+            posts.length !== 0 && 
+            <SortSection>
+              <SortOption onClick={() => setSort("New")} selected={sort === "New" ? "yes" : "no"}>
+                <NewIcon />&nbsp;New  
+              </SortOption>
+              <SortOption onClick={() => setSort("Best")} selected={sort === "Best" ? "yes" : "no"}>
+                <BestIcon />&nbsp;Best
+              </SortOption>
+            </SortSection>
+          }
           {
             posts.map((post) => (
               <Post

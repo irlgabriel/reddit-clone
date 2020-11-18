@@ -15,26 +15,3 @@ var PostSchema = mongoose.Schema(
 var Post = mongoose.model("Post", PostSchema);
 
 module.exports = Post;
-
-/*
-Post
-{
-  title: "",
-  content: "",
-  subreddit: "",
-  user: "",
-  votes: "",
-  comments: [
-    {
-      user: "",
-      votes: "",
-      replies: [
-        {
-          user: "",
-          votes: "",
-        }
-      ]
-    },
-  ]
-}
-*/
