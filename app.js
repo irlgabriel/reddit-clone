@@ -4,19 +4,9 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var passport = require('passport');
 var session = require('express-session');
-
-
-// import ROUTES
-var usersRouter = require("./routes/users");
-var postsRouter = require("./routes/posts");
-var subredditsRouter = require("./routes/subreddits");
-var commentsRouter = require("./routes/comments");
-var repliesRouter = require("./routes/replies");
+var mongoose = require('mongoose');
 var app = express();
 
-// view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "jade");
 
 app.use(logger("dev"));
 app.use(session({secret:"secret", saveUninitialized: true, resave: false}))
@@ -25,6 +15,28 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(passport.initialize());
+
+
+const port = process.env.PORT || 4000;
+app.listen(port, () => console.log(`Server listening on ${port}`));
+
+const uri = `mongodb+srv://irlgabriel:4737e2c7@cluster0.gle0a.mongodb.net/test?retryWrites=true&w=majority`
+mongoose.connect(uri,{
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+})
+const db = mongoose.connection;
+db.once('open', () => {
+  console.log("Connected to mongoDB")
+})
+
+// import ROUTES
+var usersRouter = require("./routes/users");
+var postsRouter = require("./routes/posts");
+var subredditsRouter = require("./routes/subreddits");
+var commentsRouter = require("./routes/comments");
+var repliesRouter = require("./routes/replies");
 
 // Routes
 app.use("/users", usersRouter);
