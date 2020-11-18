@@ -11,6 +11,7 @@ router.get("/", (req, res, next) => {
     res.status(200).send(docs);
   });
 });
+
 /* GET - Retrieve user with user_id */
 router.get("/:user_id", (req, res, next) => {
   User.findById(req.params.user_id, (err, user) => {
@@ -18,23 +19,20 @@ router.get("/:user_id", (req, res, next) => {
     res.status(200).send(user)
   })
 })
+
 /* POST - Register User */
 router.post("/register", async (req, res, next) => {
   const { username, email, password } = req.body;
   const isUsernameUsed = await User.findOne({ username: username })
   const isEmailUsed = await User.findOne({ email: email })
-
   if(isEmailUsed) {
     res.status(400).send({message: "Email already in use"})
     return;
   }
-
   if(isUsernameUsed) {
     res.status(400).send({message: "Username already in use"})
     return;
   }
-  
-
   bcrypt.hash(password, 10)
   .then((hashedPassword) => {
     User.create({
@@ -47,14 +45,20 @@ router.post("/register", async (req, res, next) => {
       })
   });
 });
+
 // POST - Login
+<<<<<<< HEAD
 router.post("/login", passport.authenticate('local', {session: false}), (req,res) => {
   const username = req.user.username;
   //const username
+=======
+router.post("/login", passport.authenticate('local'), (req,res) => {
+  const username = req.user.username;
+>>>>>>> b32f2ffa0cdf3a9198a57281efd848832ffe914f
   return User.findOne({username: username})
   .then(user => {
-    if(!user) return res.sendStatus(400);
-    return res.json({user})
+    if(!user) return res.status(400).send({msg: "Username does not exist"});
+    return res.json({user, message: "Logged in Sucessfully"})
   })
 })
 

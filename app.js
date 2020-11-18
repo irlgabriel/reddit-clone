@@ -21,6 +21,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
 
 app.use(logger("dev"));
+app.use(session({secret:"secret", saveUninitialized: true, resave: false}))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -30,8 +31,7 @@ app.use(passport.initialize());
   store: new MongoStore({})
 }))*/
 
-
-//app.use("/", indexRouter);
+// Routes
 app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
 app.use("/subreddits", subredditsRouter);

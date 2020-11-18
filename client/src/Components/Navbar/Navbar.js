@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import {
   Nav,
   RedditLogo,
@@ -25,6 +25,7 @@ import { CSSTransition } from "react-transition-group";
 
 const Navbar = ({ filter, setFilter, setFlash, setShowFlash, showLogin, setLogin, showRegister, setRegister, subreddits, user, setUser }) => {
   const location = useLocation();
+  const history = useHistory();
   const [showDropdown, setDropdown] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -41,6 +42,9 @@ const Navbar = ({ filter, setFilter, setFlash, setShowFlash, showLogin, setLogin
     );
     setSearchResults(results);
   }, [searchQuery]);
+  useEffect(() => {
+    filter === "HOME" ? history.push("/") : history.push("/all")
+  }, [filter])
   return (
     <Nav>
       <CSSTransition
