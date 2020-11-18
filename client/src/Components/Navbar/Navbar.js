@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useLocation, useHistory } from "react-router-dom";
 import {
   Nav,
@@ -32,9 +33,13 @@ const Navbar = ({ filter, setFilter, setFlash, setShowFlash, showLogin, setLogin
   const [showSearchResults, setShowSearchResults] = useState([]);
   const logoutUser = () => {
     //localStorage.removeItem("currentUser");
-    setUser(undefined);
-    setShowFlash(true);
-    setFlash("Logged out successfully!");
+    axios.post('/users/logout')
+    .then(res => {
+      console.log(res);
+      setFlash(res.data.message);
+      setShowFlash(true);
+    })
+    .catch(err => console.log(err))
   };
   useEffect(() => {
     const results = subreddits.filter((subreddit) =>

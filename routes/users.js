@@ -4,6 +4,8 @@ var bcrypt = require("bcryptjs");
 var passport = require('../config/passport'); 
 var User = require("../models/users");
 
+
+
 /* GET - Retrieve all users */
 router.get("/", (req, res, next) => {
   User.find((err, docs) => {
@@ -48,17 +50,18 @@ router.post("/register", async (req, res, next) => {
 
 // POST - Login
 router.post("/login", passport.authenticate('local'), (req,res) => {
-  const username = req.user.username;
-  return User.findOne({username: username})
-  .then(user => {
-    if(!user) return res.status(400).send({msg: "Username does not exist"});
-    return res.json({user, message: "Logged in Sucessfully"})
-  })
+  res.send({user: {username: req.user.username}})
 })
 
 // POST - Logout
 router.post("/logout", (req, res, next) => {
-  const user = req.body.username;
+  req.logout();
+  res.send({msg: "Logged out successfully!"})
 });
+
+// GET - DUMMY TO CHECK IF USER LOGGED IN 
+router.post("/logged_in", (req, res, next) => {
+  res.status(200).send({user: req.user});
+})
 
 module.exports = router;

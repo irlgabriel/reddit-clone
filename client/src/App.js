@@ -42,9 +42,19 @@ function App() {
 
   // fetch data when app is rendered
   useEffect(() => {
-    // check if there's an user in localstorage
-    //const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    //if (currentUser) setUser(currentUser);
+    
+    // Make a dummy request to check if user is logged in
+    axios.post("users/logged_in")
+    .then(res => { 
+      console.log(res);
+      if(res.data.user) { 
+        setUser(res.data.user)
+      } else {
+        setUser(undefined);
+      }
+    })
+    .catch(err => console.log(err.response))
+
     // ASYNC
     // retrieve all posts
     const fetchPosts = async () => {
