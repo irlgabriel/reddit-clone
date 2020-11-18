@@ -5,6 +5,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var passport = require('passport');
 var session = require('express-session');
+const MongoStore = require('mongo-connect')(session);
 var mongoose = require('mongoose');
 var app = express();
 
@@ -15,6 +16,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(session({
+  store: new MongoStore({mongooseConnection: mongoose.connection})
+}))
 app.use(passport.initialize());
 
 
