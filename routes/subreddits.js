@@ -20,13 +20,14 @@ router.get('/:subreddit_name', (req, res, next) => {
 
 /* POST - create new subreddit */
 router.post("/", (req, res, next) => {
+  console.log(req.body);
   Subreddit.create({
     name: req.body.name,
     creator: req.body.creator,
-    posts: [],
+    description: req.body.description,
   })
-    .then((sub) => res.status(200).send(sub))
-    .catch((err) => res.status(400).send(err));
+  .then((sub) => res.status(200).send(sub))
+  .catch((err) => console.log(err));
 });
 /* POST - subscribe to subreddit */
 router.post("/:subreddit_id/subscribe", (req, res, next) => {
@@ -52,6 +53,15 @@ router.post("/:subreddit_id/unsubscribe", (req, res, next) => {
       if(err) res.status(400).send(err);
       res.status(200).send({message: `Unsubscribed from r/${sub.name}`, sub});
     })
+  })
+})
+
+/* DELETE - Delete subreddit */
+router.delete("/:subreddit_id/", (req, res, next) => {
+  Subreddit.findByIdAndDelete(req.params.subreddit_id, (err, doc) => {
+    if(err) res.status(400).send(err);
+    doc.deleteSubredditPosts();
+    res.status(200).send({message: "Subreddit deleted", doc});
   })
 })
 module.exports = router;

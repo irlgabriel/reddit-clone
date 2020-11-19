@@ -50,16 +50,16 @@ router.post("/register", async (req, res, next) => {
 
 // POST - Login
 router.post("/login", passport.authenticate('local'), (req,res) => {
-  res.send({user: {username: req.user.username}})
+  res.send({user: req.user});
 })
 
 // POST - Logout
 router.post("/logout", (req, res, next) => {
   req.logout();
-  res.send({msg: "Logged out successfully!"})
+  res.send({message: "Logged out successfully!"})
 });
 
-// GET - DUMMY TO CHECK IF USER LOGGED IN 
+// GET - Dummy route to check if user is logged in
 router.post("/logged_in", (req, res, next) => {
   res.status(200).send({user: req.user});
 })

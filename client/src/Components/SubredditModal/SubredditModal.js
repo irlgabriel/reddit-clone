@@ -21,7 +21,7 @@ const SubredditModal = ({
   setSubredditModal,
 }) => {
   const [subredditName, setSubredditName] = useState("");
-
+  const [subredditDesc, setSubredditDesc] = useState("");
   const createSubreddit = (e) => {
     e.preventDefault();
     const config = {
@@ -32,6 +32,7 @@ const SubredditModal = ({
     };
     const body = {
       name: subredditName,
+      description: subredditDesc,
       creator: user._id,
     };
     axios.post("/subreddits", body, config)
@@ -42,8 +43,8 @@ const SubredditModal = ({
       setShowFlash(true);
     })
     .catch(err => {
-      console.log(err);
-      setFlash(err);
+      console.log(err.response);
+      setFlash(err.response.message);
       setShowFlash(true);
     })
   };
@@ -61,7 +62,7 @@ const SubredditModal = ({
           </FormGroup>
           <FormGroup>
             <Label>Description</Label>
-            <TextArea rows={5} />
+            <TextArea onChange={(e) => {setSubredditDesc(e.target.value)}} rows={5} />
           </FormGroup>
           <FormGroup>
             <Button color="white" bgColor="royalblue">

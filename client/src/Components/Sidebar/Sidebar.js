@@ -1,5 +1,7 @@
 import React from "react";
+import axios from "axios";
 import moment from "moment";
+import { useHistory } from "react-router-dom";
 import { SidebarSubreddit } from "..";
 import {
   SidebarContainer,
@@ -19,9 +21,21 @@ import {
   ProfileContainer,
   ProfileBody,
   ProfileHeader,
+  Button,
 } from "./Sidebar.components";
 
 const Sidebar = ({ setFlash, setShowFlash, profilePage, subredditPage, homePage, subreddit, user, profileUser, subreddits, setSubreddits }) => {
+  const history = useHistory()
+  const deleteSubreddit = () => {
+    window.confirm("Are you sure you want to delete this subreddit?") && 
+    axios.delete(`/subreddits/${subreddit._id}`)
+    .then(res => {
+      setFlash(res.data.message);
+      setShowFlash(true);
+      history.push("/all");
+    })
+    .catch(err => console.log(err))
+  }
 
   //960px hidden
   return (
@@ -62,6 +76,7 @@ const Sidebar = ({ setFlash, setShowFlash, profilePage, subredditPage, homePage,
         <SubredditSection>
           <SidebarSubreddit setFlash={setFlash} setShowFlash={setShowFlash} subreddits={subreddits} setSubreddits={setSubreddits} sub={subreddit} user={user}/>
           <Description>{subreddit.description}</Description>
+          <Button onClick={() => deleteSubreddit()} color="red" bgColor="white">DELETE</Button>
         </SubredditSection>
       }
       <Header>

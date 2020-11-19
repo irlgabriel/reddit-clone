@@ -35,7 +35,7 @@ const Navbar = ({ filter, setFilter, setFlash, setShowFlash, showLogin, setLogin
     //localStorage.removeItem("currentUser");
     axios.post('/users/logout')
     .then(res => {
-      console.log(res);
+      setUser(undefined);
       setFlash(res.data.message);
       setShowFlash(true);
     })

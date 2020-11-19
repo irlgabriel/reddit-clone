@@ -13,9 +13,8 @@ import {
   BestIcon,
   NewIcon,
   Button
-} from "./Home.components";
-const Home = ({
-  setFilter,
+} from "./All.components";
+const All = ({
   setFlash,
   setShowFlash,
   setLogin,
@@ -26,6 +25,7 @@ const Home = ({
   setPosts,
   user,
   setUser,
+  setFilter,
   postModal,
   setPostModal,
   subredditModal,
@@ -33,7 +33,7 @@ const Home = ({
   sort,
   setSort
 }) => {
-  setFilter("HOME");
+  setFilter("ALL");
   return (
     <div> 
       {/* PostModal and SubredditModal transitions */}
@@ -137,4 +137,4 @@ const Home = ({
   );
 };
 
-export default Home;
+export default All;
