@@ -27,7 +27,7 @@ var UserSchema = new Schema(
   { timestamps: true }
 );
 
-UserSchema.methods.verifyPassword = async function(password) {
+UserSchema.methods.verifyPassword = async function(password) {  
   const match = await bcrypt.compare(password, this.password);
   return match;
 }
@@ -35,3 +35,4 @@ UserSchema.methods.verifyPassword = async function(password) {
 var User = mongoose.model("User", UserSchema);
 
 module.exports = User;
+

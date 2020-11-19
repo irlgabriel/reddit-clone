@@ -2,6 +2,14 @@ var express = require("express");
 var router = express.Router();
 var Subreddit = require("../models/subreddits");
 
+/* GET - Get subreddit posts */
+router.get("/:subreddit_id/posts/", (req, res, next) => {
+  Subreddit.findById(req.params.subreddit_id, (err, subreddit) => {
+    if(err) res.status(400).send(err);
+    res.json(subreddit.getPosts());
+  })
+})
+
 /* GET - retrieve all subreddits */
 router.get("/", (req, res, next) => {
   Subreddit.find((err, docs) => {

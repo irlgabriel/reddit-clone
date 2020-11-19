@@ -25,16 +25,11 @@ import {
   TextWrapper,
   Button,
   EditFooter,
-  ReplyFooter,
-  ReplyWrapper,
-  ReplyForm
+
 } from "./PostComment.components";
-import { Reply } from "..";
 const PostComment = ({ setFlash, setShowFlash, upvotes, comments, setComments, upvoted, downvoted, post_id, user, comment }) => {
   const [replies, setReplies] = useState([]);
   const [username, setUsername] = useState("");
-  const [showReplyForm, setReplyForm] = useState(false);
-  const [replyContent, setReplyContent] = useState("");
   const [showEditComment, setShowEditComment] = useState(false);
   const [commentContent, setCommentContent] = useState(comment.content)
   const config = {
@@ -64,19 +59,6 @@ const PostComment = ({ setFlash, setShowFlash, upvotes, comments, setComments, u
       setFlash(err.response.data.message);
       setShowFlash(true);
     })
-    
-  }
-  const createReply = () => {
-    const data = {
-      user_id: user._id,
-      content: replyContent,
-    }
-    axios.post(`/posts/${post_id}/comments/${comment._id}`, data, config)
-    .then(res => {
-      setReplies([...replies, res.data]);
-      setReplyForm(false);
-    })
-    .catch(err => console.log(err));
   }
   const editComment = () => {
     if(!user) return;
@@ -152,29 +134,6 @@ const PostComment = ({ setFlash, setShowFlash, upvotes, comments, setComments, u
             }
           </CommentBody>
           <CommentFooter>
-            {
-            showReplyForm && 
-              <ReplyWrapper>
-                <P size="13" color="darkgray">Reply to {username}'s comment</P>
-                <ReplyForm onChange={(e) => setReplyContent(e.target.value)} placeholder="What is on your mind?"/>
-                <ReplyFooter>
-                  <Button color="white" bgColor="royalblue" onClick={() => createReply()}>REPLY</Button>
-                </ReplyFooter>
-              </ReplyWrapper>
-            }
-            <FooterItem onClick={() => user && setReplyForm(!showReplyForm)}>
-              <CommentIcon />
-              &nbsp;
-              {
-                !showReplyForm  
-                ? <P bold size="13" color="darkgray">
-                  Reply
-                </P>
-                : <P bold size="13" color="darkgray">
-                  Cancel
-                </P>
-              }
-            </FooterItem>
             { 
             user && comment.user_id === user._id && 
             <FooterItem onClick={() => setShowEditComment(!showEditComment)}>
@@ -198,11 +157,6 @@ const PostComment = ({ setFlash, setShowFlash, upvotes, comments, setComments, u
           </CommentFooter>
         </CommentContent>
       </CommentContainer>
-      {
-        replies.map(reply => 
-          <Reply replies={replies} setReplies={setReplies} comment_id={comment._id} post_id={post_id} reply={reply} user={user}/>  
-        )
-      }
     </CommentWrapper>
   );
 };

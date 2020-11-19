@@ -38,14 +38,12 @@ const usersRouter = require("./routes/users");
 const postsRouter = require("./routes/posts");
 const subredditsRouter = require("./routes/subreddits");
 const commentsRouter = require("./routes/comments");
-const repliesRouter = require("./routes/replies");
 
 // Route handlers
 app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
 app.use("/subreddits", subredditsRouter);
 app.use("/posts/:post_id/comments", commentsRouter);
-app.use("/posts/:post_id/comments/:comment_id", repliesRouter);
 
 if (process.env.NODE_ENV == "production") {
   // Set a static folder

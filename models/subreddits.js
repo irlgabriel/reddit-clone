@@ -8,9 +8,17 @@ var SubredditSchema = Schema(
     creator: { type: Schema.Types.ObjectId, ref: "User"},
     members: [{ type: Schema.Types.ObjectId, ref: "User"}],
     description: { type: String, required: [true, "can't be blank"]},
+    posts: { type: Schema.Types.ObjectId, ref: "Post"}
   },
   { timestamps: true }
 );
+
+SubredditSchema.methods.getPosts = function() {
+  this.populate('posts', (err, posts) => {
+    if(err) return err;
+    return posts;
+  })
+}
 
 SubredditSchema.methods.deleteSubredditPosts = async function() {
   const subName = this.name
