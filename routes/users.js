@@ -4,8 +4,6 @@ var bcrypt = require("bcryptjs");
 var passport = require('../config/passport'); 
 var User = require("../models/users");
 
-
-
 /* GET - Retrieve all users */
 router.get("/", (req, res, next) => {
   User.find((err, docs) => {
