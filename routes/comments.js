@@ -3,7 +3,8 @@ var router = express.Router({mergeParams: true});
 // Comments base route : /posts/:post_id/comments 
 
 const Comment = require("../models/comments");
-
+const Post = require("../models/posts");
+const User = require("../models/users");
 
 // GET - Get comments of post_id
 router.get("/", (req, res, next) => {
@@ -29,6 +30,12 @@ router.post("/", (req, res, next) => {
     content: content,
   })
   .then(comm => {
+    // Add a ref of this comment to the post that it was made to;
+    Post.findById(post_id, (err, post) => {
+      if(err) res.status(400).send(err);
+      post.comments.push(comm._id);
+      post.save();
+    })
     res.status(200).send({message: "Comment posted!", comment: comm});
   })
   .catch(err => {
@@ -108,9 +115,21 @@ router.put("/:comment_id", (req, res, next) => {
 router.delete("/:comment_id", (req, res, next) => {
   const user_id = req.body.user_id;
   const comment_id = req.params.comment_id;
-  Comment.findByIdAndDelete(comment_id, (err, doc) => {
+  Comment.findByIdAndDelete(comment_id, (err, comment) => {
     if(err) res.status(400).send(err);
-    res.status(200).send({message:"Comment deleted!", comment: doc});
+    // Delete the reference of this comment from the post
+    Post.findById(comment.post, (err, post) => {
+      if(err) res.status(400).send(err);
+      post.comments = post.comments.filter(postComment => postComment !== comment._id)
+      post.save();
+    })
+    // Delete the reference of this comment from the user
+    User.findById(user_id, (err, user) => {
+      if(err) res.status(400).send(err);
+      user.comments = user.comments.filter(userComment => userComment !== comment._id)
+      user.save();
+    })
+    res.status(200).send({message:"Comment deleted!", comment: comment});
   })
 })
 module.exports = router;

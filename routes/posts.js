@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var Post = require("../models/posts");
 var Subreddit = require("../models/subreddits");
+const User = require("../models/users");
 
 const getSubredditId = (name) => {
   Subreddit.findOne({name: name}, (err, sub) => {
@@ -30,7 +31,21 @@ router.post("/", (req, res, next) => {
     user: user._id, // object!
     content: content,
   })
-    .then((post) => res.status(200).send({message: "Post created!", post: post}))
+    .then((post) => {
+      // Add a ref to this post to the user document;
+      User.findById(user._id, (err, user) => {
+        if(err) res.status(400).send(err);
+        user.push(post._id);
+        user.save();
+      })
+      // Add a ref to this post to the subreddit document;
+      Subreddit.findById(getSubredditId(subreddit), (err, subreddit) => {
+        if(err) res.status(400).send(err);
+        subreddit.posts = subreddit.posts.filter(subredditPost => subredditPost !== post._id)
+        subreddit.save();
+      })
+      res.status(200).send({message: "Post created!", post: post})
+    })
     .catch(err => res.status(400).send(err));
 });
 
@@ -78,10 +93,22 @@ router.put("/:post_id", (req, res, next) => {
 // POST - deletes a post
 router.delete("/:post_id", (req, res, next) => {
   const postId = req.params.post_id;
-  // Find and delete the post form the "posts" collection
-  Post.findByIdAndDelete(postId)
-    .then((post) => res.status(200).send({message: "Post deleted!", post}))
-    .catch((err) => res.status(400).send(err));
+  Post.findByIdAndDelete(postId, (err, post) => {
+    if(err) res.status(400).send(err);
+    // Delete the reference from the user
+    User.findById(post.user, (err, user) => {
+      user.posts = user.posts.filter(userPost => userPost !== post._id)
+      user.save();
+    })
+    // Delete the reference from the subreddit
+    Subreddit.findById(post.subreddit, (err, subreddit) => {
+      if(err) res.status(400).send(err);
+      subreddit.posts = subreddit.posts.filter(subredditPost => subredditPost !== post._id);
+      subreddit.save();
+    })
+    res.status(200).send({message: "Post deleted!", post})
+  })
+
 });
 module.exports = router;
 
