@@ -1,7 +1,8 @@
 var mongoose = require("mongoose");
 var bcrypt = require('bcryptjs');
+const Schema = mongoose.Schema;
 
-var UserSchema = new mongoose.Schema(
+var UserSchema = new Schema(
   {
     username: {
       type: String,
@@ -20,6 +21,8 @@ var UserSchema = new mongoose.Schema(
       index: true,
     },
     password: { type: String, required: [true, "can't be blank"] },
+    posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
+    comments: [{ type: Schema.Types.ObjectId, ref: "Comment"}]
   },
   { timestamps: true }
 );

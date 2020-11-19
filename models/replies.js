@@ -1,14 +1,15 @@
 var mongoose = require('mongoose');
-
-var RepliesSchema = mongoose.Schema(
+var Schema = mongoose.Schema
+var RepliesSchema = Schema(
   {
-    comment_id: String,
-    user_id: String,
+    comment_id: { type: Schema.Types.ObjectId, ref: "Comment",},
+    user_id: { type: Schema.Types.ObjectId, ref: "User",},
     content: { type: String, required: [true, "can't be blank"]},
-    upvotes: { type: Array, default: []},
-    downvotes: { type: Array, default: []},
+    upvotes: [{ type: Schema.Types.ObjectId, ref: "User"}],
+    downvotes: [{ type: Schema.Types.ObjectId, ref: "User"}],
   },
-  { timestamps: true}
+  { timestamps: true }
 )
+
 var Reply = mongoose.model("Reply", RepliesSchema);
 module.exports = Reply;

@@ -1,11 +1,12 @@
 var mongoose = require("mongoose");
+var Schema = mongoose.Schema;
 const Post = require("./posts")
 
-var SubredditSchema = mongoose.Schema(
+var SubredditSchema = Schema(
   {
     name: { type: String, unique: true, required: [true, "can't be blank"] },
-    creator: String,
-    members: { type: Array, default: [] },
+    creator: { type: Schema.Types.ObjectId, ref: "User"},
+    members: [{ type: Schema.Types.ObjectId, ref: "User"}],
     description: { type: String, required: [true, "can't be blank"]},
   },
   { timestamps: true }

@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const CommentsSchema = mongoose.Schema({
-  user_id: String,
-  post_id: String,
+const CommentsSchema = Schema({
+  user_id: {type: Schema.Types.ObjectId, ref: "User"},
+  post_id: {type: Schema.Types.ObjectId, ref: "Post"},
   content: {type: String, required: true},
-  upvotes: {type: Array, default: []},
-  downvotes: {type: Array, default: []},
-  replies: {type: Array, default: []}
+  upvotes: [{type: Schema.Types.ObjectId, ref: "User"}],
+  downvotes: [{type: Schema.Types.ObjectId, ref: "User"}],
+  replies: {type: Schema.Types.ObjectId, ref: "Comment"}
 }, {timestamps: true})
 const Comment = mongoose.model('Comment', CommentsSchema);
 

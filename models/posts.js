@@ -1,13 +1,13 @@
 var mongoose = require("mongoose");
-
-var PostSchema = mongoose.Schema(
+var Schema = mongoose.Schema;
+var PostSchema = Schema(
   {
-    subreddit: { type: String, required: [true, "can't be blank"] },
-    user: String,
-    title: { type: String, required: [true, "can't be blank"] },
-    content: { type: String, required: [true, "can't be blank"] },
-    upvotes: { type: Array, default: [] },
-    downvotes: { type: Array, default: [] },
+    subreddit: { type: Schema.Types.ObjectId, ref: "Subreddit" },
+    user: { type: Schema.Types.ObjectId, ref: "User" },
+    title: { type: String, required: [true, "can't be blank" ]},
+    content: { type: String, required: [true, "can't be blank" ]},
+    upvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    downvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }
 );
