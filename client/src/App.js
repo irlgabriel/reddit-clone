@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, generatePath} from "react-router-dom";
 import axios from "axios";
 import "./App.css";
-// Components
 import { CSSTransition } from "react-transition-group";
 import { Navbar } from "./Components";
 import { Home, Subreddit, Profile, All } from "./Pages";
@@ -22,6 +21,7 @@ function App() {
   const [showRegister, setRegister] = useState(false);
   const [showFlash, setShowFlash] = useState(false);
   const [flashMessage, setFlash] = useState("");
+  console.log(posts);
 
   const compareByDate = (a, b) => {
     return a.createdAt >= b.createdAt ? -1 : 1;
@@ -146,8 +146,8 @@ function App() {
             setRegister={setRegister}
             user={user}
             setUser={setUser}
-            posts={subscribedPosts}
-            setPosts={setSubscribedPosts}
+            posts={subscribedPosts} /** */
+            setPosts={setSubscribedPosts}/** */
             setFilter={setFilter}
             setSubreddits={setSubreddits}
             postModal={postModal}

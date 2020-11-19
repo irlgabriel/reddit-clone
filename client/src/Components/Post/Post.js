@@ -48,11 +48,13 @@ const Post = ({
   user,
   post,
 }) => {
+  console.log(post);
   const [postUsername, setPostUsername] = useState("");
   const [showComments, setShowComments] = useState(false);
   const [postComments, setPostComments] = useState([]);
   const [showEditPost, setShowEditPost] = useState(false);
-
+  const [upvoted, setUpvoted] = useState(user && post.upvotes.includes(user._id) ? "yes" : "no");
+  const [downvoted, setDownvoted] = useState(user && post.downvotes.includes(user._id) ? "yes" : "no");
   // State for editing Post
   const [postTitle, setPostTitle] = useState(post.title);
   const [postContent, setPostContent] =  useState(post.content);
@@ -63,8 +65,7 @@ const Post = ({
       "Content-Type": "application/json",
     },
   };
-
-
+  
   const editPost = () => {
     if(!user) return;
     axios.put(`/posts/${post._id}`, {title: postTitle, content: postContent, user_id: user._id}, config)
@@ -79,6 +80,7 @@ const Post = ({
       setShowFlash(true);
     })
   }
+
   const upvotePost = () => {
     if (!user) return;
     const body = JSON.stringify({
@@ -133,11 +135,11 @@ const Post = ({
         {/* Votes Container */}
         <DotsWrapper>
           <DotsContainer>
-            <UpDot onClick={() => upvotePost()} upvoted={post.upvoted} />
-            <DotsCount upvoted={post.upvoted} downvoted={post.downvoted}>
+            <UpDot onClick={() => upvotePost()} upvoted={upvoted} />
+            <DotsCount upvoted={upvoted} downvoted={downvoted}>
               {post.upvotes.length - post.downvotes.length}
             </DotsCount>
-            <DownDot onClick={() => downvotePost()} downvoted={post.downvoted} />
+            <DownDot onClick={() => downvotePost()} downvoted={downvoted} />
           </DotsContainer>
         </DotsWrapper>
         <PostContentWrapper>

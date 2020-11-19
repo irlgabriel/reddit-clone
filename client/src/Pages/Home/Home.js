@@ -15,7 +15,6 @@ import {
   Button
 } from "./Home.components";
 const Home = ({
-  setFilter,
   setFlash,
   setShowFlash,
   setLogin,
@@ -25,7 +24,6 @@ const Home = ({
   posts,
   setPosts,
   user,
-  setUser,
   postModal,
   setPostModal,
   subredditModal,
@@ -33,7 +31,6 @@ const Home = ({
   sort,
   setSort
 }) => {
-  setFilter("HOME");
   return (
     <div> 
       {/* PostModal and SubredditModal transitions */}

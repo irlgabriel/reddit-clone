@@ -35,11 +35,12 @@ const PostComment = ({
   user,
   comment,
 }) => {
-  const [upvoted, setUpvoted] = useState("");
-  const [downvoted, setDownvoted] = useState("");
+  const [upvoted, setUpvoted] = useState(user && comment.upvotes.includes(user._id) ? "yes" : "no");
+  const [downvoted, setDownvoted] = useState(user && comment.downvotes.includes(user._id) ? "yes" : "no");
   const [username, setUsername] = useState("");
   const [showEditComment, setShowEditComment] = useState(false);
   const [commentContent, setCommentContent] = useState(comment.content);
+  
   const config = {
     headers: {
       Accept: "application/json",

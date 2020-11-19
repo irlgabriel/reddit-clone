@@ -28,7 +28,6 @@ router.get('/:subreddit_name', (req, res, next) => {
 
 /* POST - create new subreddit */
 router.post("/", (req, res, next) => {
-  console.log(req.body);
   Subreddit.create({
     name: req.body.name,
     creator: req.body.creator,

@@ -33,7 +33,6 @@ const All = ({
   sort,
   setSort
 }) => {
-  setFilter("ALL");
   return (
     <div> 
       {/* PostModal and SubredditModal transitions */}
@@ -105,23 +104,13 @@ const All = ({
           {
             posts.map((post) => (
               <Post
+                key={post._id}
                 setFlash={setFlash}
                 setShowFlash={setShowFlash}
                 posts={posts}
                 setPosts={setPosts}
                 user={user}
-                id={post._id}
-                key={post._id}
-                creator_id={post.user}
-                content={post.content}
-                subreddit={post.subreddit}
-                title={post.title}
-                upvotes={post.upvotes}
-                downvotes={post.downvotes}
-                createdAt={post.createdAt}
-                updatedAt={post.updatedAt}
-                upvoted={user && post.upvotes.includes(user._id) ? "yes" : "no"}
-                downvoted={user && post.downvotes.includes(user._id) ? "yes" : "no"}
+                post={post}
               />
             ))}
           {

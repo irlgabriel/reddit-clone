@@ -1,6 +1,14 @@
 var express = require("express");
 var router = express.Router();
 var Post = require("../models/posts");
+var Subreddit = require("../models/subreddits");
+
+const getSubredditId = (name) => {
+  Subreddit.findOne({name: name}, (err, sub) => {
+    if(err) return err;
+    return sub._id;
+  })
+}
 
 /* GET - retrieve all posts */
 router.get("/", (req, res, next) => {
@@ -18,68 +26,35 @@ router.post("/", (req, res, next) => {
   const { title, subreddit, user, content } = req.body;
   Post.create({
     title: title,
-    subreddit: subreddit,
+    subreddit: getSubredditId(subreddit),
     user: user._id, // object!
     content: content,
   })
     .then((post) => res.status(200).send({message: "Post created!", post: post}))
     .catch(err => res.status(400).send(err));
 });
+
 // POST - upvote a post
 router.post("/:post_id/upvote", (req, res, next) => {
   const post_id = req.params.post_id
   const user_id = req.body.user_id;
-
   Post.findById(post_id, (err, post) => {
-    if(err) console.log(err);
-
-    // Check if user downvoted this and remove it;
-    post.downvotes = post.downvotes.filter(downvote => downvote !== user_id)
-    // Check if user upvoted this and remove it;
-    post.upvotes.includes(user_id)
-    ? post.upvotes = post.upvotes.filter(upvote => upvote !== user_id)
-    : post.upvotes.push(user_id);
-
-    // Now save
-    post.save((err, post) => {
-      if(err){
-        res.status(400).send(err);
-      } else {
-        res.status(200).send(post);
-      }
-      
-    })
+    if(err) res.status(400).send(err);
+    res.status(200).send(post.upvotePost(user_id));
   })
 })
+
 // POST - downvote a post
 router.post("/:post_id/downvote", (req, res, next) => {
   const post_id = req.params.post_id
   const user_id = req.body.user_id;
-
   Post.findById(post_id, (err, post) => {
-    if(err) console.log(err);
-
-    // Check if user upvoted this and remove it;
-    post.upvotes = post.upvotes.filter(upvote => upvote !== user_id)  
-     // Check if user downvoted this and remove it;
-     post.downvotes.includes(user_id)
-     ? post.downvotes = post.downvotes.filter(downvote => downvote != user_id)
-     :  post.downvotes.push(user_id)
-
-    // Now save
-    post.save((err, post) => {
-      if(err){
-        res.status(400).send(err);
-      } else {
-        res.status(200).send(post);
-      }
-    })
-    
+    if(err) res.status(400).send(err);
+    res.status(200).send(post.upvotePost(user_id));
   })
 })
 
 // PUT - Edit a post 
-
 router.put("/:post_id", (req, res, next) => {
   // send an user_id as well just to make sure it's the user that submits the edit req
   const user_id = req.body.user_id;
