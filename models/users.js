@@ -32,6 +32,20 @@ UserSchema.methods.verifyPassword = async function(password) {
   return match;
 }
 
+UserSchema.methods.getPosts = function() {
+  this.populate('posts', (err, posts) => {
+    if(err) return err;
+    return posts;
+  })
+}
+
+UserSchema.methods.getComments = function() {
+  this.populate('comments', (err, comments) => {
+    if(err) return err;
+    return comments;
+  })
+}
+
 var User = mongoose.model("User", UserSchema);
 
 module.exports = User;
