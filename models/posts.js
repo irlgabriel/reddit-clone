@@ -20,13 +20,16 @@ PostSchema.methods.getComments = function(){
   })
 }
 
-PostSchema.methods.upvotePost = function(user_id){
+PostSchema.methods.upvotePost = function(user_id){  
   this.downvotes = this.downvotes.filter(downvote => downvote !== user_id);
   this.upvotes.includes(user_id) 
   ? this.upvotes = this.upvotes.filter(upvote => upvote !== user_id)
   : this.upvotes.push(user_id);
-  this.save();
-  return this;
+  this.save((err, doc) => {
+    console.log(doc);
+    if(err) return err;
+    return doc;
+  });
 }
 
 PostSchema.methods.downvotePost = function(user_id){
@@ -34,8 +37,10 @@ PostSchema.methods.downvotePost = function(user_id){
   this.downvotes.includes(user_id) 
   ? this.downvotes = this.downvotes.filter(downvote => downvote !== user_id)
   : this.downvotes.push(user_id);
-  this.save();
-  return this;
+  this.save((err, doc) => {
+    if(err) return err;
+    return doc;
+  });
 }
 
 var Post = mongoose.model("Post", PostSchema);

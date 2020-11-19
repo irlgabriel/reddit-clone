@@ -50,7 +50,7 @@ router.post("/:post_id/downvote", (req, res, next) => {
   const user_id = req.body.user_id;
   Post.findById(post_id, (err, post) => {
     if(err) res.status(400).send(err);
-    res.status(200).send(post.upvotePost(user_id));
+    res.status(200).send(post.downvotePost(user_id));
   })
 })
 
@@ -67,7 +67,6 @@ router.put("/:post_id", (req, res, next) => {
       updated_obj[obj] = req.body[obj];
     }
   })
-  // res.status(200).send(updated_obj)
   Post.findByIdAndUpdate(req.params.post_id, updated_obj, {new: true}, (err, doc) => {
     // Check if user that submited the request is the creator
     if(doc.user !== user_id) res.status(403).send({message: "Forbidden"})

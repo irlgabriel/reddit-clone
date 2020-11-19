@@ -5,19 +5,16 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const passport = require('passport');
 const session = require('express-session');
-//const MongoStore = require('connect-mongo')(session);
+const MongoStore = require('connect-mongo')(session);
 const mongoose = require('mongoose');
 
 const app = express();
 app.use(logger("dev"));
-app.use(session({secret:"secret", saveUninitialized: true, resave: false}))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-app.use(session({resave: false, saveUninitialized: true, secret: process.env.SESSION_SECRET}));
-app.use(passport.initialize());
-app.use(passport.session())
+
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => console.log(`Server listening on ${port}`));
@@ -31,6 +28,16 @@ const db = mongoose.connection;
 db.once('open', () => {
   console.log("Connected to mongoDB")
 })
+
+app.use(cookieParser(process.env.SESSION_SECRET))
+app.use(session({
+  store: new MongoStore({mongooseConnection: mongoose.connection}),
+  resave: false, 
+  saveUninitialized: true, 
+  secret: process.env.SESSION_SECRET
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 // import Routers
@@ -53,5 +60,3 @@ if (process.env.NODE_ENV == "production") {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
 }
-
-module.exports = app;
