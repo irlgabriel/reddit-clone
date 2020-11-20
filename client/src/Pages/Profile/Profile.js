@@ -4,6 +4,8 @@ import {
   MainWrapper,
   UserActivities,
   PostsContainer,
+  PostsHeader,
+  Paragraph,
 } from "./Profile.components";
 const Profile = ({ setFlash, setShowFlash, user, posts, profileUser }) => {
   const [userPosts, setUserPosts] = useState(
@@ -25,6 +27,12 @@ const Profile = ({ setFlash, setShowFlash, user, posts, profileUser }) => {
               post={post}
             />
           ))}
+          {
+            userPosts.length === 0 && 
+            <PostsHeader>
+              <Paragraph>No posts? Subscribe to some communities!</Paragraph>
+            </PostsHeader>
+          }
         </PostsContainer>
       </UserActivities>
       <Sidebar setFlash={setFlash} setShowFlash={setShowFlash} profilePage user={user} profileUser={profileUser} />

@@ -6,6 +6,8 @@ import {
   Paragraph,
   PostIcon,
   Button,
+  ParagraphSlim,
+
 } from "./Subreddit.components";
 import { Sidebar, Post, PostModal } from "../../Components";
 
@@ -21,7 +23,7 @@ const Subreddit = ({
   setRegister,
   setLogin,
   subreddits,
-  setSubreddits
+  setSubreddits,
 
 }) => {
   // only show posts from this subreddits
@@ -66,6 +68,12 @@ const Subreddit = ({
             post={post}
           />
         ))}
+        {
+          subredditPosts.length === 0 && 
+          <PostsHeader>
+            <ParagraphSlim>No posts? Subscribe to some communities!</ParagraphSlim>
+          </PostsHeader>
+        }
       </PostsContainer>
       <Sidebar setFlash={setFlash} setShowFlash={setShowFlash} subredditPage subreddits={subreddits} setSubreddits={setSubreddits} subreddit={subreddit} user={user} />
     </MainWrapper>

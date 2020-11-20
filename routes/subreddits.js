@@ -33,7 +33,7 @@ router.post("/", (req, res, next) => {
     creator: req.body.creator,
     description: req.body.description,
   })
-  .then((sub) => res.status(200).send(sub))
+  .then((sub) => res.status(200).send({message: `Subreddit r/${sub.name} created!`, sub}))
   .catch((err) => console.log(err));
 });
 
@@ -69,7 +69,7 @@ router.delete("/:subreddit_id/", (req, res, next) => {
   Subreddit.findById(req.params.subreddit_id, (err, doc) => {
     if(err) console.log(err);
     doc.remove()
-    .then(() => res.status(200).send({message: "Subreddit deleted", doc}))
+    .then(() => res.status(200).send({message: `Subreddit r/${doc.name} deleted`, doc}))
     .catch(err => console.log(err))
     
   })

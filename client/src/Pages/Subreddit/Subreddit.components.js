@@ -58,3 +58,7 @@ export const Button = styled.a`
     opacity: .75;
   }
 `;
+export const ParagraphSlim = styled.p`
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+`;

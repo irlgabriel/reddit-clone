@@ -50,8 +50,8 @@ const Sidebar = ({ setFlash, setShowFlash, profilePage, subredditPage, homePage,
             <RedditAge>Account created {moment(profileUser.createdAt).fromNow()}</RedditAge>
           </ProfileHeader>
           <ProfileBody>
-            <KarmaCount count={profileUser.upvotes.length - profileUser.downvotes.length}>
-              Karma: {profileUser.upvotes.length - profileUser.downvotes.length}
+            <KarmaCount count={0}>
+              Karma: {0}
             </KarmaCount>
           </ProfileBody> 
         </ProfileContainer>
