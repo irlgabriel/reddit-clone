@@ -1,6 +1,6 @@
-var express = require("express");
-var router = express.Router();
-var Subreddit = require("../models/subreddits");
+const express = require("express");
+const router = express.Router();
+const Subreddit = require("../models/subreddits");
 
 /* GET - Get subreddit posts */
 router.get("/:subreddit_id/posts/", (req, res, next) => {

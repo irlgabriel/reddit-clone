@@ -1,5 +1,5 @@
-var express = require("express");
-var router = express.Router({mergeParams: true});
+const express = require("express");
+const router = express.Router({mergeParams: true});
 // Comments base route : /posts/:post_id/comments 
 
 const Comment = require("../models/comments");

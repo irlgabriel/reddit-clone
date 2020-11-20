@@ -1,9 +1,11 @@
-var express = require("express");
-var router = express.Router();
-var Post = require("../models/posts");
-var Subreddit = require("../models/subreddits");
+const express = require("express");
+const router = express.Router();
+const mongoose = require('mongoose');
+
+const Post = require("../models/posts");
+const Subreddit = require("../models/subreddits");
 const User = require("../models/users");
-const Comment = require("../models/comments");
+const Comment = require("../models//comments");
 
 /* GET - retrieve all posts */
 router.get("/", (req, res, next) => {
@@ -29,8 +31,6 @@ router.post("/", async (req, res, next) => {
   })
     .save()
     .then(async (post) => {
-      // add a ref of this to user
-      await User.updateOne({_id: post.user}, {$push: { posts: post._id }})
       res.status(200).send({message: "Post created!", post: post})
     })
     .catch(err => console.log(err));
@@ -86,7 +86,7 @@ router.delete("/:post_id", async (req, res, next) => {
   Post.findByIdAndDelete(post_id, async (err, post) => {
     if(err) res.status(400).send(err);
     // get subreddit object from name reference in the post doc;
-    const subredditObject = await Subreddit.findOne({name: subreddit});
+    const subredditObject = await Subreddit.findOne({_id: post.subreddit});
 
     // delete ref of this post from user and subreddit docs
     await User.updateOne({_id: post.user}, {$pull: {posts: post._id}});

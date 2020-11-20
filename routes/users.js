@@ -1,8 +1,9 @@
-var express = require("express");
-var router = express.Router();
-var bcrypt = require("bcryptjs");
-var passport = require('../config/passport'); 
-var User = require("../models/users");
+const express = require("express");
+const router = express.Router();
+const bcrypt = require("bcryptjs");
+const passport = require('../config/passport'); 
+
+const User = require("../models/users");
 
 /* GET - Retrieve all users */
 router.get("/", (req, res, next) => {
@@ -47,7 +48,6 @@ router.post("/register", async (req, res, next) => {
 });
 
 // POST - Login
-
 router.post("/login", passport.authenticate('local'), (req,res) => {
   const username = req.user.username;
   return User.findOne({username: username})
@@ -55,7 +55,6 @@ router.post("/login", passport.authenticate('local'), (req,res) => {
     if(!user) return res.status(400).send({msg: "Username does not exist"});
     return res.json({user, message: "Logged in Sucessfully"})
   })
-  res.send({user: req.user});
 })
 
 // POST - Logout
