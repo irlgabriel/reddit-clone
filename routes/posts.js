@@ -15,10 +15,22 @@ router.get("/", (req, res, next) => {
   });
 });
 
+/** dummy check populate */
+router.get("/:post_id", async (req, res, next) => {
+  Post.findById(req.params.post_id, (err, post) => {
+    if(err) res.json(err);
+    console.log(post);
+    post.populate({path: 'comments'}, (err, populatedPost) => {
+      console.log(populatedPost);
+    })
+  })
+})
+
 /* POST - Create a post */
 router.post("/", async (req, res, next) => {
   const { title, subreddit, user, content } = req.body;
   const subredditObject = await Subreddit.findOne({name: subreddit});
+
   Post.create({
     title: title,
     subreddit: subredditObject._id,
@@ -48,6 +60,7 @@ router.post("/", async (req, res, next) => {
 router.post("/:post_id/upvote", (req, res, next) => {
   const post_id = req.params.post_id
   const user_id = req.body.user_id;
+
   Post.findById(post_id, (err, post) => {
     if(err) res.status(400).send(err);
     post.upvotePost(user_id);
@@ -59,6 +72,7 @@ router.post("/:post_id/upvote", (req, res, next) => {
 router.post("/:post_id/downvote", (req, res, next) => {
   const post_id = req.params.post_id
   const user_id = req.body.user_id;
+
   Post.findById(post_id, (err, post) => {
     if(err) res.status(400).send(err);
     post.downvotePost(user_id);

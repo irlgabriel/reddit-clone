@@ -126,7 +126,6 @@ router.delete("/:comment_id", (req, res, next) => {
     // Delete the reference of this comment from the post
     Post.findById(comment.post_id, (err, post) => {
       if(err) res.status(400).send(err);
-      console.log(post);
       post.comments = post.comments.filter(postComment => postComment !== comment._id)
       post.save();
     })
