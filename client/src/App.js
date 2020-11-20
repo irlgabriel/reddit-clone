@@ -41,9 +41,6 @@ function App() {
 
   // fetch data when app is rendered
   useEffect(() => {
-    
-    //debug
-    axios.get('/posts/5fb7a2ef20582424ec937f57').then(res => console.log(res.data))
 
     // Make a dummy request to check if user is logged in
     axios.post("users/logged_in")
@@ -60,7 +57,6 @@ function App() {
     // retrieve all posts
     const fetchPosts = async () => {
       const res = await axios.get("/posts");
-      console.log(res.data);
       setPosts(res.data.sort(compareByDate));
     }
     fetchPosts();

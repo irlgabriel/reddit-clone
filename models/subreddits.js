@@ -6,9 +6,9 @@ var SubredditSchema = Schema(
   {
     name: { type: String, unique: true, required: [true, "can't be blank"] },
     description: { type: String, required: [true, "can't be blank"]},
-    creator: { type: Schema.Types.ObjectId, reference: "User"},
-    members: [{ type: Schema.Types.ObjectId, reference: "User"}],
-    posts: [{ type: Schema.Types.ObjectId, reference: "Post"}]
+    creator: { type: Schema.Types.ObjectId, ref: "User"},
+    members: [{ type: Schema.Types.ObjectId, ref: "User"}],
+    posts: [{ type: Schema.Types.ObjectId, ref: "Post"}]
   },
   { timestamps: true }
 );

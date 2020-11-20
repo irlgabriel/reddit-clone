@@ -4,20 +4,16 @@ var PostSchema = Schema(
   {
     title: { type: String, required: [true, "can't be blank" ]},
     content: { type: String, required: [true, "can't be blank" ]},
-    subreddit: { type: Schema.Types.ObjectId, reference: "Subreddit" },
-    user: { type: Schema.Types.ObjectId, reference: "User" },
-    upvotes: [{ type: Schema.Types.ObjectId, reference: "User" }],
-    downvotes: [{ type: Schema.Types.ObjectId, reference: "User" }],
-    comments: [{ type: Schema.Types.ObjectId, reference: "Comment" }]
-  },
-  { timestamps: true }
-);
+    subreddit: { type: Schema.Types.ObjectId, ref: "Subreddit" },
+    user: { type: Schema.Types.ObjectId, ref: "User" },
+    upvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    downvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }]
+  },{ timestamps: true });
 
-PostSchema.methods.getComments = function(){
-  this.populate('comments', (err, comments) => {
-    if(err) return err;
-    return comments;
-  })
+PostSchema.methods.getComments = async function(){
+  const posts = await this.populate('comments').execPopulate()
+  return posts;
 }
 
 PostSchema.methods.upvotePost = function(user_id){  

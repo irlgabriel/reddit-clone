@@ -6,14 +6,18 @@ const Comment = require("../models/comments");
 const Post = require("../models/posts");
 const User = require("../models/users");
 
+// Base route url: /posts/:post_id/comments/
 // GET - Get comments of post_id
 router.get("/", (req, res, next) => {
   const post_id = req.params.post_id;
   Comment.find({post_id: post_id})
-  .then(comments => {
+  .then(async(comments) => {
+    //const post = await Post.findById(post_id);
+    //await post.populate('comments').execPopulate();
     res.status(200).send(comments);
   })
   .catch(err => {
+    console.log(err);
     res.status(400).send(err);
   })
 })
@@ -24,24 +28,16 @@ router.post("/", (req, res, next) => {
 
   const user_id = req.body.user_id;
   const content = req.body.content;
-  Comment.create({
+  new Comment({
     user_id: user_id,
     post_id: post_id,
     content: content,
   })
-  .then(comm => {
-    // Add a reference of this comment to the post that it was made to;
-    Post.findById(post_id, (err, post) => {
-      if(err) res.status(400).send(err);
-      post.comments.push(comm._id);
-      post.save();
-    })
+  .save()
+  .then(async (comm) => {
+    await Post.updateOne({_id: comm.post_id}, {$push: { comments: comm._id}});
+    await User.updateOne({_id: comm.user_id}, {$push: { comments: comm._id}});
     res.status(200).send({message: "Comment posted!", comment: comm});
-    // Add a reference of this comment to the user that created it
-    User.findById(user_id, (err, user) => {
-      if(err) res.status(400).send(err);
-      user.comments = user.comments.filter(userComment => userComment !== comm._id)
-    })
   })
   .catch(err => {
     res.status(400).send(err);
@@ -118,23 +114,13 @@ router.put("/:comment_id", (req, res, next) => {
 
 // DELETE - delete a comment
 router.delete("/:comment_id", (req, res, next) => {
-  const user_id = req.body.user_id;
   const comment_id = req.params.comment_id;
-  Comment.findByIdAndDelete(comment_id, (err, comment) => {
-    console.log(comment);
+  Comment.findByIdAndDelete(comment_id, async (err, comment) => {
     if(err) res.status(400).send(err);
-    // Delete the reference of this comment from the post
-    Post.findById(comment.post_id, (err, post) => {
-      if(err) res.status(400).send(err);
-      post.comments = post.comments.filter(postComment => postComment !== comment._id)
-      post.save();
-    })
-    // Delete the reference of this comment from the user
-    User.findById(comment.user_id, (err, user) => {
-      if(err) res.status(400).send(err);
-      user.comments = user.comments.filter(userComment => userComment !== comment._id)
-      user.save();
-    })
+
+    // delete refs of this doc from user and post docs;
+    await User.updateOne({_id: comment.user_id}, {$pull: { comments: comment._id}});
+    await Post.updateOne({_id: comment.post_id}, {$pull: { comments: comment._id}});
     res.status(200).send({message:"Comment deleted!", comment: comment});
   })
 })

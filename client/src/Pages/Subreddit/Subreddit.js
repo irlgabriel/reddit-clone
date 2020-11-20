@@ -35,6 +35,8 @@ const Subreddit = ({
     <MainWrapper>
       {postModal && (
         <PostModal
+          setFlash={setFlash}
+          setShowFlash={setShowFlash}
           fromSubreddit={subreddit.name}
           setPostModal={setPostModal}
           user={user}
