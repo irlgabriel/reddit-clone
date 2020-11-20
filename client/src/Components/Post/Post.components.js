@@ -13,7 +13,6 @@ export const PostWrapper = styled.div`
 export const PostContainer = styled.div`
   background-color: white;
   width: 600px;
-  min-height: 150px;
   position: relative;
   display: flex;
   border: 1px solid lightgray;

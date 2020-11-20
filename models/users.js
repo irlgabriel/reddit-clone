@@ -21,8 +21,8 @@ var UserSchema = new Schema(
       index: true,
     },
     password: { type: String, required: [true, "can't be blank"] },
-    posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
-    comments: [{ type: Schema.Types.ObjectId, ref: "Comment"}]
+    posts: [{ type: Schema.Types.ObjectId, reference: "Post" }],
+    comments: [{ type: Schema.Types.ObjectId, reference: "Comment"}]
   },
   { timestamps: true }
 );

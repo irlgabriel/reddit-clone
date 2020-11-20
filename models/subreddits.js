@@ -5,10 +5,10 @@ const Post = require("./posts")
 var SubredditSchema = Schema(
   {
     name: { type: String, unique: true, required: [true, "can't be blank"] },
-    creator: { type: Schema.Types.ObjectId, ref: "User"},
-    members: [{ type: Schema.Types.ObjectId, ref: "User"}],
     description: { type: String, required: [true, "can't be blank"]},
-    posts: { type: Schema.Types.ObjectId, ref: "Post"}
+    creator: { type: Schema.Types.ObjectId, reference: "User"},
+    members: [{ type: Schema.Types.ObjectId, reference: "User"}],
+    posts: [{ type: Schema.Types.ObjectId, reference: "Post"}]
   },
   { timestamps: true }
 );
@@ -20,16 +20,14 @@ SubredditSchema.methods.getPosts = function() {
   })
 }
 
-SubredditSchema.methods.deleteSubredditPosts = async function() {
-  const subName = this.name
-  Post.find().then(docs => {
-    docs.forEach(doc => {
-      if(doc.subreddit === subName) {
-        doc.remove();
-      }
-    })
-  })
-}
+// delete all posts that belonged to this subreddit when 
+SubredditSchema.post('remove', function() {
+  console.log(this);
+  this.posts.forEach(post => Post.findByIdAndRemove(post, (err, doc) => {
+    if(err) console.log(err);
+    console.log(doc);
+  }))
+});
 
 var Subreddit = mongoose.model("Subreddit", SubredditSchema);
 

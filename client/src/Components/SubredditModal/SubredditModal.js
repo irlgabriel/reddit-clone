@@ -38,9 +38,10 @@ const SubredditModal = ({
     axios.post("/subreddits", body, config)
     .then((res) => {
     setSubredditModal(false);
+    console.log(res);
     setSubreddits([...subreddits, res.data]);
-      setFlash(res.data.message);
-      setShowFlash(true);
+    setFlash(res.data.message);
+    setShowFlash(true);
     })
     .catch(err => {
       console.log(err.response);

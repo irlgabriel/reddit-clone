@@ -2,12 +2,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const CommentsSchema = Schema({
-  user_id: {type: Schema.Types.ObjectId, ref: "User"},
-  post_id: {type: Schema.Types.ObjectId, ref: "Post"},
+  user_id: {type: Schema.Types.ObjectId, reference: "User"},
+  post_id: {type: Schema.Types.ObjectId, reference: "Post"},
   content: {type: String, required: true},
-  upvotes: [{type: Schema.Types.ObjectId, ref: "User"}],
-  downvotes: [{type: Schema.Types.ObjectId, ref: "User"}],
-  replies: {type: Schema.Types.ObjectId, ref: "Comment"}
+  upvotes: [{type: Schema.Types.ObjectId, reference: "User"}],
+  downvotes: [{type: Schema.Types.ObjectId, reference: "User"}],
+  replies: {type: Schema.Types.ObjectId, reference: "Comment"}
 }, {timestamps: true})
 
 CommentsSchema.methods.upvoteComment = function(user_id) {

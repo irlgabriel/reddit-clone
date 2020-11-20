@@ -17,14 +17,16 @@ import {
 
 const PostModal = ({ setFlash, setShowFlash, fromSubreddit, setPosts, posts, user, setPostModal }) => {
   const [subreddits, setSubreddits] = useState([]);
-  const [subreddit, setSubreddit] = useState();
+  const [subreddit, setSubreddit] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   // Seed state with the available subreddits
   useEffect(() => {
     axios.get("/subreddits").then((res) => {
       setSubreddits(res.data);
-      if (res.data.length > 0) setSubreddit(res.data[0].name);
+      if (res.data.length > 0) {
+        setSubreddit(res.data[0].name);
+      }
     });
   }, []);
   const createPost = (e) => {
@@ -44,13 +46,13 @@ const PostModal = ({ setFlash, setShowFlash, fromSubreddit, setPosts, posts, use
     axios
       .post("/posts", body, config)
       .then((res) => {
-        console.log(res);
         setPostModal(false);
         setPosts([res.data.post, ...posts])
         setFlash(res.data.message);
         setShowFlash(true);
       })
       .catch((err) => {
+        console.log(err);
         setFlash(err.response.data.message);
         setShowFlash(true);
       })

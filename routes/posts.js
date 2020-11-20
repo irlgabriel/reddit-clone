@@ -4,13 +4,6 @@ var Post = require("../models/posts");
 var Subreddit = require("../models/subreddits");
 const User = require("../models/users");
 
-const getSubredditId = (name) => {
-  Subreddit.findOne({name: name}, (err, sub) => {
-    if(err) return err;
-    return sub._id;
-  })
-}
-
 /* GET - retrieve all posts */
 router.get("/", (req, res, next) => {
   Post.find((err, docs) => {
@@ -23,30 +16,32 @@ router.get("/", (req, res, next) => {
 });
 
 /* POST - Create a post */
-router.post("/", (req, res, next) => {
+router.post("/", async (req, res, next) => {
   const { title, subreddit, user, content } = req.body;
+  const subredditObject = await Subreddit.findOne({name: subreddit});
   Post.create({
     title: title,
-    subreddit: getSubredditId(subreddit),
+    subreddit: subredditObject._id,
     user: user._id, // object!
     content: content,
   })
-    .then((post) => {
-      // Add a ref to this post to the user document;
+    .then(async (post) => {
+      // Add a reference to this post to the user document;
       User.findById(user._id, (err, user) => {
         if(err) res.status(400).send(err);
-        user.push(post._id);
+        user.posts.push(post._id);
         user.save();
       })
-      // Add a ref to this post to the subreddit document;
-      Subreddit.findById(getSubredditId(subreddit), (err, subreddit) => {
+      // Add a reference to this post to the subreddit document;
+      Subreddit.findById(subredditObject._id, (err, subreddit) => {
         if(err) res.status(400).send(err);
-        subreddit.posts = subreddit.posts.filter(subredditPost => subredditPost !== post._id)
+        subreddit.posts = [...subreddit.posts, post._id];
         subreddit.save();
       })
       res.status(200).send({message: "Post created!", post: post})
     })
     .catch(err => res.status(400).send(err));
+
 });
 
 // POST - upvote a post
@@ -55,7 +50,8 @@ router.post("/:post_id/upvote", (req, res, next) => {
   const user_id = req.body.user_id;
   Post.findById(post_id, (err, post) => {
     if(err) res.status(400).send(err);
-    res.status(200).send(post.upvotePost(user_id));
+    post.upvotePost(user_id);
+    res.status(200).send(post);
   })
 })
 
@@ -65,7 +61,8 @@ router.post("/:post_id/downvote", (req, res, next) => {
   const user_id = req.body.user_id;
   Post.findById(post_id, (err, post) => {
     if(err) res.status(400).send(err);
-    res.status(200).send(post.downvotePost(user_id));
+    post.downvotePost(user_id);
+    res.status(200).send(post);
   })
 })
 
@@ -90,7 +87,7 @@ router.put("/:post_id", (req, res, next) => {
   })
 })
 
-// POST - deletes a post
+// DELETE - deletes a post
 router.delete("/:post_id", (req, res, next) => {
   const postId = req.params.post_id;
   Post.findByIdAndDelete(postId, (err, post) => {

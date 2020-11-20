@@ -48,7 +48,6 @@ const Post = ({
   user,
   post,
 }) => {
-  console.log(post);
   const [postUsername, setPostUsername] = useState("");
   const [showComments, setShowComments] = useState(false);
   const [postComments, setPostComments] = useState([]);
@@ -113,12 +112,14 @@ const Post = ({
       axios
         .delete(`/posts/${post._id}`, config)
         .then((res) => {
-          console.log(res);
+          console.log(res.data.post);
           setPosts(posts.filter(post => post._id !== res.data.post._id))
           setFlash(res.data.message);
           setShowFlash(true);
         })
         .catch(err => {
+          console.log(err);
+          console.log(err.response)
           setFlash(err.response.data.message);
           setShowFlash(true);
         });

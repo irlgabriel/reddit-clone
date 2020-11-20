@@ -6,14 +6,7 @@ var logger = require("morgan");
 var passport = require('passport');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
-
-
-// import ROUTES
-var usersRouter = require("./routes/users");
-var postsRouter = require("./routes/posts");
-var subredditsRouter = require("./routes/subreddits");
-var commentsRouter = require("./routes/comments");
-var repliesRouter = require("./routes/replies");
+var mongoose = require('mongoose')
 var app = express();
 
 // view engine setup

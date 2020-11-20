@@ -36,6 +36,7 @@ router.post("/", (req, res, next) => {
   .then((sub) => res.status(200).send(sub))
   .catch((err) => console.log(err));
 });
+
 /* POST - subscribe to subreddit */
 router.post("/:subreddit_id/subscribe", (req, res, next) => {
   const user = req.body.user_id
@@ -65,10 +66,12 @@ router.post("/:subreddit_id/unsubscribe", (req, res, next) => {
 
 /* DELETE - Delete subreddit */
 router.delete("/:subreddit_id/", (req, res, next) => {
-  Subreddit.findByIdAndDelete(req.params.subreddit_id, (err, doc) => {
-    if(err) res.status(400).send(err);
-    doc.deleteSubredditPosts();
-    res.status(200).send({message: "Subreddit deleted", doc});
+  Subreddit.findById(req.params.subreddit_id, (err, doc) => {
+    if(err) console.log(err);
+    doc.remove()
+    .then(() => res.status(200).send({message: "Subreddit deleted", doc}))
+    .catch(err => console.log(err))
+    
   })
 })
 module.exports = router;

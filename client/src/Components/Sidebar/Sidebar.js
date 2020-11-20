@@ -34,7 +34,7 @@ const Sidebar = ({ setFlash, setShowFlash, profilePage, subredditPage, homePage,
       setShowFlash(true);
       history.push("/all");
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log(err.response))
   }
 
   //960px hidden

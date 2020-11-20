@@ -21,7 +21,6 @@ function App() {
   const [showRegister, setRegister] = useState(false);
   const [showFlash, setShowFlash] = useState(false);
   const [flashMessage, setFlash] = useState("");
-  console.log(posts);
 
   const compareByDate = (a, b) => {
     return a.createdAt >= b.createdAt ? -1 : 1;

@@ -30,13 +30,18 @@ router.post("/", (req, res, next) => {
     content: content,
   })
   .then(comm => {
-    // Add a ref of this comment to the post that it was made to;
+    // Add a reference of this comment to the post that it was made to;
     Post.findById(post_id, (err, post) => {
       if(err) res.status(400).send(err);
       post.comments.push(comm._id);
       post.save();
     })
     res.status(200).send({message: "Comment posted!", comment: comm});
+    // Add a reference of this comment to the user that created it
+    User.findById(user_id, (err, user) => {
+      if(err) res.status(400).send(err);
+      user.comments = user.comments.filter(userComment => userComment !== comm._id)
+    })
   })
   .catch(err => {
     res.status(400).send(err);
@@ -116,15 +121,17 @@ router.delete("/:comment_id", (req, res, next) => {
   const user_id = req.body.user_id;
   const comment_id = req.params.comment_id;
   Comment.findByIdAndDelete(comment_id, (err, comment) => {
+    console.log(comment);
     if(err) res.status(400).send(err);
     // Delete the reference of this comment from the post
-    Post.findById(comment.post, (err, post) => {
+    Post.findById(comment.post_id, (err, post) => {
       if(err) res.status(400).send(err);
+      console.log(post);
       post.comments = post.comments.filter(postComment => postComment !== comment._id)
       post.save();
     })
     // Delete the reference of this comment from the user
-    User.findById(user_id, (err, user) => {
+    User.findById(comment.user_id, (err, user) => {
       if(err) res.status(400).send(err);
       user.comments = user.comments.filter(userComment => userComment !== comment._id)
       user.save();
