@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Post = require('./posts');
+const User = require('./users');
 const Schema = mongoose.Schema;
 
 const CommentsSchema = Schema({
@@ -36,15 +37,18 @@ CommentsSchema.methods.getReplies = function() {
   })
 }
 
+CommentsSchema.post('save', async function() {
+  console.log("running post middleware after save");
+  console.log("the comment is", this);
+  await Post.updateOne({_id: this.post_id}, {$push: {comments: this._id}})
+  await User.updateOne({_id: this.user_id}, {$push: {comments: this._id}})
+})
+
 CommentsSchema.post('remove', async function() {
   console.log("running post middleware after remove");
-  console.log("the comments is", this);
-  await Post.findById(this.post_id).then(post => {
-    console.log(post);
-    post.comments = post.comments.filter(postComment => postComment !== this._id)
-    post.save();
-  })
-  .catch(err => console.log(err))
+  console.log("the comment is", this);
+  await Post.updateOne({_id: this.post_id}, {$pull: {comments: this._id}});
+  await User.updateOne({_id: this.user_id}, {$pull: {comments: this._id}});
 })
 
 const Comment = mongoose.model('Comment', CommentsSchema);

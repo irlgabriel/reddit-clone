@@ -3,8 +3,6 @@ var router = express.Router({mergeParams: true});
 // Comments base route : /posts/:post_id/comments 
 
 const Comment = require("../models/comments");
-const Post = require("../models/posts");
-const User = require("../models/users");
 
 // Base route url: /posts/:post_id/comments/
 // GET - Get comments of post_id
@@ -34,9 +32,9 @@ router.post("/", (req, res, next) => {
     content: content,
   })
   .save()
-  .then(async (comm) => {
-    await Post.updateOne({_id: comm.post_id}, {$push: { comments: comm._id}});
-    await User.updateOne({_id: comm.user_id}, {$push: { comments: comm._id}});
+  .then((comm) => {
+    //await Post.updateOne({_id: comm.post_id}, {$push: { comments: comm._id}});
+    //await User.updateOne({_id: comm.user_id}, {$push: { comments: comm._id}});
     res.status(200).send({message: "Comment posted!", comment: comm});
   })
   .catch(err => {
@@ -115,12 +113,12 @@ router.put("/:comment_id", (req, res, next) => {
 // DELETE - delete a comment
 router.delete("/:comment_id", (req, res, next) => {
   const comment_id = req.params.comment_id;
-  Comment.findByIdAndDelete(comment_id, async (err, comment) => {
+  Comment.findOneAndRemove({_id:comment_id} , (err, comment) => {
     if(err) res.status(400).send(err);
-
+    comment.remove();
     // delete refs of this doc from user and post docs;
-    await User.updateOne({_id: comment.user_id}, {$pull: { comments: comment._id}});
-    await Post.updateOne({_id: comment.post_id}, {$pull: { comments: comment._id}});
+    // await User.updateOne({_id: comment.user_id}, {$pull: { comments: comment._id}});
+    // await Post.updateOne({_id: comment.post_id}, {$pull: { comments: comment._id}});
     res.status(200).send({message:"Comment deleted!", comment: comment});
   })
 })

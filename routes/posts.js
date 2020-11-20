@@ -80,17 +80,20 @@ router.put("/:post_id", (req, res, next) => {
 })
 
 // DELETE - deletes a post
-router.delete("/:post_id", (req, res, next) => {
+router.delete("/:post_id", async (req, res, next) => {
   const post_id = req.params.post_id;
-  Post.findByIdAndDelete(post_id, (err, post) => {
+
+  Post.findByIdAndDelete(post_id, async (err, post) => {
     if(err) res.status(400).send(err);
-    // delete ref of this post from user
-    console.log(post)
-    User.findById(post.user).then(user => {
-      user.posts.pull(post._id);
-      user.save();
-    })
+    // get subreddit object from name reference in the post doc;
+    const subredditObject = await Subreddit.findOne({name: subreddit});
+
+    // delete ref of this post from user and subreddit docs
+    await User.updateOne({_id: post.user}, {$pull: {posts: post._id}});
+    await Subreddit.updateOne({_id: subredditObject._id}, {$pull: {posts: post._id}});
     // delete the comments of the post as well
+    
+    //
     Comment.deleteMany({post_id: { $eq: post._id }});
     res.status(200).send({message: "Post deleted!", post})
   })
