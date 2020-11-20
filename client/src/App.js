@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, generatePath} from "react-router-dom";
 import axios from "axios";
 import "./App.css";
-// Components
 import { CSSTransition } from "react-transition-group";
 import { Navbar } from "./Components";
-import { Home, Subreddit, Profile } from "./Pages";
+import { Home, Subreddit, Profile, All } from "./Pages";
 import { Container, FlashContainer} from "./App.components";
 
 function App() {
@@ -22,6 +21,7 @@ function App() {
   const [showRegister, setRegister] = useState(false);
   const [showFlash, setShowFlash] = useState(false);
   const [flashMessage, setFlash] = useState("");
+  console.log(posts);
 
   const compareByDate = (a, b) => {
     return a.createdAt >= b.createdAt ? -1 : 1;
@@ -42,9 +42,18 @@ function App() {
 
   // fetch data when app is rendered
   useEffect(() => {
-    // check if there's an user in localstorage
-    //const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    //if (currentUser) setUser(currentUser);
+    
+    // Make a dummy request to check if user is logged in
+    axios.post("users/logged_in")
+    .then(res => { 
+      if(res.data.user) { 
+        setUser(res.data.user)
+      } else {
+        setUser(undefined);
+      }
+    })
+    .catch(err => console.log(err.response))
+
     // ASYNC
     // retrieve all posts
     const fetchPosts = async () => {
@@ -104,7 +113,7 @@ function App() {
           setUser={setUser} 
         />
         <Route exact path="/all">
-          <Home
+          <All
             setFlash={setFlash}
             setShowFlash={setShowFlash}
             showLogin={showLogin}
@@ -115,6 +124,7 @@ function App() {
             setUser={setUser}
             posts={posts}
             setPosts={setPosts}
+            setFilter={setFilter}
             setSubreddits={setSubreddits}
             postModal={postModal}
             setPostModal={setPostModal}
@@ -124,7 +134,7 @@ function App() {
             sort={sort}
             setSort={setSort}
           >
-          </Home>
+          </All>
         </Route>
         <Route exact path="/">
           <Home
@@ -136,8 +146,9 @@ function App() {
             setRegister={setRegister}
             user={user}
             setUser={setUser}
-            posts={subscribedPosts}
-            setPosts={setSubscribedPosts}
+            posts={subscribedPosts} /** */
+            setPosts={setSubscribedPosts}/** */
+            setFilter={setFilter}
             setSubreddits={setSubreddits}
             postModal={postModal}
             setPostModal={setPostModal}

@@ -59,21 +59,11 @@ const Subreddit = ({
         }
         {subredditPosts.map((post) => (
           <Post
+            key={post._id}
             posts={subredditPosts}
             setPosts={setSubredditPosts}
             user={user}
-            id={post._id}
-            key={post._id}
-            creator_id={post.user}
-            content={post.content}
-            subreddit={post.subreddit}
-            createdAt={post.createdAt}
-            updatedAt={post.updatedAt}
-            title={post.title}
-            upvotes={post.upvotes}
-            downvotes={post.downvotes}
-            upvoted={user && post.upvotes.includes(user._id) ? "yes" : "no"}
-            downvoted={user && post.downvotes.includes(user._id) ? "yes" : "no"}
+            post={post}
           />
         ))}
       </PostsContainer>

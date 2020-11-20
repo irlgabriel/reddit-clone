@@ -1,14 +1,35 @@
 var mongoose = require("mongoose");
+var Schema = mongoose.Schema;
+const Post = require("./posts")
 
-var SubredditSchema = mongoose.Schema(
+var SubredditSchema = Schema(
   {
     name: { type: String, unique: true, required: [true, "can't be blank"] },
-    creator: String,
-    members: { type: Array, default: [] },
+    creator: { type: Schema.Types.ObjectId, ref: "User"},
+    members: [{ type: Schema.Types.ObjectId, ref: "User"}],
     description: { type: String, required: [true, "can't be blank"]},
+    posts: { type: Schema.Types.ObjectId, ref: "Post"}
   },
   { timestamps: true }
 );
+
+SubredditSchema.methods.getPosts = function() {
+  this.populate('posts', (err, posts) => {
+    if(err) return err;
+    return posts;
+  })
+}
+
+SubredditSchema.methods.deleteSubredditPosts = async function() {
+  const subName = this.name
+  Post.find().then(docs => {
+    docs.forEach(doc => {
+      if(doc.subreddit === subName) {
+        doc.remove();
+      }
+    })
+  })
+}
 
 var Subreddit = mongoose.model("Subreddit", SubredditSchema);
 

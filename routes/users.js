@@ -47,24 +47,26 @@ router.post("/register", async (req, res, next) => {
 });
 
 // POST - Login
-<<<<<<< HEAD
-router.post("/login", passport.authenticate('local', {session: false}), (req,res) => {
-  const username = req.user.username;
-  //const username
-=======
+
 router.post("/login", passport.authenticate('local'), (req,res) => {
   const username = req.user.username;
->>>>>>> b32f2ffa0cdf3a9198a57281efd848832ffe914f
   return User.findOne({username: username})
   .then(user => {
     if(!user) return res.status(400).send({msg: "Username does not exist"});
     return res.json({user, message: "Logged in Sucessfully"})
   })
+  res.send({user: req.user});
 })
 
 // POST - Logout
 router.post("/logout", (req, res, next) => {
-  const user = req.body.username;
+  req.logout();
+  res.send({message: "Logged out successfully!"})
 });
+
+// GET - Dummy route to check if user is logged in
+router.post("/logged_in", (req, res, next) => {
+  res.status(200).send({user: req.user});
+})
 
 module.exports = router;

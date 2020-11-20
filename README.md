@@ -8,4 +8,8 @@
 
 #### - Set up HOME/ALL/POPULAR pages like in the real reddit app
 
+#### - Error when creating subreddit but it still gets created
+
+#### - Figure out Home/All filtering 
+
 

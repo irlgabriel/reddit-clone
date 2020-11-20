@@ -46,26 +46,18 @@ const Post = ({
   posts,
   setPosts,
   user,
-  upvotes,
-  downvotes,
-  title,
-  subreddit,
-  creator_id,
-  content,
-  id,
-  createdAt,
-  postedAt,
-  upvoted,
-  downvoted,
+  post,
 }) => {
+  console.log(post);
   const [postUsername, setPostUsername] = useState("");
   const [showComments, setShowComments] = useState(false);
   const [postComments, setPostComments] = useState([]);
   const [showEditPost, setShowEditPost] = useState(false);
-
+  const [upvoted, setUpvoted] = useState(user && post.upvotes.includes(user._id) ? "yes" : "no");
+  const [downvoted, setDownvoted] = useState(user && post.downvotes.includes(user._id) ? "yes" : "no");
   // State for editing Post
-  const [postTitle, setPostTitle] = useState(title);
-  const [postContent, setPostContent] =  useState(content);
+  const [postTitle, setPostTitle] = useState(post.title);
+  const [postContent, setPostContent] =  useState(post.content);
 
   const config = {
     headers: {
@@ -73,18 +65,13 @@ const Post = ({
       "Content-Type": "application/json",
     },
   };
-  const getUsername = (user_id) => {
-    axios.get(`/users/${user_id}`).then((res) => {
-      setPostUsername(res.data.username);
-    });
-  };
-
+  
   const editPost = () => {
     if(!user) return;
-    axios.put(`/posts/${id}`, {title: postTitle, content: postContent, user_id: user._id}, config)
+    axios.put(`/posts/${post._id}`, {title: postTitle, content: postContent, user_id: user._id}, config)
     .then(res => {
       setShowEditPost(false);
-      setPosts(posts.map(post => post._id === id ? res.data : post))
+      setPosts(posts.map(post => post._id === post._id ? res.data : post))
       setFlash(res.data.message);
       setShowFlash(true);
     })
@@ -93,16 +80,17 @@ const Post = ({
       setShowFlash(true);
     })
   }
+
   const upvotePost = () => {
     if (!user) return;
     const body = JSON.stringify({
       user_id: user._id,
     });
     axios
-      .post(`/posts/${id}/upvote`, body, config)
+      .post(`/posts/${post._id}/upvote`, body, config)
       .then((res) => {
         const updatedPost = res.data;
-        setPosts(posts.map((post) => (post._id === id ? updatedPost : post)));
+        setPosts(posts.map((post) => (post._id === post._id ? updatedPost : post)));
       })
       .catch((err) => console.log(err));
   };
@@ -112,10 +100,10 @@ const Post = ({
       user_id: user._id,
     });
     axios
-      .post(`/posts/${id}/downvote`, body, config)
+      .post(`/posts/${post._id}/downvote`, body, config)
       .then((res) => {
         const updatedPost = res.data;
-        setPosts(posts.map((post) => (post._id === id ? updatedPost : post)));
+        setPosts(posts.map((post) => (post._id === post._id ? updatedPost : post)));
       })
       .catch((err) => console.log(err));
   };
@@ -123,7 +111,7 @@ const Post = ({
     if (!user) return;
     window.confirm("Are you sure you want to delete this post?") &&
       axios
-        .delete(`/posts/${id}`, config)
+        .delete(`/posts/${post._id}`, config)
         .then((res) => {
           console.log(res);
           setPosts(posts.filter(post => post._id !== res.data.post._id))
@@ -138,10 +126,7 @@ const Post = ({
 
   // When component renders
   useEffect(() => {
-    // Retrieve post's comments
-    axios.get(`/posts/${id}/comments`).then((res) => setPostComments(res.data));
-    // Get post's username using user_id
-    getUsername(creator_id);
+    axios.get(`/posts/${post._id}/comments`).then((res) => setPostComments(res.data));
   }, []);
 
   return (
@@ -152,7 +137,7 @@ const Post = ({
           <DotsContainer>
             <UpDot onClick={() => upvotePost()} upvoted={upvoted} />
             <DotsCount upvoted={upvoted} downvoted={downvoted}>
-              {upvotes.length - downvotes.length}
+              {post.upvotes.length - post.downvotes.length}
             </DotsCount>
             <DownDot onClick={() => downvotePost()} downvoted={downvoted} />
           </DotsContainer>
@@ -160,25 +145,25 @@ const Post = ({
         <PostContentWrapper>
           <PostContentContainer>
             <PostHeader>
-              <SubredditName to={`/subreddits/${subreddit}`}>
-                r/{subreddit}&nbsp;
+              <SubredditName to={`/subreddits/${post.subreddit}`}>
+                r/{post.subreddit}&nbsp;
               </SubredditName>
               &middot;&nbsp;
               <Creator
                 to={`/users/${postUsername}`}
-                me={user ? (creator_id === user._id ? "yes" : "false") : ""}
+                me={user ? (post.user === user._id ? "yes" : "false") : ""}
               >
                 &nbsp;{postUsername}&nbsp;
               </Creator>
               <PostedAt>
-               &middot;&nbsp;{moment(createdAt).fromNow()}
+               &middot;&nbsp;{moment(post.createdAt).fromNow()}
               </PostedAt>
             </PostHeader>
             { 
               !showEditPost && 
               <PostBody>
-                <PostTitle>{title}</PostTitle>
-                <PostContent>{content}</PostContent>
+                <PostTitle>{post.title}</PostTitle>
+                <PostContent>{post.content}</PostContent>
               </PostBody>
             }
             {
@@ -216,14 +201,14 @@ const Post = ({
                 &nbsp;
                 <span>Save</span>
               </FooterLink>
-              {user && creator_id === user._id && 
+              {user && post.user === user._id && 
                 <FooterLink onClick={() => deletePost()}>
                   <DeleteIcon />
                   &nbsp;
                   <span style={{ color: "lightsalmon" }}>Delete</span>
                 </FooterLink>
               }
-              {user && creator_id === user._id && 
+              {user && post.user === user._id && 
                 <FooterLink onClick={() => setShowEditPost(!showEditPost)}>
                   <EditIcon />
                   &nbsp;
@@ -253,7 +238,7 @@ const Post = ({
                   setShowFlash={setShowFlash}
                   setPostComments={setPostComments}
                   postComments={postComments}
-                  post_id={id}
+                  post_id={post._id}
                   user_id={user._id}
                 />
               )}
@@ -261,16 +246,12 @@ const Post = ({
                 <PostComment
                   setFlash={setFlash}
                   setShowFlash={setShowFlash}
-                  upvoted={user && comment.upvotes.includes(user._id) ? "yes" : "no"}
-                  downvoted={user && comment.downvotes.includes(user._id) ? "yes" : "no"}
-                  upvotes={comment.upvotes.length - comment.downvotes.length}
-                  comments={postComments}
-                  setComments={setPostComments}
                   key={comment._id}
-                  post_id={id}
+                  post_id={post._id}
                   user={user}
                   comment={comment}
-                  
+                  comments={postComments}
+                  setComments={setPostComments}                  
                 />
               ))}
             </CommentsWrapper>

@@ -13,8 +13,8 @@ import {
   BestIcon,
   NewIcon,
   Button
-} from "./Home.components";
-const Home = ({
+} from "./All.components";
+const All = ({
   setFlash,
   setShowFlash,
   setLogin,
@@ -24,6 +24,8 @@ const Home = ({
   posts,
   setPosts,
   user,
+  setUser,
+  setFilter,
   postModal,
   setPostModal,
   subredditModal,
@@ -102,6 +104,7 @@ const Home = ({
           {
             posts.map((post) => (
               <Post
+                key={post._id}
                 setFlash={setFlash}
                 setShowFlash={setShowFlash}
                 posts={posts}
@@ -123,4 +126,4 @@ const Home = ({
   );
 };
 
-export default Home;
+export default All;
