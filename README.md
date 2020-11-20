@@ -12,4 +12,6 @@
 
 #### - Figure out Home/All filtering 
 
+#### - fix new comments - idkwhat circular dependency
+
 
