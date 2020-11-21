@@ -76,10 +76,11 @@ router.put("/:comment_id", (req, res, next) => {
       updated_obj[obj] = req.body[obj];
     }
   })
-  Comment.findByIdAndUpdate(comment_id, updated_obj, {new: true}, (err, doc) => {
-    if(user_id !== doc.user_id) res.status(403).send({message: "Forbidden"})
+  Comment.findOneAndUpdate({_id:comment_id}, updated_obj, {new: true}, (err, doc) => {
+    console.log(doc.user_id, user_id);
+    if(user_id != doc.user_id) return res.status(403).send({message: "Forbidden"})
     if(err) res.status(400).send(err);
-    res.status(200).send({message: "Comment edited!", doc});
+    res.status(200).send({message: "Comment edited!", comment: doc});
   })
 })
 

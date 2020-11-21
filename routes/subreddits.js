@@ -57,11 +57,9 @@ router.post("/:subreddit_id/unsubscribe", (req, res, next) => {
   if(!user) return;
   Subreddit.findById(req.params.subreddit_id, (err, sub) => {
     if(err) res.status(400).send(err);
-    sub.members = sub.members.filter(member_id => member_id !== user);
-    sub.save((err, sub) => {
-      if(err) res.status(400).send(err);
-      res.status(200).send({message: `Unsubscribed from r/${sub.name}`, sub});
-    })
+    sub.members.pull(user);
+    sub.save();
+    res.status(200).send({message: `Unsubscribed from r/${sub.name}`, sub});
   })
 })
 

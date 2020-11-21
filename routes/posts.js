@@ -24,6 +24,24 @@ router.get('/:post_id', (req, res, next) => {
     res.json(post);
   })
 })
+/* GET - retrieve posts from subscribed reddits */
+router.get("/:user_id/subscribed", (req, res, next) => {
+  const user_id = req.params.user_id
+  const subscribedPosts = [];
+  Subreddit.find({members: {$in: user_id}})
+  .then(subs => {
+    console.log(subs);
+    subs.forEach(sub => {
+      Post.find({subreddit: {$eq: sub.name}})
+      .then(posts => {
+        subscribedPosts.push(...posts)
+        res.json({posts: subscribedPosts});
+      })
+    })
+  })
+  .catch(err => res.status(400).send(err))
+
+})
 
 /* POST - Create a post */
 router.post("/", async (req, res, next) => {

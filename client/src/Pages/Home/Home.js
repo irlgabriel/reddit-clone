@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useEffect} from "react";
+import axios from "axios";
 import { CSSTransition } from "react-transition-group";
 import { Sidebar, Post, PostModal, SubredditModal } from "../../Components";
 import {
@@ -31,6 +32,24 @@ const Home = ({
   sort,
   setSort
 }) => {
+  // query subreddit posts
+  useEffect(() => {
+    user && axios.get(`/posts/${user._id}/subscribed`)
+    .then(res => {
+      setPosts(res.data.posts);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }, [])
+
+  // reload subscribed posts when subreddits changes
+  useEffect(() => {
+    user && axios.get(`/posts/${user._id}/subscribed`)
+    .then(res => {
+      setPosts(res.data.posts);
+    })
+  }, [subreddits])
   return (
     <div> 
       {/* PostModal and SubredditModal transitions */}

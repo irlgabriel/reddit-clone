@@ -96,7 +96,7 @@ const PostComment = ({
       .then((res) => {
         setShowEditComment(false);
         setComments(
-          comments.map((comm) => (comm._id === comment._id ? res.data : comm))
+          comments.map((comm) => (comm._id === comment._id ? res.data.comment : comm))
         );
         setFlash(res.data.message);
         setShowFlash(true);
