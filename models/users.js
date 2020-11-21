@@ -21,27 +21,12 @@ const UserSchema = new Schema(
       index: true,
     },
     password: { type: String, required: [true, "can't be blank"] },
-    posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
-    comments: [{ type: Schema.Types.ObjectId, ref: "Comment"}]
   }, { timestamps: true });
 
-UserSchema.methods.verifyPassword = async function(password) {  
+UserSchema.methods.verifyPassword = async function(password) { 
+  console.log(password); 
   const match = await bcrypt.compare(password, this.password);
   return match;
-}
-
-UserSchema.methods.getPosts = function() {
-  this.populate('posts', (err, posts) => {
-    if(err) return err;
-    return posts;
-  })
-}
-
-UserSchema.methods.getComments = function() {
-  this.populate('comments', (err, comments) => {
-    if(err) return err;
-    return comments;
-  })
 }
 
 var User = mongoose.model("User", UserSchema);

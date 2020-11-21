@@ -4,19 +4,13 @@ const router = express.Router({mergeParams: true});
 
 const Comment = require("../models/comments");
 
-// Base route url: /posts/:post_id/comments/
 // GET - Get comments of post_id
 router.get("/", (req, res, next) => {
   const post_id = req.params.post_id;
   Comment.find({post_id: post_id})
-  .then(async(comments) => {
-    //const post = await Post.findById(post_id);
-    //await post.populate('comments').execPopulate();
+  .exec((err, comments) => {
+    if(err) res.status(400).send(err);
     res.status(200).send(comments);
-  })
-  .catch(err => {
-    console.log(err);
-    res.status(400).send(err);
   })
 })
 
@@ -26,48 +20,26 @@ router.post("/", (req, res, next) => {
 
   const user_id = req.body.user_id;
   const content = req.body.content;
-  new Comment({
+  Comment.create({
     user_id: user_id,
     post_id: post_id,
     content: content,
-  })
-  .save()
-  .then((comm) => {
-    //await Post.updateOne({_id: comm.post_id}, {$push: { comments: comm._id}});
-    //await User.updateOne({_id: comm.user_id}, {$push: { comments: comm._id}});
+  }, (err, comm) => {
+    if(err) res.status(400).send(err);
     res.status(200).send({message: "Comment posted!", comment: comm});
   })
-  .catch(err => {
-    res.status(400).send(err);
-  })
+
 })
 
 // POST - Upvote a comment
 router.post("/:comment_id/upvote", (req, res, next) => {
   const comment_id = req.params.comment_id;
   const user_id = req.body.user_id;
-  Comment.findById(comment_id, (err, comm) => {
+  Comment.findById(comment_id)
+  .exec((err, comment) => {
     if(err) res.status(400).send(err);
-
-    // Check if user downvoted this previously and remove it!
-    if(comm.downvotes.includes(user_id)) {
-      // Remove downvote from comment;
-      comm.downvotes = comm.downvotes.filter(downvote => downvote !== user_id);
-      // Remove it from user's document;
-    }
-
-    // Check if current user upvoted this previously
-    if(comm.upvotes.includes(user_id)) {
-      comm.upvotes = comm.upvotes.filter(upvote => upvote !== user_id)
-    } else {
-      comm.upvotes.push(user_id);
-    }
-    // Save and send res back
-    comm.save((err, doc) => {
-      if(err) res.status(400).send(err);
-      res.status(200).send(doc);
-    })
-    
+    comment.upvoteComment(user_id);
+    res.send(comment);
   })
 })
 
@@ -75,21 +47,11 @@ router.post("/:comment_id/upvote", (req, res, next) => {
 router.post("/:comment_id/downvote", (req, res, next) => {
   const comment_id = req.params.comment_id;
   const user_id = req.body.user_id;
-  Comment.findById(comment_id, (err, comm) => {
+  Comment.findById(comment_id)
+  .exec((err, comment) => {
     if(err) res.status(400).send(err);
-
-    // First check if the user upvoted this post and remove the upvote
-    if (comm.upvotes.includes(user_id)) comm.upvotes = comm.upvotes.filter(upvote => upvote !== user_id);
-
-    // Now check if the user already downvoted this post and remove the downvote if that is the case
-    comm.downvotes.includes(user_id)
-    ? comm.downvotes = comm.downvotes.filter(downvote => downvote !== user_id)
-    : comm.downvotes.push(user_id)
-    // Save and send res back
-    comm.save((err, doc) => {
-      if(err) res.status(400).send(err);
-      res.status(200).send(doc);
-    })
+    comment.downvoteComment(user_id);
+    res.send(comment);
   })
 })
 /* PUT - edit comment route */
@@ -116,9 +78,6 @@ router.delete("/:comment_id", (req, res, next) => {
   Comment.findOneAndRemove({_id:comment_id} , (err, comment) => {
     if(err) res.status(400).send(err);
     comment.remove();
-    // delete refs of this doc from user and post docs;
-    // await User.updateOne({_id: comment.user_id}, {$pull: { comments: comment._id}});
-    // await Post.updateOne({_id: comment.post_id}, {$pull: { comments: comment._id}});
     res.status(200).send({message:"Comment deleted!", comment: comment});
   })
 })

@@ -1,18 +1,14 @@
 const mongoose = require("mongoose");
-const Subreddit = require('./subreddits') // circular dependency post <-> subreddit
-const User = require('./users')
-const Comment = require("./comments");
-
 const Schema = mongoose.Schema;
+const Comment = require('./comments');
 const PostSchema = Schema(
   {
     title: { type: String, required: [true, "can't be blank" ]},
     content: { type: String, required: [true, "can't be blank" ]},
-    subreddit: { type: Schema.Types.ObjectId, ref: "Subreddit" },
+    subreddit: { type: String, ref: "Subreddit" },
     user: { type: Schema.Types.ObjectId, ref: "User" },
     upvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
     downvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
-    comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }]
   },{ timestamps: true });
 
 PostSchema.methods.getComments = async function(){
@@ -20,25 +16,11 @@ PostSchema.methods.getComments = async function(){
   return posts;
 }
 
-// middleware that runs after post is saved;
-PostSchema.post('save', async function(doc){
-  console.log("running post middleware on save post")
-  await User.updateOne({_id: doc.user}, {$push: {posts: doc._id}})
-  await Subreddit.updateOne({_id: doc.subreddit}, {$push: {posts: doc._id}})
-})
-
-// middleware that runs after post is deleted;
-PostSchema.post('remove', async function(doc){
-  console.log("running post middleware on remove post")
-  await User.updateOne({_id: doc.user}, {$pull: {posts: doc._id}});
-  await Subreddit.updateOne({_id: doc.subreddit}, {$pull: {posts: doc._id}});
-  await Comment.deleteMany({post_id: doc._id});
-})
-
 PostSchema.methods.upvotePost = function(user_id){  
-  this.downvotes = this.downvotes.filter(downvote => downvote !== user_id);
+  console.log(this)
+  this.downvotes = this.downvotes.filter(downvote => downvote != user_id);
   this.upvotes.includes(user_id) 
-  ? this.upvotes = this.upvotes.filter(upvote => upvote !== user_id)
+  ? this.upvotes = this.upvotes.filter(upvote => upvote != user_id)
   : this.upvotes = [...this.upvotes, user_id];
   this.save((err, doc) => {
     if(err) return err;
@@ -47,9 +29,10 @@ PostSchema.methods.upvotePost = function(user_id){
 }
 
 PostSchema.methods.downvotePost = function(user_id){
-  this.upvotes = this.upvotes.filter(upvote => upvote !== user_id);
+  console.log(this)
+  this.upvotes = this.upvotes.filter(upvote => upvote != user_id);
   this.downvotes.includes(user_id) 
-  ? this.downvotes = this.downvotes.filter(downvote => downvote !== user_id)
+  ? this.downvotes = this.downvotes.filter(downvote => downvote != user_id)
   : this.downvotes = [...this.downvotes, user_id];
   this.save((err, doc) => {
     if(err) return err;
@@ -57,6 +40,21 @@ PostSchema.methods.downvotePost = function(user_id){
   });
 }
 
+PostSchema.post('remove', async function(){
+  console.log("running post middleware on post removed");
+  await Comment.deleteMany({post_id: this._id})
+})
+
+PostSchema.post('delete', async function(){
+  console.log("running post middleware on post deleted");
+  await Comment.deleteMany({post_id: this._id})
+})
+
+PostSchema.pre('deleteMany', {document: true, query: false}, async function(){
+  const thisPost = await this.model.findOne(this.getQuery());
+  console.log("running pre middleware on post deleteMany");
+  await Comment.deleteMany({post_id: thisPost._id})
+})
 
 var Post = mongoose.model("Post", PostSchema);
 

@@ -25,7 +25,7 @@ router.post("/", async (req, res, next) => {
 
   new Post({
     title: title,
-    subreddit: subredditObject._id,
+    subreddit: subredditObject.name,
     user: user._id, // object!
     content: content,
   })
@@ -56,7 +56,7 @@ router.post("/:post_id/downvote", (req, res, next) => {
 
   Post.findById(post_id, (err, post) => {
     if(err) res.status(400).send(err);
-    post.downvotePost(user_id);
+      post.downvotePost(user_id);
     res.status(200).send(post);
   })
 })
@@ -85,16 +85,6 @@ router.delete("/:post_id", async (req, res, next) => {
 
   Post.findByIdAndDelete(post_id, async (err, post) => {
     if(err) res.status(400).send(err);
-    // get subreddit object from name reference in the post doc;
-    const subredditObject = await Subreddit.findOne({_id: post.subreddit});
-
-    // delete ref of this post from user and subreddit docs
-    await User.updateOne({_id: post.user}, {$pull: {posts: post._id}});
-    await Subreddit.updateOne({_id: subredditObject._id}, {$pull: {posts: post._id}});
-    // delete the comments of the post as well
-    
-    //
-    Comment.deleteMany({post_id: { $eq: post._id }});
     res.status(200).send({message: "Post deleted!", post})
   })
 

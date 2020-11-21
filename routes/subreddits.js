@@ -1,14 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Subreddit = require("../models/subreddits");
-
-/* GET - Get subreddit posts */
-router.get("/:subreddit_id/posts/", (req, res, next) => {
-  Subreddit.findById(req.params.subreddit_id, (err, subreddit) => {
-    if(err) res.status(400).send(err);
-    res.json(subreddit.getPosts());
-  })
-})
+const Post = require("../models/posts");
 
 /* GET - retrieve all subreddits */
 router.get("/", (req, res, next) => {
@@ -20,9 +13,17 @@ router.get("/", (req, res, next) => {
 
 /* GET - retrieve subreddit by subreddit_id */
 router.get('/:subreddit_name', (req, res, next) => {
-  Subreddit.find({name: req.params.subreddit_name}, (err, subreddit) => {
+  Subreddit.findOne({name: req.params.subreddit_name}, (err, subreddit) => {
     if(err) res.status(400).send(err)
     res.status(200).send(subreddit);
+  })
+})
+
+/* GET - Get subreddit posts */
+router.get("/:subreddit_id/posts/", (req, res, next) => {
+  Subreddit.findById(req.params.subreddit_id, (err, subreddit) => {
+    if(err) res.status(400).send(err);
+    res.json(subreddit.getPosts());
   })
 })
 
