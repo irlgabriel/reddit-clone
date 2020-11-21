@@ -130,6 +130,11 @@ const Post = ({
     axios.get(`/posts/${post._id}/comments`).then((res) => setPostComments(res.data));
   }, []);
 
+  // Update upvote/downvote status when posts prop changes
+  useEffect(() => {
+    user && post.downvotes.includes(user._id) ? setDownvoted("yes") : setDownvoted("no");
+    user && post.upvotes.includes(user._id) ? setUpvoted("yes") : setUpvoted("no");
+  }, [posts])
   return (
     <PostWrapper>
       <PostContainer>

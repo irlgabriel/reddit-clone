@@ -14,6 +14,17 @@ router.get("/", (req, res, next) => {
   })
 })
 
+// GET - Get a comment
+router.get("/:comment_id", (req, res, next) => {
+  Comment.findOne({_id: req.params.comment_id})
+  .populate('user_id')
+  .exec(function (err, comment) {
+    if(err) res.status(400).send(err);
+    res.status(200).send(comment.user_id);
+  })
+  
+})
+
 // POST - Post a comment
 router.post("/", (req, res, next) => {
   const post_id = req.params.post_id;

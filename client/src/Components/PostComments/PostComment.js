@@ -37,9 +37,9 @@ const PostComment = ({
 }) => {
   const [upvoted, setUpvoted] = useState(user && comment.upvotes.includes(user._id) ? "yes" : "no");
   const [downvoted, setDownvoted] = useState(user && comment.downvotes.includes(user._id) ? "yes" : "no");
-  const [username, setUsername] = useState("");
   const [showEditComment, setShowEditComment] = useState(false);
   const [commentContent, setCommentContent] = useState(comment.content);
+  const [commentAuthor, setCommentAuthor] = useState(undefined)
   
   const config = {
     headers: {
@@ -47,6 +47,22 @@ const PostComment = ({
       "Content-Type": "application/json",
     },
   };
+
+  const getCommentUser = async (comment_id) => {
+    try {
+      const res = await axios.get(`/posts/${post_id}/comments/${comment_id}`)
+      console.log(res);
+      setCommentAuthor(res.data);
+    } catch(err) {
+      console.log(err);
+      console.log(err.response);
+      if(err.response.data.message) {
+        setFlash(err.response.data.message);
+        setShowFlash(true);
+      } 
+    }
+  }
+
   const deleteComment = () => {
     if (!user) return;
     window.confirm("Are you sure you want to delete this comment?") &&
@@ -116,6 +132,17 @@ const PostComment = ({
       .catch((e) => console.log(e));
   };
 
+  useEffect(() => {
+    getCommentUser(comment._id);
+  }, [])
+
+  // Update downvote/upvote state when comments prop changes
+  useEffect(() => {
+    console.log(comment.upvotes, comment.downvotes)
+    user && comment.upvotes.includes(user._id) ? setUpvoted("yes") : setUpvoted("no");
+    user && comment.downvotes.includes(user._id) ? setDownvoted("yes") : setDownvoted("no");
+  }, [comments])
+
   return (
     <CommentWrapper>
       <CommentContainer>
@@ -130,14 +157,14 @@ const PostComment = ({
         <CommentContent>
           <CommentHeader>
             <Username
-              to={`/users/${username}`}
+              to={ `/users/${commentAuthor && commentAuthor.username}`}
               me={user && user._id === comment.user_id ? "yes" : "no"}
             >
-              {username}
+              { `${commentAuthor && commentAuthor.username}`}
             </Username>
             &nbsp;&middot;&nbsp;
             <Upvotes downvoted={downvoted} upvoted={upvoted}>
-              {comment.upvotes.length} points
+              {comment.upvotes.length - comment.downvotes.length} points
             </Upvotes>
             &nbsp;&middot;&nbsp;
             <TimeAgo>{moment(comment.createdAt).fromNow()}</TimeAgo>
