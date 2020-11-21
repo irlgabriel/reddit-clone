@@ -48,7 +48,7 @@ const Post = ({
   user,
   post,
 }) => {
-  const [postUsername, setPostUsername] = useState("");
+  const [postUser, setPostUser] = useState("default ");
   const [showComments, setShowComments] = useState(false);
   const [postComments, setPostComments] = useState([]);
   const [showEditPost, setShowEditPost] = useState(false);
@@ -128,6 +128,7 @@ const Post = ({
   // When component renders
   useEffect(() => {
     axios.get(`/posts/${post._id}/comments`).then((res) => setPostComments(res.data));
+    axios.get(`/posts/${post._id}`).then((res) => setPostUser(res.data.user))
   }, []);
 
   // Update upvote/downvote status when posts prop changes
@@ -156,10 +157,10 @@ const Post = ({
               </SubredditName>
               &middot;&nbsp;
               <Creator
-                to={`/users/${postUsername}`}
+                to={`/users/${postUser && postUser.username}`}
                 me={user ? (post.user === user._id ? "yes" : "false") : ""}
               >
-                &nbsp;{postUsername}&nbsp;
+                &nbsp;{postUser && postUser.username}&nbsp;
               </Creator>
               <PostedAt>
                &middot;&nbsp;{moment(post.createdAt).fromNow()}

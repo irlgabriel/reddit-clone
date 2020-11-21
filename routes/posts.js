@@ -4,8 +4,6 @@ const mongoose = require('mongoose');
 
 const Post = require("../models/posts");
 const Subreddit = require("../models/subreddits");
-const User = require("../models/users");
-const Comment = require("../models//comments");
 
 /* GET - retrieve all posts */
 router.get("/", (req, res, next) => {
@@ -17,6 +15,17 @@ router.get("/", (req, res, next) => {
     }
   });
 });
+
+/* GET - retrieve post by id */
+router.get('/:post_id', (req, res, next) => {
+  Post.findOne({_id: req.params.post_id})
+  .populate('user')
+  .exec((err, post) => {
+    if(err) res.status(400).send(err);
+    console.log(post);
+    res.json(post);
+  })
+})
 
 /* POST - Create a post */
 router.post("/", async (req, res, next) => {
@@ -71,9 +80,9 @@ router.put("/:post_id", (req, res, next) => {
       updated_obj[obj] = req.body[obj];
     }
   })
-  Post.findByIdAndUpdate(req.params.post_id, updated_obj, {new: true}, (err, doc) => {
+  Post.findOneAndUpdate({_id: req.params.post_id}, updated_obj, {new: true}, (err, doc) => {
     // Check if user that submited the request is the creator
-    if(doc.user !== user_id) res.status(403).send({message: "Forbidden"})
+    if(doc.user !== user_id) return res.status(403).send({message: "Forbidden"})
     if(err) res.status(400).send(err);
     res.status(200).send({message: "Post edited!", doc});
   })

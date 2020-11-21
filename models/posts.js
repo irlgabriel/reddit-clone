@@ -16,6 +16,8 @@ PostSchema.methods.getComments = async function(){
   return posts;
 }
 
+
+
 PostSchema.methods.upvotePost = function(user_id){  
   console.log(this)
   this.downvotes = this.downvotes.filter(downvote => downvote != user_id);
