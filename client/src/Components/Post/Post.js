@@ -93,7 +93,7 @@ const Post = ({
       .post(`/posts/${post._id}/upvote`, body, config)
       .then((res) => {
         const updatedPost = res.data;
-        setPosts(posts.map((post) => (post._id === post._id ? updatedPost : post)));
+        setPosts(posts.map((newPost) => (newPost._id === post._id ? updatedPost : newPost)));
       })
       .catch((err) => console.log(err));
   };
@@ -106,7 +106,7 @@ const Post = ({
       .post(`/posts/${post._id}/downvote`, body, config)
       .then((res) => {
         const updatedPost = res.data;
-        setPosts(posts.map((post) => (post._id === post._id ? updatedPost : post)));
+        setPosts(posts.map((newPost) => (newPost._id === post._id ? updatedPost : newPost)));
       })
       .catch((err) => console.log(err));
   };
