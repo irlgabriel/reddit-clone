@@ -24,6 +24,9 @@ router.get("/:user_id", (req, res, next) => {
 /* POST - Register User */
 router.post("/register", async (req, res, next) => {
   const { username, email, password } = req.body;
+
+  if(!password || !email || !password) res.status(400).send({message: "You need to fill in all fields"})
+
   const isUsernameUsed = await User.findOne({ username: username })
   const isEmailUsed = await User.findOne({ email: email })
   if(isEmailUsed) {
@@ -49,12 +52,9 @@ router.post("/register", async (req, res, next) => {
 
 // POST - Login
 router.post("/login", passport.authenticate('local'), (req,res) => {
-  const username = req.user.username;
-  return User.findOne({username: username})
-  .then(user => {
-    if(!user) return res.status(400).send({msg: "Username does not exist"});
-    return res.json({user, message: "Logged in Sucessfully"})
-  })
+  req.user
+  ? res.status(200).send({user: req.user})
+  : res.status(400).send({message: "Username or password invalid"})
 })
 
 // POST - Logout

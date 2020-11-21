@@ -12,10 +12,11 @@ passport.deserializeUser(function(id, done) {
   })
 });
 passport.use(new LocalStrategy((username, password, done) => {
-  User.findOne({username: username}, (err, user) => {
+  User.findOne({username: username}, async (err, user) => {
     if(err) return done(err);
-    if(!user) return done(null, false, {msg: "Username does not exist"});
-    if(!user.verifyPassword(password)) return done(null, false, {msg: "Incorrect password"});
+    if(!user) return done(null, false);
+    const match = await user.verifyPassword(password);
+    if(!match) return done(null, false);
     return done(null, user);
   })
 }))

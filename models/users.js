@@ -24,9 +24,7 @@ const UserSchema = new Schema(
   }, { timestamps: true });
 
 UserSchema.methods.verifyPassword = async function(password) { 
-  console.log(password); 
-  const match = await bcrypt.compare(password, this.password);
-  return match;
+  return await bcrypt.compare(password, this.password);
 }
 
 var User = mongoose.model("User", UserSchema);
