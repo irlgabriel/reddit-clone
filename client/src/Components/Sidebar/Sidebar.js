@@ -30,6 +30,8 @@ const Sidebar = ({ setFlash, setShowFlash, profilePage, subredditPage, homePage,
     window.confirm("Are you sure you want to delete this subreddit?") && 
     axios.delete(`/subreddits/${subreddit._id}`)
     .then(res => {
+      console.log(subreddits, res.data.sub);
+      setSubreddits(subreddits.filter(sub => sub._id !== subreddit._id))
       setFlash(res.data.message);
       setShowFlash(true);
       history.push("/all");

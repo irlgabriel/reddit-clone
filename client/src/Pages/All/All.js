@@ -61,6 +61,7 @@ const All = ({
           setFlash={setFlash}
           setShowFlash={setShowFlash}
           user={user}
+          subreddits={subreddits}
           setSubreddits={setSubreddits}
           setSubredditModal={setSubredditModal}
         />

@@ -20,6 +20,7 @@ const SubredditModal = ({
   user,
   setSubredditModal,
 }) => {
+  
   const [subredditName, setSubredditName] = useState("");
   const [subredditDesc, setSubredditDesc] = useState("");
   const createSubreddit = (e) => {
@@ -40,7 +41,8 @@ const SubredditModal = ({
     console.log(res);
 
     setSubredditModal(false);
-    //setSubreddits([subreddits, res.data.sub]);
+    console.log(subreddits, res.data.sub)
+    setSubreddits([...subreddits, res.data.sub]);
     setFlash(res.data.message);
     setShowFlash(true);
     })

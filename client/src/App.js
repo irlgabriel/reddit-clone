@@ -63,7 +63,7 @@ function App() {
     // retrieve all subreddits
     const fetchSubreddits = async () => {
       const res = await axios.get("/subreddits");
-      setSubreddits(res.data);
+      setSubreddits([...res.data]);
     }
     fetchSubreddits();
     // retrieve all users

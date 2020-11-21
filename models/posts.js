@@ -53,7 +53,7 @@ PostSchema.post('delete', async function(){
 PostSchema.pre('deleteMany', {document: true, query: false}, async function(){
   const thisPost = await this.model.findOne(this.getQuery());
   console.log("running pre middleware on post deleteMany");
-  await Comment.deleteMany({post_id: thisPost._id})
+  if(thisPost) await Comment.deleteMany({post_id: thisPost._id})
 })
 
 var Post = mongoose.model("Post", PostSchema);

@@ -70,7 +70,7 @@ router.delete("/:subreddit_id/", (req, res, next) => {
   Subreddit.findById(req.params.subreddit_id, (err, doc) => {
     if(err) console.log(err);
     doc.remove()
-    .then(() => res.status(200).send({message: `Subreddit r/${doc.name} deleted`, doc}))
+    .then(() => res.status(200).send({message: `Subreddit r/${doc.name} deleted`, sub: doc}))
     .catch(err => console.log(err))
     
   })
