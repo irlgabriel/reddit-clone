@@ -51,7 +51,6 @@ const PostComment = ({
   const getCommentUser = async (comment_id) => {
     try {
       const res = await axios.get(`/posts/${post_id}/comments/${comment_id}`)
-      console.log(res);
       setCommentAuthor(res.data);
     } catch(err) {
       console.log(err);
@@ -138,7 +137,6 @@ const PostComment = ({
 
   // Update downvote/upvote state when comments prop changes
   useEffect(() => {
-    console.log(comment.upvotes, comment.downvotes)
     user && comment.upvotes.includes(user._id) ? setUpvoted("yes") : setUpvoted("no");
     user && comment.downvotes.includes(user._id) ? setDownvoted("yes") : setDownvoted("no");
   }, [comments])

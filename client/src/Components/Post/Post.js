@@ -69,14 +69,18 @@ const Post = ({
     if(!user) return;
     axios.put(`/posts/${post._id}`, {title: postTitle, content: postContent, user_id: user._id}, config)
     .then(res => {
+      console.log(res.data);
       setShowEditPost(false);
-      setPosts(posts.map(post => post._id === post._id ? res.data : post))
+      setPosts(posts.map(post => post._id === post._id ? res.data.post : post))
       setFlash(res.data.message);
       setShowFlash(true);
     })
     .catch(err => {
-      setFlash(err.response.data.msg);
-      setShowFlash(true);
+      console.log(err, err.response);
+      if(err.response.data.message) {
+        setFlash(err.response.data.msg);
+        setShowFlash(true);
+      }
     })
   }
 

@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const mongoose = require('mongoose');
 
 const Post = require("../models/posts");
 const Subreddit = require("../models/subreddits");
@@ -22,7 +21,6 @@ router.get('/:post_id', (req, res, next) => {
   .populate('user')
   .exec((err, post) => {
     if(err) res.status(400).send(err);
-    console.log(post);
     res.json(post);
   })
 })
@@ -81,10 +79,11 @@ router.put("/:post_id", (req, res, next) => {
     }
   })
   Post.findOneAndUpdate({_id: req.params.post_id}, updated_obj, {new: true}, (err, doc) => {
-    // Check if user that submited the request is the creator
-    if(doc.user !== user_id) return res.status(403).send({message: "Forbidden"})
     if(err) res.status(400).send(err);
-    res.status(200).send({message: "Post edited!", doc});
+
+    // Check if user that submited the request is the creator
+    if(doc.user != user_id) return res.status(403).send({message: "Forbidden"})
+    res.status(200).send({message: "Post edited!", post: doc});
   })
 })
 
