@@ -40,6 +40,7 @@ import {
   EditFooter,
   PostedAt,
 } from "./Post.components";
+import { CSSTransition } from "react-transition-group";
 const Post = ({
   setFlash,
   setShowFlash,
@@ -129,7 +130,7 @@ const Post = ({
         });
   };
 
-  // When component renders
+  // When component renders fetch resources
   useEffect(() => {
     axios.get(`/posts/${post._id}/comments`).then((res) => setPostComments(res.data));
     axios.get(`/posts/${post._id}`).then((res) => setPostUser(res.data.user))
@@ -228,7 +229,12 @@ const Post = ({
               }
             </PostFooter>
           </PostContentContainer>
-          {showComments && (
+          <CSSTransition
+            in={showComments}
+            timeout={300}
+            classNames="fade"
+            unmountOnExit
+          >
             <CommentsWrapper>
               {!user && (
                 <NotLoggedIn>
@@ -268,7 +274,7 @@ const Post = ({
                 />
               ))}
             </CommentsWrapper>
-          )}
+            </CSSTransition>
         </PostContentWrapper>
       </PostContainer>
     </PostWrapper>
