@@ -233,13 +233,16 @@ const PostComment = ({
             )}
           </CommentBody>
           <CommentFooter>
-            <FooterItem onClick={() => user && setShowReply(!showReply)}>
-              <CommentIcon/>
-              &nbsp;
-              <P size="13">
-                {showReply ? "Cancel" : "Reply"}
-              </P>
-            </FooterItem>
+            { 
+              offset < 200 && 
+              <FooterItem onClick={() => user && setShowReply(!showReply)}>
+                <CommentIcon/>
+                &nbsp;
+                <P size="13">
+                  {showReply ? "Cancel" : "Reply"}
+                </P>
+              </FooterItem>
+            }
             {user && comment.user_id === user._id && (
               <FooterItem onClick={() => setShowEditComment(!showEditComment)}>
                 <EditIcon color="orange"/>

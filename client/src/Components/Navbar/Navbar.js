@@ -58,11 +58,14 @@ const Navbar = ({ filter, setFilter, setFlash, setShowFlash, showLogin, setLogin
   // on page change
   useEffect(() => {
     const path = history.location.pathname.split('/')[1].toUpperCase()
+    console.log(path);
     switch(path) {
       case '': 
         setFilter("HOME")
+        break;
       case 'HOME':
         setFilter("ALL");
+        break;
     }
   }, [history.location.pathname])
   return (
