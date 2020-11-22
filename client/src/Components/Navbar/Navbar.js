@@ -30,7 +30,7 @@ const Navbar = ({ filter, setFilter, setFlash, setShowFlash, showLogin, setLogin
   const [showDropdown, setDropdown] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [showSearchResults, setShowSearchResults] = useState([]);
+  const [showSearchResults, setShowSearchResults] = useState(false);
   const logoutUser = () => {
     //localStorage.removeItem("currentUser");
     axios.post('/users/logout')

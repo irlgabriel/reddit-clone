@@ -31,6 +31,7 @@ const PostModal = ({ setFlash, setShowFlash, fromSubreddit, setPosts, posts, use
   }, []);
   const createPost = (e) => {
     e.preventDefault();
+    if(!title || !content) return;
     const config = {
       headers: {
         Accept: "application/json",
@@ -47,14 +48,17 @@ const PostModal = ({ setFlash, setShowFlash, fromSubreddit, setPosts, posts, use
       .post("/posts", body, config)
       .then((res) => {
         setPostModal(false);
+        console.log(posts);
         setPosts([res.data.post, ...posts])
         setFlash(res.data.message);
         setShowFlash(true);
       })
       .catch((err) => {
         console.log(err);
-        setFlash(err.response.data.message);
-        setShowFlash(true);
+        if(err.response) {
+          setFlash(err.response.data.message);
+          setShowFlash(true);
+        }
       })
   };
   return (
@@ -78,11 +82,12 @@ const PostModal = ({ setFlash, setShowFlash, fromSubreddit, setPosts, posts, use
           </FormGroup>
           <FormGroup>
             <Label>Title</Label>
-            <Input onChange={(e) => setTitle(e.target.value)} type="text" />
+            <Input required onChange={(e) => setTitle(e.target.value)} type="text" />
           </FormGroup>
           <FormGroup>
             <Label>Content</Label>
             <TextArea
+              required
               onChange={(e) => setContent(e.target.value)}
               rows="10"
             ></TextArea>
