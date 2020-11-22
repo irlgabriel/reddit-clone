@@ -215,6 +215,7 @@ const PostComment = ({
                 <TextWrapper>
                   <TextArea
                     rows={6}
+                    required
                     defaultValue={comment.content}
                     onChange={(e) => setCommentContent(e.target.value)}
                   ></TextArea>

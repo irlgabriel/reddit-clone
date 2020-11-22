@@ -61,13 +61,14 @@ const SubredditModal = ({
           <FormGroup>
             <Label>Name</Label>
             <Input
+              required
               onChange={(e) => setSubredditName(e.target.value)}
               type="text"
             />
           </FormGroup>
           <FormGroup>
             <Label>Description</Label>
-            <TextArea onChange={(e) => {setSubredditDesc(e.target.value)}} rows={5} />
+            <TextArea required onChange={(e) => {setSubredditDesc(e.target.value)}} rows={5} />
           </FormGroup>
           <FormGroup>
             <Button color="white" bgColor="royalblue">

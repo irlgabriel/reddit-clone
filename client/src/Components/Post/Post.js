@@ -187,11 +187,11 @@ const Post = ({
               <EditPost>
                 <EditTitleWrapper>
                   <TitleAbsolute>Title:</TitleAbsolute>
-                  <EditTitle type="text" value={postTitle} onChange={(e) => setPostTitle(e.target.value)}/>
+                  <EditTitle required type="text" value={postTitle} onChange={(e) => setPostTitle(e.target.value)}/>
                 </EditTitleWrapper>
                 <EditContentWrapper>
                   <ContentAbsolute>Content:</ContentAbsolute>
-                  <EditContent rows={6} value={postContent} onChange={(e) =>  setPostContent(e.target.value)}/>
+                  <EditContent required rows={6} value={postContent} onChange={(e) =>  setPostContent(e.target.value)}/>
                 </EditContentWrapper>
                 <EditFooter>
                   <Button onClick={() => editPost()} toRight="yes" color="white" bgColor="royalblue">EDIT</Button>
