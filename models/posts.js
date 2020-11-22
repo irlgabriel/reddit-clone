@@ -19,7 +19,6 @@ PostSchema.methods.getComments = async function(){
 
 
 PostSchema.methods.upvotePost = function(user_id){  
-  console.log(this)
   this.downvotes = this.downvotes.filter(downvote => downvote != user_id);
   this.upvotes.includes(user_id) 
   ? this.upvotes = this.upvotes.filter(upvote => upvote != user_id)
@@ -31,7 +30,6 @@ PostSchema.methods.upvotePost = function(user_id){
 }
 
 PostSchema.methods.downvotePost = function(user_id){
-  console.log(this)
   this.upvotes = this.upvotes.filter(upvote => upvote != user_id);
   this.downvotes.includes(user_id) 
   ? this.downvotes = this.downvotes.filter(downvote => downvote != user_id)

@@ -30,7 +30,6 @@ router.get("/:user_id/subscribed", (req, res, next) => {
   const subscribedPosts = [];
   Subreddit.find({members: {$in: user_id}})
   .then(subs => {
-    console.log(subs);
     subs.forEach(sub => {
       Post.find({subreddit: {$eq: sub.name}})
       .then(posts => {
