@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import axios from "axios";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
@@ -25,6 +25,7 @@ import {
 } from "./Sidebar.components";
 
 const Sidebar = ({ setFlash, setShowFlash, profilePage, subredditPage, homePage, subreddit, user, profileUser, subreddits, setSubreddits }) => {
+  const [karma, setKarma] = useState(0);
   const history = useHistory()
   const deleteSubreddit = () => {
     window.confirm("Are you sure you want to delete this subreddit?") && 
@@ -39,6 +40,16 @@ const Sidebar = ({ setFlash, setShowFlash, profilePage, subredditPage, homePage,
     .catch(err => console.log(err.response))
   }
 
+  // calculate karma info on render
+  useEffect(() => {
+    if(!user) return;
+    axios.get(`/users/${user._id}/karma`)
+    .then(res => {
+      console.log(res);
+      setKarma(res.data.karma)
+    
+    });
+  }, [])
   //960px hidden
   return (
     <SidebarContainer>
@@ -52,8 +63,8 @@ const Sidebar = ({ setFlash, setShowFlash, profilePage, subredditPage, homePage,
             <RedditAge>Account created {moment(profileUser.createdAt).fromNow()}</RedditAge>
           </ProfileHeader>
           <ProfileBody>
-            <KarmaCount count={0}>
-              Karma: {0}
+            <KarmaCount count={karma}>
+              Karma: {karma}
             </KarmaCount>
           </ProfileBody> 
         </ProfileContainer>
