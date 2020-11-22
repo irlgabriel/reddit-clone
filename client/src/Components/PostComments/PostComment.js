@@ -25,8 +25,11 @@ import {
   TextWrapper,
   Button,
   EditFooter,
+  ReplyContainer,
+  ReplyFooter,
 } from "./PostComment.components";
 const PostComment = ({
+  offset = 0,
   setFlash,
   setShowFlash,
   comments,
@@ -38,8 +41,11 @@ const PostComment = ({
   const [upvoted, setUpvoted] = useState(user && comment.upvotes.includes(user._id) ? "yes" : "no");
   const [downvoted, setDownvoted] = useState(user && comment.downvotes.includes(user._id) ? "yes" : "no");
   const [showEditComment, setShowEditComment] = useState(false);
+  const [showReply, setShowReply] = useState(false);
   const [commentContent, setCommentContent] = useState(comment.content);
-  const [commentAuthor, setCommentAuthor] = useState(undefined)
+  const [commentAuthor, setCommentAuthor] = useState(undefined);
+  const [replyContent, setReplyContent] = useState("")
+  const [replies, setReplies] = useState([]);
   
   const config = {
     headers: {
@@ -61,7 +67,36 @@ const PostComment = ({
       } 
     }
   }
+  const getReplies = async (comment_id) => {
+    const res = await axios.get(`/posts/${post_id}/comments/${comment_id}/replies`)
+    console.log(res.data);
+    setReplies(res.data);
+  }
 
+  const createReply = () => {
+    if(!user) return;
+    axios.post(`/posts/${post_id}/comments/${comment._id}/`, {user_id: user._id, content: replyContent})
+    .then(res => {
+      setShowReply(false);
+      setReplies([...replies, res.data.reply])
+      setFlash(res.data.message);
+      setShowFlash(true);
+      
+    })
+    .catch(err => {
+      console.log(err, err.response); 
+    })
+  }
+  const deleteReply = () => {
+    if(!user) return;
+    window.confirm("Are you sure you want to delete this reply?") && 
+    axios.delete(`/posts/${post_id}/comments/${comment._id}`, {user_id: user._id}, config)
+    .then(res => {
+      setReplies(replies.filter(reply => reply._id !== res.data.reply._id))
+      setFlash(res.data.message);
+      setShowFlash(true);
+    })
+  }
   const deleteComment = () => {
     if (!user) return;
     window.confirm("Are you sure you want to delete this comment?") &&
@@ -102,8 +137,9 @@ const PostComment = ({
         setShowFlash(true);
       })
       .catch((err) => {
-        setFlash(err.response.data.message);
-        setShowFlash(true);
+        console.log(err);
+        //setFlash(err.response.data.message);
+        //setShowFlash(true);
       });
   };
   const upvoteComment = () => {
@@ -133,6 +169,7 @@ const PostComment = ({
 
   useEffect(() => {
     getCommentUser(comment._id);
+    getReplies(comment._id);
   }, [])
 
   // Update downvote/upvote state when comments prop changes
@@ -143,7 +180,7 @@ const PostComment = ({
 
   return (
     <CommentWrapper>
-      <CommentContainer>
+      <CommentContainer offset={offset}>
         <DotsGroup>
           <Upvote upvoted={upvoted} onClick={() => upvoteComment()}></Upvote>
           <Downvote
@@ -192,6 +229,13 @@ const PostComment = ({
             )}
           </CommentBody>
           <CommentFooter>
+            <FooterItem onClick={() => setShowReply(!showReply)}>
+              <CommentIcon/>
+              &nbsp;
+              <P size="13">
+                {showReply ? "Cancel" : "Reply"}
+              </P>
+            </FooterItem>
             {user && comment.user_id === user._id && (
               <FooterItem onClick={() => setShowEditComment(!showEditComment)}>
                 <EditIcon />
@@ -210,9 +254,42 @@ const PostComment = ({
                 </P>
               </FooterItem>
             )}
+            {
+              showReply &&
+              <ReplyContainer>
+                <TextArea value={replyContent} onChange={(e) => setReplyContent(e.target.value)} required placeholder="Reply..."/>
+                <ReplyFooter>
+                  <Button
+                    style={{marginTop: ".5rem"}}
+                    onClick={() => createReply()}
+                    toRight="yes"
+                    color="white"
+                    bgColor="royalblue"
+                  >
+                    Reply
+                  </Button>
+                </ReplyFooter>
+              </ReplyContainer>
+
+            }
           </CommentFooter>
         </CommentContent>
       </CommentContainer>
+      {
+        replies.map(reply => 
+          <PostComment 
+            key={reply._id}
+            offset={offset + 40}
+            setFlash={setFlash}
+            setShowFlash={setShowFlash}
+            comments={comments}
+            setComments={setComments}
+            post_id={reply._id}
+            comment={reply}
+            user={user}
+          />
+        )
+      }
     </CommentWrapper>
   );
 };

@@ -117,7 +117,8 @@ export const FooterLink = styled.div`
   cursor: pointer;
 
   &:hover {
-    background: lightgray;
+    opacity: .75;
+    cursor: pointer;
     text-decoration: none;
   }
 `;

@@ -5,6 +5,7 @@ const Post = require("./posts");
 const CommentSchema = Schema({
   user_id: {type: Schema.Types.ObjectId, ref: "User"},
   post_id: {type: Schema.Types.ObjectId, ref: "Post"},
+  comment_id: {type: Schema.Types.ObjectId, ref : "Comment"},
   content: {type: String, required: true},
   upvotes: [{type: Schema.Types.ObjectId, ref: "User"}],
   downvotes: [{type: Schema.Types.ObjectId, ref: "User"}],

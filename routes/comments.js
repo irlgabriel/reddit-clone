@@ -14,6 +14,15 @@ router.get("/", (req, res, next) => {
   })
 })
 
+ // Get - get replies of comment
+ router.get("/:comment_id/replies", (req, res, next) => {
+   Comment.find({comment_id: req.params.comment_id})
+   .then(replies => {
+    res.status(200).send(replies);
+   })
+   .catch(err => res.status(400).send(err))
+ })
+
 // GET - Get a comment
 router.get("/:comment_id", (req, res, next) => {
   Comment.findOne({_id: req.params.comment_id})
@@ -39,6 +48,18 @@ router.post("/", (req, res, next) => {
     if(err) res.status(400).send(err);
     res.status(200).send({message: "Comment posted!", comment: comm});
   })
+})
+
+// POST - Post a reply to a comment
+router.post("/:comment_id", (req, res, next) => {
+  const comment_id = req.params.comment_id;
+  const user_id = req.body.user_id;
+  const content = req.body.content;
+  Comment.create({comment_id, user_id, content})
+  .then(reply => {
+    res.json({message: "Reply created successfully", reply: reply})
+  })
+  .catch(err => console.log(err))
 
 })
 

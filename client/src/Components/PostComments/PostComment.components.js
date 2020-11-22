@@ -11,6 +11,7 @@ export const DotsGroup = styled.div`
   padding: 0 0.5rem;
 `;
 export const CommentContainer = styled.div`
+  margin-left: ${({offset}) => (offset + "px")};
   display: flex;
   padding: 0.25rem 0.5rem;
   width: 100%;
@@ -85,18 +86,24 @@ export const FooterItem = styled.div`
   padding: 4px 2px;
   padding-left: 0;
   &:hover {
-    background: lightgray;
+    opacity: .75;
+    cursor: pointer;
   }
 `;
 export const TextArea = styled.textarea`
   font-family: "Open Sans", sans-serif;
   font-weight: 300;
   font-size: 13px;
+  border: 1px solid lightgray;
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
   resize: vertical;
+  outline: 0;
   padding: .25rem .5rem;
+  &:hover, &:focus {
+    border: 1px solid black;
+  }
 `
 export const TextWrapper = styled.div`
   display: flex;
@@ -134,4 +141,12 @@ export const EditFooter = styled.div`
 
 export const DeleteIcon = styled(FaTrash)`
   color: red;
+`
+
+export const ReplyContainer = styled.div`
+  width: 100%;
+`
+export const ReplyFooter = styled.div`
+  display: flex;
+  justify-content: flex-end;
 `

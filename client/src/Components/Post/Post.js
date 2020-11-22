@@ -256,6 +256,8 @@ const Post = ({
               {postComments.map((comment) => (
                 <PostComment
                   setFlash={setFlash}
+                  posts={posts}
+                  setPosts={setPosts}
                   setShowFlash={setShowFlash}
                   key={comment._id}
                   post_id={post._id}
