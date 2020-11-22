@@ -7,7 +7,7 @@ import {
   PostsHeader,
   Paragraph,
 } from "./Profile.components";
-const Profile = ({ setFlash, setShowFlash, user, posts, profileUser }) => {
+const Profile = ({ setRegister, setLogin, setFlash, setShowFlash, user, posts, profileUser }) => {
   const [userPosts, setUserPosts] = useState(
     posts.filter((post) => post.user === profileUser._id)
   );
@@ -20,6 +20,8 @@ const Profile = ({ setFlash, setShowFlash, user, posts, profileUser }) => {
           {userPosts.map((post) => (
             <Post
               key={post._id}
+              setRegister={setRegister}
+              setLogin={setLogin}
               posts={userPosts}
               setPosts={setUserPosts}
               user={user}

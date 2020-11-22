@@ -11,7 +11,7 @@ export const DotsGroup = styled.div`
   padding: 0 0.5rem;
 `;
 export const CommentContainer = styled.div`
-  margin-left: ${({offset}) => (offset + "px")};
+  padding-left: ${({offset}) => (offset + "px")} !important;
   display: flex;
   padding: 0.25rem 0.5rem;
   width: 100%;
@@ -78,7 +78,6 @@ export const CommentIcon = styled(RiMessageFill)`
   color: darkgray;
 `;
 export const EditIcon = styled(RiPencilFill)`
-  color: black;
 `
 export const FooterItem = styled.div`
   display: flex;

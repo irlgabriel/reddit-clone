@@ -14,12 +14,6 @@ const SidebarSubreddit = ({ setFlash, setShowFlash, subreddits, setSubreddits, u
   const [subscribed, setSubscribed] = useState(false)
   const [members, setMembers] = useState(sub.members.length)
 
-  useEffect(() => {
-    !user 
-    ? setSubscribed(false) 
-    : sub.members.includes(user._id) ? setSubscribed(true) : setSubscribed(false);
-  }, [user])
-
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -50,6 +44,12 @@ const SidebarSubreddit = ({ setFlash, setShowFlash, subreddits, setSubreddits, u
     })
     .catch(e => console.log(e));
   }
+
+  useEffect(() => {
+    !user 
+    ? setSubscribed(false) 
+    : sub.members.includes(user._id) ? setSubscribed(true) : setSubscribed(false);
+  }, [user])
 
   return (
     <SubredditContainer>

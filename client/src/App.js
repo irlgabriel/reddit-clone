@@ -72,7 +72,6 @@ function App() {
       setUsers([...res.data]);
     }
     fetchUsers();
-    
   }, []);
   
   // Everytime a flash message is displayed we reset the state after 3000ms.
@@ -82,6 +81,10 @@ function App() {
       setTimeout(() => setFlash(""), 300)
     }, 3000)
   }, [flashMessage])
+  // Reload post status when user changes
+  useEffect(() => {
+    
+  }, [user])
   return (
     <Container>
       {
@@ -192,6 +195,8 @@ function App() {
               })}
             >
               <Profile
+                setRegister={setRegister}
+                setLogin={setLogin}
                 setFlash={setFlash}
                 setShowFlash={setShowFlash}
                 setPosts={setPosts}

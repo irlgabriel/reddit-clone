@@ -27,6 +27,7 @@ import {
 const Sidebar = ({ setFlash, setShowFlash, profilePage, subredditPage, homePage, subreddit, user, profileUser, subreddits, setSubreddits }) => {
   const [karma, setKarma] = useState(0);
   const history = useHistory()
+  
   const deleteSubreddit = () => {
     window.confirm("Are you sure you want to delete this subreddit?") && 
     axios.delete(`/subreddits/${subreddit._id}`)
@@ -42,12 +43,10 @@ const Sidebar = ({ setFlash, setShowFlash, profilePage, subredditPage, homePage,
 
   // calculate karma info on render
   useEffect(() => {
-    if(!user) return;
-    axios.get(`/users/${user._id}/karma`)
+    profileUser && 
+    axios.get(`/users/${profileUser._id}/karma`)
     .then(res => {
-      console.log(res);
       setKarma(res.data.karma)
-    
     });
   }, [])
   //960px hidden
@@ -89,7 +88,10 @@ const Sidebar = ({ setFlash, setShowFlash, profilePage, subredditPage, homePage,
         <SubredditSection>
           <SidebarSubreddit setFlash={setFlash} setShowFlash={setShowFlash} subreddits={subreddits} setSubreddits={setSubreddits} sub={subreddit} user={user}/>
           <Description>{subreddit.description}</Description>
-          <Button onClick={() => deleteSubreddit()} color="red" bgColor="white">DELETE</Button>
+          {
+            user && user._id === subreddit.creator && 
+            <Button onClick={() => deleteSubreddit()} color="red" bgColor="white">DELETE</Button>
+          }
         </SubredditSection>
       }
       <Header>

@@ -70,8 +70,7 @@ router.post("/:comment_id/upvote", (req, res, next) => {
   Comment.findById(comment_id)
   .exec((err, comment) => {
     if(err) res.status(400).send(err);
-    comment.upvoteComment(user_id);
-    res.send(comment);
+    res.status(200).send((comment.upvoteComment(user_id)));
   })
 })
 

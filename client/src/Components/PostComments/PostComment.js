@@ -148,6 +148,9 @@ const PostComment = ({
     axios
       .post(`/posts/${post_id}/comments/${comment._id}/upvote`, body, config)
       .then((res) => {
+        console.log(res);
+        console.log(comments);
+        console.log(res.data)
         setComments(
           comments.map((comm) => (comm._id === comment._id ? res.data : comm))
         );
@@ -160,6 +163,7 @@ const PostComment = ({
     axios
       .post(`/posts/${post_id}/comments/${comment._id}/downvote`, body, config)
       .then((res) => {
+        console.log(res);
         setComments(
           comments.map((comm) => (comm._id === comment._id ? res.data : comm))
         );
@@ -229,7 +233,7 @@ const PostComment = ({
             )}
           </CommentBody>
           <CommentFooter>
-            <FooterItem onClick={() => setShowReply(!showReply)}>
+            <FooterItem onClick={() => user && setShowReply(!showReply)}>
               <CommentIcon/>
               &nbsp;
               <P size="13">
@@ -238,9 +242,9 @@ const PostComment = ({
             </FooterItem>
             {user && comment.user_id === user._id && (
               <FooterItem onClick={() => setShowEditComment(!showEditComment)}>
-                <EditIcon />
+                <EditIcon color="orange"/>
                 &nbsp;
-                <P bold size="13">
+                <P color="orange" size="13">
                   {showEditComment ? "Cancel" : "Edit"}
                 </P>
               </FooterItem>
@@ -249,7 +253,7 @@ const PostComment = ({
               <FooterItem onClick={() => deleteComment()}>
                 <DeleteIcon />
                 &nbsp;
-                <P bold color="red" size="13">
+                <P color="red" size="13">
                   Delete
                 </P>
               </FooterItem>
@@ -282,8 +286,8 @@ const PostComment = ({
             offset={offset + 40}
             setFlash={setFlash}
             setShowFlash={setShowFlash}
-            comments={comments}
-            setComments={setComments}
+            comments={replies}
+            setComments={setReplies}
             post_id={reply._id}
             comment={reply}
             user={user}

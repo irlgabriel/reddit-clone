@@ -42,6 +42,8 @@ import {
 } from "./Post.components";
 import { CSSTransition } from "react-transition-group";
 const Post = ({
+  setLogin,
+  setRegister,
   setFlash,
   setShowFlash,
   posts,
@@ -140,7 +142,9 @@ const Post = ({
   useEffect(() => {
     user && post.downvotes.includes(user._id) ? setDownvoted("yes") : setDownvoted("no");
     user && post.upvotes.includes(user._id) ? setUpvoted("yes") : setUpvoted("no");
-  }, [posts])
+  }, [posts, user])
+
+  
   return (
     <PostWrapper>
       <PostContainer>
@@ -203,16 +207,6 @@ const Post = ({
                 &nbsp;
                 <span>{postComments.length} Comments</span>
               </FooterLink>
-              <FooterLink href="">
-                <ShareIcon />
-                &nbsp;
-                <span>Share</span>
-              </FooterLink>
-              <FooterLink href="">
-                <SaveIcon />
-                &nbsp;
-                <span>Save</span>
-              </FooterLink>
               {user && post.user === user._id && 
                 <FooterLink onClick={() => deletePost()}>
                   <DeleteIcon />
@@ -240,10 +234,10 @@ const Post = ({
                 <NotLoggedIn>
                   <P color="darkgray">Log in or sign up to leave a comment</P>
                   <ButtonGroup>
-                    <Button color="royalblue" bgColor="white">
+                    <Button onClick={() => setLogin(true)} color="royalblue" bgColor="white">
                       LOG IN
                     </Button>
-                    <Button color="white" bgColor="royalblue">
+                    <Button onClick={() => setRegister(true)} color="white" bgColor="royalblue">
                       SIGN UP
                     </Button>
                   </ButtonGroup>

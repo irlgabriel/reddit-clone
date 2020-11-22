@@ -122,6 +122,8 @@ const Home = ({
           {
             posts.map((post) => (
               <Post
+                setLogin={setLogin}
+                setRegister={setRegister}
                 setFlash={setFlash}
                 setShowFlash={setShowFlash}
                 posts={posts}

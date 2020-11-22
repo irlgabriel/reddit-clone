@@ -31,6 +31,7 @@ const Navbar = ({ filter, setFilter, setFlash, setShowFlash, showLogin, setLogin
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showSearchResults, setShowSearchResults] = useState(false);
+  
   const logoutUser = () => {
     //localStorage.removeItem("currentUser");
     axios.post('/users/logout')
@@ -41,15 +42,29 @@ const Navbar = ({ filter, setFilter, setFlash, setShowFlash, showLogin, setLogin
     })
     .catch(err => console.log(err))
   };
+  // on search query change
   useEffect(() => {
     const results = subreddits.filter((subreddit) =>
       subreddit.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setSearchResults(results);
   }, [searchQuery]);
+
+  // on filter change
   useEffect(() => {
     filter === "HOME" ? history.push("/") : history.push("/all")
   }, [filter])
+  
+  // on page change
+  useEffect(() => {
+    const path = history.location.pathname.split('/')[1].toUpperCase()
+    switch(path) {
+      case '': 
+        setFilter("HOME")
+      case 'HOME':
+        setFilter("ALL");
+    }
+  }, [history.location.pathname])
   return (
     <Nav>
       <CSSTransition

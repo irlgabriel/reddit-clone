@@ -106,6 +106,8 @@ const All = ({
             posts.map((post) => (
               <Post
                 key={post._id}
+                setRegister={setRegister}
+                setLogin={setLogin}
                 setFlash={setFlash}
                 setShowFlash={setShowFlash}
                 posts={posts}

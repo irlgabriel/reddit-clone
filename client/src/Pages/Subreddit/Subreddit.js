@@ -63,6 +63,10 @@ const Subreddit = ({
         }
         {subredditPosts.map((post) => (
           <Post
+            setLogin={setLogin}
+            setRegister={setLogin}
+            setShowFlash={setShowFlash}
+            setFlash={setFlash}
             key={post._id}
             posts={subredditPosts}
             setPosts={setSubredditPosts}
