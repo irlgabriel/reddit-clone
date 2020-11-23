@@ -53,7 +53,9 @@ const Post = ({
 }) => {
   const [postUser, setPostUser] = useState("default ");
   const [showComments, setShowComments] = useState(false);
+  // this counts just the comments, not the replies!
   const [postComments, setPostComments] = useState([]);
+  const [postCommentsAll, setPostCommentsAll] = useState([]);
   const [showEditPost, setShowEditPost] = useState(false);
   const [upvoted, setUpvoted] = useState(user && post.upvotes.includes(user._id) ? "yes" : "no");
   const [downvoted, setDownvoted] = useState(user && post.downvotes.includes(user._id) ? "yes" : "no");
@@ -134,9 +136,16 @@ const Post = ({
 
   // When component renders fetch resources
   useEffect(() => {
+    
     axios.get(`/posts/${post._id}/comments`).then((res) => setPostComments(res.data));
     axios.get(`/posts/${post._id}`).then((res) => setPostUser(res.data.user))
   }, []);
+
+  useEffect(() => {
+    // I fetch comments + replies here because I don't know another way to calculate the 
+    // total number of comments any other way;
+    axios.get(`/posts/${post._id}/all_comments`).then(res => setPostCommentsAll(res.data));
+  }, [postComments])
 
   // Update upvote/downvote status when posts prop changes
   useEffect(() => {
@@ -205,7 +214,7 @@ const Post = ({
               >
                 <CommentIcon />
                 &nbsp;
-                <span>{postComments.length} Comments</span>
+                <span>{postCommentsAll.length} Comments</span>
               </FooterLink>
               {user && post.user === user._id && 
                 <FooterLink onClick={() => deletePost()}>

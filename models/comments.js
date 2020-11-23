@@ -29,5 +29,15 @@ CommentSchema.methods.downvoteComment = function(user_id) {
   return this;
 }
 
+// works - it deletes child replies (even though it's not the same user's replies :-??)
+CommentSchema.post('findOneAndRemove', {document: true, query: false}, (doc) => {
+  Comment.find({comment_id: doc._id})
+  .then(replies => {
+    replies.forEach(reply => {
+      reply.remove();
+    })
+  })
+})
+
 const Comment = mongoose.model('Comment', CommentSchema);
 module.exports = Comment;

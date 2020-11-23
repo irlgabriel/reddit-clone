@@ -3,6 +3,7 @@ const router = express.Router();
 
 const Post = require("../models/posts");
 const Subreddit = require("../models/subreddits");
+const Comment = require("../models/comments");
 
 /* GET - retrieve all posts */
 router.get("/", (req, res, next) => {
@@ -14,6 +15,7 @@ router.get("/", (req, res, next) => {
     }
   });
 });
+
 
 /* GET - retrieve post by id */
 router.get('/:post_id', (req, res, next) => {
@@ -41,7 +43,16 @@ router.get("/:user_id/subscribed", (req, res, next) => {
   .catch(err => res.status(400).send(err))
 
 })
-
+/* GET - retrieve replies + comments of a post */
+router.get('/:post_id/all_comments', (req, res, next) => {
+  Comment.find({post_id: req.params.post_id})
+  .then(docs => {
+    res.json(docs);
+  })
+  .catch(err => {
+    res.status(400).send(err);
+  }) 
+})
 /* POST - Create a post */
 router.post("/", async (req, res, next) => {
   const { title, subreddit, user, content } = req.body;

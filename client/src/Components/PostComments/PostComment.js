@@ -87,16 +87,6 @@ const PostComment = ({
       console.log(err, err.response); 
     })
   }
-  const deleteReply = () => {
-    if(!user) return;
-    window.confirm("Are you sure you want to delete this reply?") && 
-    axios.delete(`/posts/${post_id}/comments/${comment._id}`, {user_id: user._id}, config)
-    .then(res => {
-      setReplies(replies.filter(reply => reply._id !== res.data.reply._id))
-      setFlash(res.data.message);
-      setShowFlash(true);
-    })
-  }
   const deleteComment = () => {
     if (!user) return;
     window.confirm("Are you sure you want to delete this comment?") &&
@@ -292,7 +282,7 @@ const PostComment = ({
             setShowFlash={setShowFlash}
             comments={replies}
             setComments={setReplies}
-            post_id={reply._id}
+            post_id={post_id}
             comment={reply}
             user={user}
           />

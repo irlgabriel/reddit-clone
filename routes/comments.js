@@ -4,13 +4,17 @@ const router = express.Router({mergeParams: true});
 
 const Comment = require("../models/comments");
 
-// GET - Get comments of post_id
+// GET - Get (JUST) comments of post_id 
 router.get("/", (req, res, next) => {
   const post_id = req.params.post_id;
+  const justComments = [];
   Comment.find({post_id: post_id})
   .exec((err, comments) => {
     if(err) res.status(400).send(err);
-    res.status(200).send(comments);
+    comments.forEach(comment => {
+      if(!comment.comment_id) justComments.push(comment);
+    })
+    res.json(justComments)
   })
 })
 
@@ -53,9 +57,12 @@ router.post("/", (req, res, next) => {
 // POST - Post a reply to a comment
 router.post("/:comment_id", (req, res, next) => {
   const comment_id = req.params.comment_id;
+  const post_id = req.params.post_id;
+  console.log(req.params);
+
   const user_id = req.body.user_id;
   const content = req.body.content;
-  Comment.create({comment_id, user_id, content})
+  Comment.create({post_id, comment_id, user_id, content})
   .then(reply => {
     res.json({message: "Reply created successfully", reply: reply})
   })
