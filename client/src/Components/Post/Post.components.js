@@ -269,3 +269,7 @@ export const PostedAt = styled.p`
   font-weight: 300;
   font-size: 12px;
 `
+export const PostImage = styled.img`
+  max-width: 100%;
+  max-height: 400px;
+`

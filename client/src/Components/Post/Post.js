@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
 import { PostComment, CommentForm } from "..";
@@ -39,6 +40,7 @@ import {
   TitleAbsolute,
   EditFooter,
   PostedAt,
+  PostImage,
 } from "./Post.components";
 import { CSSTransition } from "react-transition-group";
 const Post = ({
@@ -188,7 +190,11 @@ const Post = ({
               !showEditPost && 
               <PostBody>
                 <PostTitle>{post.title}</PostTitle>
-                <PostContent>{post.content}</PostContent>
+                  {
+                    post.content 
+                    ? <PostContent>{post.content}</PostContent>
+                    : <Link to=""><PostImage src={post.image} /></Link>
+                  }
               </PostBody>
             }
             {
