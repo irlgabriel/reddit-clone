@@ -27,21 +27,16 @@ router.get('/:post_id', (req, res, next) => {
   })
 })
 /* GET - retrieve posts from subscribed reddits */
-router.get("/:user_id/subscribed", (req, res, next) => {
+router.get("/:user_id/subscribed", async (req, res, next) => {
   const user_id = req.params.user_id
-  const subscribedPosts = [];
-  Subreddit.find({members: {$in: user_id}})
-  .then(subs => {
-    subs.forEach(sub => {
-      Post.find({subreddit: {$eq: sub.name}})
-      .then(posts => {
-        subscribedPosts.push(...posts)
-        res.json({posts: subscribedPosts});
-      })
-    })
-  })
-  .catch(err => res.status(400).send(err))
-
+  try {
+    const subscribed_reddits = await Subreddit.find({members: {$in: user_id}})
+    const subscribed_reddits_names = subscribed_reddits.map(sub => sub.name);
+    const subscribed_posts = await Post.find({subreddit: {$in: subscribed_reddits_names}});
+    res.json({posts: subscribed_posts});
+  } catch(err) {
+    return res.status(400).send(err);
+  }
 })
 /* GET - retrieve replies + comments of a post */
 router.get('/:post_id/all_comments', (req, res, next) => {

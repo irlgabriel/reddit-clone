@@ -16,6 +16,8 @@ import {
   Button
 } from "./Home.components";
 const Home = ({
+  compareByDate,
+  compareByVotes,
   setFlash,
   setShowFlash,
   setLogin,
@@ -41,6 +43,7 @@ const Home = ({
     .catch(err => {
       console.log(err);
     })
+    setPosts(posts => [...posts].sort(compareByDate));
   }, [])
 
   // reload subscribed posts when subreddits changes
@@ -50,6 +53,15 @@ const Home = ({
       setPosts(res.data.posts);
     })
   }, [subreddits])
+
+    // SORT LOGIC
+    useEffect(() => {
+      if(sort === "New") {
+        setPosts(posts => [...posts].sort(compareByDate));
+       } else {
+        setPosts(posts => [...posts].sort(compareByVotes)); 
+       }
+    }, [sort])
   return (
     <div> 
       {/* PostModal and SubredditModal transitions */}
@@ -122,6 +134,7 @@ const Home = ({
           {
             posts.map((post) => (
               <Post
+                key={post._id}
                 setLogin={setLogin}
                 setRegister={setRegister}
                 setFlash={setFlash}

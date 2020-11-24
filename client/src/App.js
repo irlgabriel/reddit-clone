@@ -140,6 +140,8 @@ function App() {
         </Route>
         <Route exact path="/">
           <Home
+            compareByDate={compareByDate}
+            compareByVotes={compareByVotes}
             setFlash={setFlash}
             setShowFlash={setShowFlash}
             showLogin={showLogin}
@@ -150,7 +152,6 @@ function App() {
             setUser={setUser}
             posts={subscribedPosts} /** */
             setPosts={setSubscribedPosts}/** */
-            setFilter={setFilter}
             setSubreddits={setSubreddits}
             postModal={postModal}
             setPostModal={setPostModal}
