@@ -39,6 +39,7 @@ const Navbar = ({ filter, setFilter, setFlash, setShowFlash, showLogin, setLogin
       setUser(undefined);
       setFlash(res.data.message);
       setShowFlash(true);
+      history.push("/all");
     })
     .catch(err => console.log(err))
   };
@@ -94,7 +95,7 @@ const Navbar = ({ filter, setFilter, setFlash, setShowFlash, showLogin, setLogin
         />
       </CSSTransition>
 
-      <Link to="/">
+      <Link to={user ? "/" : "/all"}>
         <RedditLogo color="red" size="32px" />
       </Link>
       {
