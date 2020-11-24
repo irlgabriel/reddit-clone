@@ -150,7 +150,7 @@ function App() {
             setRegister={setRegister}
             user={user}
             setUser={setUser}
-            posts={subscribedPosts} /** */
+            posts={subscribedPosts.sort(compareByDate)} /** */
             setPosts={setSubscribedPosts}/** */
             setSubreddits={setSubreddits}
             postModal={postModal}
