@@ -4,7 +4,8 @@ const Comment = require('./comments');
 const PostSchema = Schema(
   {
     title: { type: String, required: [true, "can't be blank" ]},
-    content: { type: String, required: [true, "can't be blank" ]},
+    content: { type: String },
+    image: { type: String},
     subreddit: { type: String, ref: "Subreddit" },
     user: { type: Schema.Types.ObjectId, ref: "User" },
     upvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],

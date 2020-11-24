@@ -1,5 +1,31 @@
 const express = require("express");
 const router = express.Router();
+const multer = require('multer');
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './uploads/')
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + file.originalname)
+  }
+})
+const fileFilter = (req, file, cb) => {
+  if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg') {
+  cb(null, true);
+  } else {
+    cb(null, false);
+  }
+}
+
+const upload = multer(
+  {
+    storage: storage, 
+    limits: {
+      fileSize: 1024 * 1024 * 5, // max 5MB
+    },
+    fileFilter: fileFilter,
+});
+
 
 const Post = require("../models/posts");
 const Subreddit = require("../models/subreddits");
@@ -15,8 +41,6 @@ router.get("/", (req, res, next) => {
     }
   });
 });
-
-
 /* GET - retrieve post by id */
 router.get('/:post_id', (req, res, next) => {
   Post.findOne({_id: req.params.post_id})
@@ -49,7 +73,8 @@ router.get('/:post_id/all_comments', (req, res, next) => {
   }) 
 })
 /* POST - Create a post */
-router.post("/", async (req, res, next) => {
+router.post("/", upload.single('postImage'), async (req, res, next) => {
+  //console.log(req.file);
   const { title, subreddit, user, content } = req.body;
   const subredditObject = await Subreddit.findOne({name: subreddit});
 
@@ -58,6 +83,7 @@ router.post("/", async (req, res, next) => {
     subreddit: subredditObject.name,
     user: user._id, // object!
     content: content,
+    image: req.file.path,
   })
     .save()
     .then(async (post) => {
