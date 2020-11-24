@@ -27,8 +27,6 @@ import {
   Button,
   P,
   CommentIcon,
-  ShareIcon,
-  SaveIcon,
   DeleteIcon,
   EditIcon,
   EditPost,
@@ -41,6 +39,7 @@ import {
   EditFooter,
   PostedAt,
   PostImage,
+
 } from "./Post.components";
 import { CSSTransition } from "react-transition-group";
 const Post = ({

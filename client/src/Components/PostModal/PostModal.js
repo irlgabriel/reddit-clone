@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import FormData from 'form-data';
 import axios from "axios";
 import {
   PostModalWrapper,
@@ -13,36 +14,36 @@ import {
   TextArea,
   Header,
   DisabledText,
+  TabDiv,
+  FlexContainer
 } from "./PostModal.components";
 
-const PostModal = ({ setFlash, setShowFlash, fromSubreddit, setPosts, posts, user, setPostModal }) => {
-  const [subreddits, setSubreddits] = useState([]);
+const PostModal = ({ subreddits, setFlash, setShowFlash, fromSubreddit, setPosts, posts, user, setPostModal }) => {
   // States for creating subreddit
   const [subreddit, setSubreddit] = useState(fromSubreddit || "");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-
+  const [image, setImage] = useState("");
+  // State for type post (image/text)
+  const [postType, setPostType] = useState('text');
 
   const createPost = (e) => {
     e.preventDefault();
-    if(!title || !content) return;
-    const config = {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    };
-    const body = JSON.stringify({
-      user,
-      subreddit,
-      title,
-      content,
-    });
+    if(!user) return;
+    if(!title) return;
+    if(!image && !content) return;
+
+    const data = new FormData();
+    data.append('user', user._id);
+    data.append('subreddit', subreddit);
+    data.append('title', title);
+    image && data.append('image', image.files[0]);
+    content && data.append('content', content);
+
     axios
-      .post("/posts", body, config)
+      .post("/posts", data)
       .then((res) => {
         setPostModal(false);
-        console.log(posts);
         setPosts([res.data.post, ...posts])
         setFlash(res.data.message);
         setShowFlash(true);
@@ -67,7 +68,7 @@ const PostModal = ({ setFlash, setShowFlash, fromSubreddit, setPosts, posts, use
               <Select
                 defaultValue={fromSubreddit || subreddit.name}
                 onChange={(e) => setSubreddit(e.target.value)}
-                name="subreddits"
+                name="subreddit"
               >
                 {subreddits.map((subreddit) => (
                   <Option key={subreddit.name} value={`${subreddit.name}`}>{subreddit.name}</Option>
@@ -79,7 +80,13 @@ const PostModal = ({ setFlash, setShowFlash, fromSubreddit, setPosts, posts, use
             <Label>Title</Label>
             <Input required onChange={(e) => setTitle(e.target.value)} type="text" />
           </FormGroup>
+          {
+            postType === "text" ? 
           <FormGroup>
+            <FlexContainer>
+              <TabDiv selected={postType === 'text' ? "yes" : "no"} onClick={() => setPostType('text')}>Content</TabDiv>
+              <TabDiv selected={postType === 'image' ? "yes" : "no"} onClick={() => setPostType('image')}>Image</TabDiv>
+            </FlexContainer>
             <Label>Content</Label>
             <TextArea
               required
@@ -87,6 +94,16 @@ const PostModal = ({ setFlash, setShowFlash, fromSubreddit, setPosts, posts, use
               rows="10"
             ></TextArea>
           </FormGroup>
+          : 
+          <FormGroup>
+              <FlexContainer>
+              <TabDiv selected={postType === 'text' ? "yes" : "no"} onClick={() => setPostType('text')}>Content</TabDiv>
+              <TabDiv selected={postType === 'image' ? "yes" : "no"} onClick={() => setPostType('image')}>Image</TabDiv>
+            </FlexContainer>
+            <Label>Image(jpeg/jpg/png, max: 5MB!</Label>
+            <input onChange={(e) => setImage(e.target)} name="image" type="file" required/>
+          </FormGroup>
+          }
           <FormGroup>
             <Button type="submit" color="white" bgColor="royalblue">
               Post

@@ -72,25 +72,25 @@ router.get('/:post_id/all_comments', (req, res, next) => {
     res.status(400).send(err);
   }) 
 })
-/* POST - Create a post */
-router.post("/", upload.single('postImage'), async (req, res, next) => {
-  //console.log(req.file);
-  const { title, subreddit, user, content } = req.body;
-  const subredditObject = await Subreddit.findOne({name: subreddit});
+/* POST '/posts' - Create a post */
+router.post("/", upload.single('image'), (req, res, next) => {
+  // console.log(req.file)
+  // console.log(req.body)
+  const { title, subreddit, content, user } = req.body;
 
-  new Post({
+  const post = new Post({
     title: title,
-    subreddit: subredditObject.name,
-    user: user._id, // object!
+    subreddit: subreddit,
+    user: user,
     content: content,
-    image: req.file.path,
   })
-    .save()
+  req.file ? post.image = req.file.path : "";
+
+    post.save()
     .then(async (post) => {
       res.status(200).send({message: "Post created!", post: post})
     })
     .catch(err => console.log(err));
-
 });
 
 // POST - upvote a post

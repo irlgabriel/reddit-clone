@@ -43,6 +43,7 @@ const All = ({
         unmountOnExit
       >
         <PostModal
+          subreddits={subreddits}
           setFlash={setFlash}
           setShowFlash={setShowFlash}
           setPosts={setPosts}

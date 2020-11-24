@@ -45,7 +45,9 @@ export const Input = styled.input`
   background: white;
   width: 100%;
 `;
-export const Label = styled.label``;
+export const Label = styled.label`
+  margin: .25rem 0;
+`;
 export const Button = styled.button`
   cursor: pointer;
   text-decoration: none;
@@ -72,3 +74,15 @@ export const DisabledText = styled.p`
   user-select: none;
   padding: 0.25rem 0;
 `;
+export const FlexContainer = styled.div`
+  display: flex;
+  align-items: center;
+`
+export const TabDiv = styled.div`
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: .5rem;
+  user-select: none;
+  cursor: pointer;
+  background: ${({selected}) => (selected === "yes" ? "#dae0e6" : "white")}
+`

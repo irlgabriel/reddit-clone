@@ -271,5 +271,4 @@ export const PostedAt = styled.p`
 `
 export const PostImage = styled.img`
   max-width: 100%;
-  max-height: 400px;
 `
