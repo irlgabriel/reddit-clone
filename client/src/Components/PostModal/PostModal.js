@@ -17,18 +17,12 @@ import {
 
 const PostModal = ({ setFlash, setShowFlash, fromSubreddit, setPosts, posts, user, setPostModal }) => {
   const [subreddits, setSubreddits] = useState([]);
-  const [subreddit, setSubreddit] = useState("");
+  // States for creating subreddit
+  const [subreddit, setSubreddit] = useState(fromSubreddit || "");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  // Seed state with the available subreddits
-  useEffect(() => {
-    axios.get("/subreddits").then((res) => {
-      setSubreddits(res.data);
-      if (res.data.length > 0) {
-        setSubreddit(res.data[0].name);
-      }
-    });
-  }, []);
+
+
   const createPost = (e) => {
     e.preventDefault();
     if(!title || !content) return;
@@ -71,6 +65,7 @@ const PostModal = ({ setFlash, setShowFlash, fromSubreddit, setPosts, posts, use
             {fromSubreddit && <DisabledText>{fromSubreddit}</DisabledText>}
             {!fromSubreddit && (
               <Select
+                defaultValue={fromSubreddit || subreddit.name}
                 onChange={(e) => setSubreddit(e.target.value)}
                 name="subreddits"
               >

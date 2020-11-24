@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   MainWrapper,
   PostsContainer,
@@ -27,9 +27,11 @@ const Subreddit = ({
 
 }) => {
   // only show posts from this subreddits
-  const [subredditPosts, setSubredditPosts] = useState(
-    posts.filter((post) => post.subreddit === subreddit.name)
-  );
+  const [subredditPosts, setSubredditPosts] = useState([]);
+
+  useEffect(() => {
+    setSubredditPosts(posts.filter(post => post.subreddit === subreddit.name));
+  }, [posts])
 
   return (
     <MainWrapper>

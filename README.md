@@ -12,6 +12,10 @@
 ### - Search subreddits in the top searchbar!
 ### - CRUD routes for post/comments/subreddits/users
 
+## Known bugs
+### - No flash messages for validation failure from the server side(mongodb validations) and for user authentication failure.
+### - Subreddit subscription status doesn't update across all pages when you update it and then jump in another page, until you refresh it.
+
 
 
 
