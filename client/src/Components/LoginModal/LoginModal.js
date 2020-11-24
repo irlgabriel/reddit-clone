@@ -36,8 +36,11 @@ const LoginModal = ({ setFlash, setShowFlash, setLogin, user, setUser }) => {
         setLogin(false); // hide login modal       
       })
       .catch(err => {
-        setFlash(err.response.data.message);
+        //console.log(err, err.response);
+        setFlash("Username or Password invalid");
         setShowFlash(true);
+        setUsername("");
+        setPassword("");
       })
   };
 
@@ -48,11 +51,12 @@ const LoginModal = ({ setFlash, setShowFlash, setLogin, user, setUser }) => {
         <LoginForm onSubmit={(e) => loginHandler(e)}>
           <FormGroup>
             <Label>Username</Label>
-            <Input onChange={(e) => setUsername(e.target.value)} type="text" />
+            <Input value={username} onChange={(e) => setUsername(e.target.value)} type="text" />
           </FormGroup>
           <FormGroup>
             <Label>Password</Label>
             <Input
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
               type="password"
             />
